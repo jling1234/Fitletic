@@ -10,13 +10,13 @@ export function EmailAndPassword() {
       <div>
         <p className="email"> E-Mail </p>
         <div className="email-text-field">
-          <input type="text" className="email-text-field-size" size="50" />
+          <input type="text" className="email-text-field-size" />
         </div>
       </div>
       <div>
         <p className="password">Password</p>
         <div className="password-text-field">
-          <input type="text" className="password-text-field-size" size="50" />
+          <input type="text" className="password-text-field-size" />
         </div>
       </div>
     </>
@@ -33,30 +33,32 @@ function LoginPage() {
             HOME
           </a>
         </div>
-        <div>
-          <p className="welcome"> WELCOME TO FITLETIC </p>
-        </div>
+        <div className="login-section">
+          <div>
+            <p className="welcome"> WELCOME TO FITLETIC </p>
+          </div>
 
-        <EmailAndPassword />
+          <EmailAndPassword />
 
-        <div className="login-button">
-          <button
-            className="login-button-size"
-            onClick={() => alert("Logging in")}
-          >
-            <p className="login-font">LOGIN</p>
-          </button>
-        </div>
+          <div className="login-button">
+            <button
+              className="login-button-size"
+              onClick={() => alert("Logging in")}
+            >
+              <p className="login-font">LOGIN</p>
+            </button>
+          </div>
 
-        <div className="flex-container">
-          <p className="no-account-text"> Don't have an account? </p>
+          <div className="flex-container">
+            <p className="no-account-text"> Don't have an account? </p>
 
-          <button
-            className="sign-up-button"
-            onClick={() => alert("To the sign up page")}
-          >
-            <p className="sign-up-font">SIGN UP</p>
-          </button>
+            <button
+              className="sign-up-button"
+              onClick={() => alert("To the sign up page")}
+            >
+              <p className="sign-up-font">SIGN UP</p>
+            </button>
+          </div>
         </div>
       </div>
       <div className="right">
