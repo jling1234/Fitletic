@@ -1,0 +1,174 @@
+@import url("https://fonts.googleapis.com/css2?family=Angkor&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+
+body {
+  background-color: #def9eb;
+  height: auto;
+  width: auto;
+  margin-left: 60px;
+  margin-right: 60px;
+  padding: auto;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.left {
+  padding: 1rem;
+}
+
+.right {
+  border-radius: 40px;
+  min-height: max(97svh, 100px);
+  background-color: #85b99f;
+}
+
+.logo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo img {
+  width: 68px;
+  height: 77px;
+}
+
+.home {
+  color: black;
+  text-decoration: underline;
+  text-underline-offset: 8px;
+  text-align: right;
+  font-family: "Josefin Sans";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.home:hover {
+  color: #555;
+}
+
+.welcome {
+  color: #000;
+  font-family: "Angkor", "Times New Roman", serif;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
+}
+
+.email {
+  font-family: "Josefin Sans", serif;
+  font-size: 1.3rem;
+  padding-left: 5rem;
+}
+
+.email-text-field {
+  padding-left: 5rem;
+}
+
+.email-text-field-size {
+  min-height: 20px;
+  padding: 3px;
+  border-radius: 25px;
+  font-weight: normal;
+  font-family: "Josefin Sans";
+  padding-left: 10px;
+}
+
+.password {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 1.3rem;
+  padding-left: 5rem;
+}
+
+.password-text-field {
+  min-height: 20px;
+  padding-left: 5rem;
+}
+
+.password-text-field-size {
+  min-height: 20px;
+  padding: 3px;
+  border-radius: 25px;
+  font-family: "Josefin Sans", sans-serif;
+  padding-left: 10px;
+}
+
+.login-button {
+  padding: 2rem;
+  padding-left: 11.8rem;
+  top: 50%;
+  left: 50%;
+}
+
+.login-button-size {
+  height: 45px;
+  width: 150px;
+  margin-top: 1rem;
+  border-radius: 10rem;
+  background-color: #9dcdb5;
+}
+
+.login-font {
+  text-align: center;
+  font-family: "Josefin Sans", serif;
+  font-size: 1.2rem;
+  line-height: 37%;
+  font-weight: 500;
+}
+
+.no-account-text {
+  text-align: center;
+  font-family: "Josefin Sans", serif;
+  font-size: 1.3rem;
+}
+
+.sign-up-button {
+  height: 40px;
+  width: 110px;
+  margin-top: 1rem;
+  border-radius: 10rem;
+  background-color: #d9d9d9;
+}
+
+.sign-up-font {
+  text-align: center;
+  font-family: "Josefin Sans", serif;
+  font-size: 1.2rem;
+  line-height: 0%;
+  font-weight: 500;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  margin-left: 6rem;
+  align-items: first baseline;
+}
+
+.the-catchphrase-font {
+  font-family: "Josefin Sans";
+  font-size: 3rem;
+  text-align: right;
+  font-weight: 500;
+}
+
+.the-catchphrase {
+  padding-top: 16rem;
+  padding-right: 2rem;
+}
+
+.the-line-in-small-font {
+  font-family: "Josefin Sans";
+  text-align: right;
+  padding-left: 8rem;
+  padding-right: 2rem;
+  font-size: 1.5rem;
+}
