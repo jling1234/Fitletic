@@ -13,9 +13,9 @@
   align-items: end;
   gap: 0.3rem;
 
-  font-family: Angkor, serif;
+  font-family: "Angkor", serif;
   font-size: 1.5rem;
-  line-height: 1;
+  line-height: 1.4rem;
 }
 
 .homepage .logo-wrapper img {
@@ -26,20 +26,42 @@
   background-color: var(--color-background);
 
   padding: 2rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 4rem;
+  display: grid;
+  grid-template: 1fr / repeat(3, 1fr);
+  gap: 2rem;
+  align-items: end;
 
-  line-height: normal;
+  line-height: 1;
+}
+
+.header > *:nth-child(3) {
+  justify-self: start;
+}
+
+.header > *:nth-child(3) {
+  justify-self: center;
+}
+
+.header > *:nth-child(3) {
+  justify-self: end;
 }
 
 .header nav ul {
   list-style: none;
   display: flex;
-  justify-content: space-evenly;
-  gap: max(3svw, 1rem);
+  justify-content: space-between;
+  gap: 1rem;
+
   padding-left: 0;
+}
+
+.header nav ul > * {
+  flex-shrink: 0;
+}
+
+.footer .footer-links a {
+  text-decoration: none;
+  color: unset;
 }
 
 .header nav a {
@@ -47,10 +69,18 @@
   color: unset;
 }
 
+.header nav li {
+  transition: transform 0.1s ease-in-out;
+}
+
+.header nav li:hover {
+  transform: scale(1.1);
+}
+
 .header .user-wrapper {
   display: flex;
-  align-items: center;
-  gap: 1rem;
+  align-items: end;
+  gap: 0.5rem;
 }
 
 .header .user-wrapper .user-image {

@@ -6,6 +6,7 @@ function Header() {
     <header className="header">
       <div className="logo-wrapper">
         <img src={logo} alt="fitletic logo" />
+        <p>FITLETIC</p>
       </div>
 
       <nav>
