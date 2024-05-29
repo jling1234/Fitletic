@@ -36,9 +36,43 @@ function Header() {
   );
 }
 
+function HomepageContent() {
+  return (
+    <section className="homepage-content">
+      <div className="homepage-content-intro">
+        <h1>Healthy Living Made Easy</h1>
+        <p>
+          Explore our calibrated workout and meal calorie trackers, make your
+          own routines and recipes, and start your journey to a healthier,
+          fitter you!
+        </p>
+      </div>
+
+      <div className="homepage-gallery">
+        <button type="button" className="workouts-button">
+          <div className="button-text">WORKOUTS</div>
+          <div className="button-background"></div>
+        </button>
+        <button type="button" className="routines-button">
+          <div className="button-text">SAVED ROUTINES</div>
+          <div className="button-background"></div>
+        </button>
+        <button type="button" className="recipes-button">
+          <div className="button-text">SAVED RECIPES</div>
+          <div className="button-background"></div>
+        </button>
+        <button type="button" className="meals-button">
+          <div className="button-text">MEALS</div>
+          <div className="button-background"></div>
+        </button>
+      </div>
+    </section>
+  );
+}
+
 function Homepage() {
   return (
-    <>
+    <div className="homepage">
       <Header></Header>
 
       <main>
@@ -67,8 +101,10 @@ function Homepage() {
             <div className="rectangle-5"></div>
           </div>
         </section>
+
+        <HomepageContent></HomepageContent>
       </main>
-    </>
+    </div>
   );
 }
 
