@@ -1,12 +1,11 @@
 header {
-  background-color: #d9d9d996;
+  background-color: var(--color-background);
 
-  padding: 1.5rem 2rem;
+  padding: 2rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 4rem;
-  font-family: sans-serif;
 
   line-height: normal;
 }
@@ -45,4 +44,107 @@ header .user-wrapper .user-image {
   aspect-ratio: 1 / 1;
   min-width: 2rem;
   border-radius: 100%;
+}
+
+.call-to-action-wrapper {
+  background: linear-gradient(
+    0deg,
+    #5d987a,
+    #2c4739,
+    #1f3229,
+    #2c4739,
+    #5d987a
+  );
+  color: white;
+
+  padding: 4rem 2rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  gap: 3rem;
+}
+
+.call-to-action-wrapper > div {
+  max-width: 65ch;
+  flex: 1 1 0;
+}
+
+.call-to-action-text-wrapper {
+  margin-bottom: 2rem;
+}
+
+.call-to-action-text-wrapper h1 {
+  font-size: 5rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.call-to-action-text-wrapper p {
+  font-size: 1.5rem;
+  line-height: 1.1;
+}
+
+.call-to-action-button-wrapper {
+  display: flex;
+  gap: 1rem;
+}
+
+.call-to-action-button-wrapper button {
+  font-size: 1.2rem;
+  color: white;
+
+  background: none;
+  border: 0.2rem solid white;
+  border-radius: 1rem;
+
+  padding: 0.5rem;
+
+  cursor: pointer;
+  transition: 0.1s transform ease-in-out;
+}
+
+.call-to-action-button-wrapper button:hover {
+  transform: scale(1.1);
+}
+
+.call-to-action-rectangle-wrapper {
+  display: grid;
+  grid-template: repeat(20, 1fr) / repeat(20, 1fr);
+  aspect-ratio: 1 / 1;
+}
+
+.call-to-action-rectangle-wrapper .rectangle-1 {
+  background: #67a887;
+  grid-column: 4 / span 9;
+  grid-row: 3 / span 9;
+  border-radius: 20% / 20%;
+}
+
+.call-to-action-rectangle-wrapper .rectangle-2 {
+  background: #20563b;
+  grid-column: 10 / span 8;
+  grid-row: 1 / span 8;
+  border-radius: 20% / 20%;
+}
+
+.call-to-action-rectangle-wrapper .rectangle-3 {
+  background: #85b99f;
+  grid-column: 15 / span 6;
+  grid-row: 5 / span 6;
+  border-radius: 20% / 20%;
+}
+
+.call-to-action-rectangle-wrapper .rectangle-4 {
+  background: #b9e5cf;
+  grid-column: 1 / span 10;
+  grid-row: 15 / span 6;
+  border-radius: 12% / 20%;
+}
+
+.call-to-action-rectangle-wrapper .rectangle-5 {
+  background: #9dcdb5;
+  grid-column: 5 / span 15;
+  grid-row: 13 / span 6;
+  border-radius: 8% / 20%;
 }

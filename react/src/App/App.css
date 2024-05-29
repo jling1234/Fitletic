@@ -1,3 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Angkor&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+
+:root {
+  --color-background: #d9d9d996;
+}
+
+body {
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 360;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Angkor", serif;
+  font-weight: 400;
+}
+
 /*
   1. Use a more-intuitive box-sizing model.
 */
