@@ -1,0 +1,48 @@
+header {
+  background-color: #d9d9d996;
+
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4rem;
+  font-family: sans-serif;
+
+  line-height: normal;
+}
+
+header .logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+header .logo-wrapper img {
+  max-width: 40px;
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-evenly;
+  gap: max(3svw, 1rem);
+  padding-left: 0;
+}
+
+header nav a {
+  text-decoration: none;
+  color: unset;
+}
+
+header .user-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+header .user-wrapper .user-image {
+  background-color: black;
+  aspect-ratio: 1 / 1;
+  min-width: 2rem;
+  border-radius: 100%;
+}
