@@ -61,16 +61,19 @@ body {
   font-weight: 400;
   line-height: normal;
   text-align: center;
+  padding: 1rem;
 }
 
 .email {
   font-family: "Josefin Sans", serif;
   font-size: 1.3rem;
   padding-left: 5rem;
+  padding-bottom: 0.5rem;
 }
 
 .email-text-field {
   padding-left: 5rem;
+  padding-bottom: 2rem;
 }
 
 .email-text-field-size {
@@ -86,11 +89,13 @@ body {
   font-family: "Josefin Sans", sans-serif;
   font-size: 1.3rem;
   padding-left: 5rem;
+  padding-bottom: 0.5rem;
 }
 
 .password-text-field {
   min-height: 20px;
   padding-left: 5rem;
+  padding-bottom: 0.5rem;
 }
 
 .password-text-field-size {
@@ -103,7 +108,7 @@ body {
 
 .login-button {
   padding: 2rem;
-  padding-left: 11.8rem;
+  padding-left: 12rem;
   top: 50%;
   left: 50%;
 }
@@ -149,8 +154,9 @@ body {
 .flex-container {
   display: flex;
   flex-direction: row;
-  margin-left: 6rem;
+  margin-left: 6.5rem;
   align-items: first baseline;
+  margin-top: -1.5rem;
 }
 
 .the-catchphrase-font {
@@ -158,10 +164,11 @@ body {
   font-size: 3rem;
   text-align: right;
   font-weight: 500;
+  line-height: 3.0rem;
 }
 
 .the-catchphrase {
-  padding-top: 16rem;
+  padding-top: 17.5rem;
   padding-right: 2rem;
 }
 
@@ -170,5 +177,7 @@ body {
   text-align: right;
   padding-left: 8rem;
   padding-right: 2rem;
+  padding-top: 1.5rem;
   font-size: 1.5rem;
+  line-height: 1.6rem ;
 }
