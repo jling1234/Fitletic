@@ -1,4 +1,4 @@
-header {
+.header {
   background-color: var(--color-background);
 
   padding: 2rem 2rem;
@@ -10,17 +10,17 @@ header {
   line-height: normal;
 }
 
-header .logo-wrapper {
+.header .logo-wrapper {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-header .logo-wrapper img {
+.header .logo-wrapper img {
   max-width: 40px;
 }
 
-header nav ul {
+.header nav ul {
   list-style: none;
   display: flex;
   justify-content: space-evenly;
@@ -28,18 +28,18 @@ header nav ul {
   padding-left: 0;
 }
 
-header nav a {
+.header nav a {
   text-decoration: none;
   color: unset;
 }
 
-header .user-wrapper {
+.header .user-wrapper {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-header .user-wrapper .user-image {
+.header .user-wrapper .user-image {
   background-color: black;
   aspect-ratio: 1 / 1;
   min-width: 2rem;
