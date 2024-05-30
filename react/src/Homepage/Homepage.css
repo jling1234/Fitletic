@@ -285,23 +285,23 @@
 .homepage-gallery .workouts-button {
   grid-column: 1 / span 2;
 
-  background-image: url("pexels-victorfreitas-841130.png");
+  background-image: url("Assets/pexels-victorfreitas-841130.png");
 }
 
 .homepage-gallery .routines-button {
-  background-image: url("evan-wise-wTcD3MwL_VY-unsplash.png");
+  background-image: url("Assets/evan-wise-wTcD3MwL_VY-unsplash.png");
   justify-content: end;
   text-align: end;
 }
 
 .homepage-gallery .recipes-button {
-  background-image: url("tangerine-newt-AKH4OVEmILc-unsplash.png");
+  background-image: url("Assets/tangerine-newt-AKH4OVEmILc-unsplash.png");
 }
 
 .homepage-gallery .meals-button {
   grid-column: 2 / span 2;
 
-  background-image: url("brenda-godinez-_Zn_7FzoL1w-unsplash.png");
+  background-image: url("Assets/brenda-godinez-_Zn_7FzoL1w-unsplash.png");
   justify-content: end;
   text-align: end;
 }
