@@ -1,6 +1,6 @@
 .homepage h1 {
-  font-size: 5rem;
-  line-height: 1.2;
+  font-size: var(--font-size-extra-large);
+  line-height: var(--line-height-extra-large);
   margin-bottom: 1rem;
 }
 
@@ -23,6 +23,9 @@
 }
 
 .header {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+
   background-color: var(--color-background);
 
   padding: 2rem 2rem;
@@ -30,8 +33,6 @@
   grid-template: 1fr / repeat(3, 1fr);
   gap: 2rem;
   align-items: end;
-
-  line-height: 1;
 }
 
 .header > *:nth-child(3) {
@@ -101,17 +102,12 @@
 }
 
 .call-to-action-wrapper > div {
-  max-width: 65ch;
+  max-width: 45ch;
   flex: 1 1 0;
 }
 
 .call-to-action-text-wrapper {
   margin-bottom: 2rem;
-}
-
-.call-to-action-text-wrapper p {
-  font-size: 1.5rem;
-  line-height: 1.1;
 }
 
 .call-to-action-button-wrapper {
@@ -120,7 +116,6 @@
 }
 
 .call-to-action-button-wrapper button {
-  font-size: 1.2rem;
   color: white;
 
   background: none;
@@ -187,13 +182,12 @@
 
 .homepage-content-intro {
   text-align: center;
-  font-size: 1.5rem;
-  line-height: 1.1;
-  max-width: 65ch;
+  max-width: 55ch;
 }
 
 .homepage-content-intro h1 {
-  font-size: 3rem;
+  font-size: var(--font-size-large);
+  line-height: var(--line-height-large);
 }
 
 .homepage-gallery {
@@ -214,6 +208,7 @@
   color: white;
   font-family: "Angkor", serif;
   font-size: max(1rem, 4cqw);
+  line-height: 1;
   text-align: start;
 
   padding: 1.5cqw 3cqw;
@@ -322,6 +317,9 @@
 }
 
 .footer {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+
   padding: 4rem 2rem;
 
   background-color: #a4cbb7;
@@ -343,7 +341,6 @@
   flex-wrap: wrap;
   gap: max(3svw, 1rem);
 
-  font-size: 1.3rem;
   text-align: center;
 }
 
