@@ -91,14 +91,7 @@
 }
 
 .call-to-action-wrapper {
-  background: linear-gradient(
-    0deg,
-    #5d987a,
-    #2c4739,
-    #1f3229,
-    #2c4739,
-    #5d987a
-  );
+  background: linear-gradient(45deg, #5d987a, #2c4739, #1f3229);
   color: white;
 
   display: flex;
