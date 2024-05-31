@@ -1,23 +1,17 @@
-import React from "react";
-import "./LoginPage.css";
 import logo from "./logo fit.png";
 
-console.log(logo);
+import "./LoginPage.css";
 
 export function EmailAndPassword() {
   return (
     <>
       <div>
-        <p className="email"> E-Mail </p>
-        <div className="email-text-field">
-          <input type="text" className="email-text-field-size" />
-        </div>
+        <p className="username">Username</p>
+        <input className="text-field-login" type="text" />
       </div>
-      <div>
-        <p className="password">Password</p>
-        <div className="password-text-field">
-          <input type="text" className="password-text-field-size" />
-        </div>
+      <div className="password-container">
+        <p className="username">Password</p>
+        <input className="text-field-login" type="text" />
       </div>
     </>
   );
@@ -25,58 +19,37 @@ export function EmailAndPassword() {
 
 function LoginPage() {
   return (
-    <div className="grid-container">
-      <div className="left">
-        <div className="logo">
-          <img src={logo}></img>
-          <a className="home" href="#home">
-            HOME
-          </a>
-        </div>
-        <div className="login-section">
-          <div>
-            <p className="welcome"> WELCOME TO FITLETIC </p>
+    <>
+      <div className="login-page-grid-container">
+        <div className="left-grid-container">
+          <div className="flex-grid-for-logo-and-logoname">
+            <img className="logo" src={logo}></img>
+            <p>FITLETIC</p>
           </div>
-
-          <EmailAndPassword />
-
-          <div className="login-button">
+          <form className="username-password-login-container">
+            <EmailAndPassword />
             <button
-              className="login-button-size"
-              onClick={() => alert("Logging in")}
+              className="login-button"
+              onClick={() => alert("login was clicked")}
             >
-              <p className="login-font">LOGIN</p>
+              {" "}
+              <p>Login</p>{" "}
             </button>
-          </div>
+          </form>
 
-          <div className="flex-container">
-            <p className="no-account-text"> Don't have an account? </p>
-
-            <button
-              className="sign-up-button"
-              onClick={() => alert("To the sign up page")}
-            >
-              <p className="sign-up-font">SIGN UP</p>
-            </button>
+          <div className="no-account">
+            <p>
+              Don't have an account?{" "}
+              <a href="" onClick={() => alert("Sign up was clicked ")}>
+                Sign Up
+              </a>
+            </p>
           </div>
         </div>
+
+        <div className="right-grid-container"></div>
       </div>
-      <div className="right">
-        <div className="the-catchphrase">
-          <p className="the-catchphrase-font">
-            Your Fitness Journey Awaits You.
-          </p>
-        </div>
-        <div className="the-line-in-small">
-          <p className="the-line-in-small-font">
-            Embark on a transformative fitness journey with us, where you are in
-            charge of every step and every meal to reach your health and
-            wellness goals.{" "}
-          </p>
-        </div>
-      </div>
-    </div>
+    </>
   );
 }
-
 export default LoginPage;

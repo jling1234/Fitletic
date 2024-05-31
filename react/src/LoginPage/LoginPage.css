@@ -1,193 +1,87 @@
-@import url("https://fonts.googleapis.com/css2?family=Angkor&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
 
-body {
-  background-color: #def9eb;
-  height: auto;
-  width: auto;
-  margin-left: 60px;
-  margin-right: 60px;
-  padding: auto;
-}
-
-.grid-container {
+.login-page-grid-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  grid-template: 1fr / 1fr 1fr;
+  min-height: 100dvh;
+  font-family: "Josefin Sans", sans-serif;
 }
 
-.left {
+.left-grid-container {
+  margin-inline: auto;
+  align-self: center;
   display: flex;
-  padding: 1rem;
   flex-direction: column;
-  align-items: center;
+  gap: 3rem;
 }
 
-.right {
-  border-radius: 40px;
-  min-height: max(97svh, 100px);
-  background-color: #85b99f;
+.flex-grid-for-logo-and-logoname {
+  display: flex;
 }
 
 .logo {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  align-self: stretch;
+  width: 58px;
+  height: 67px;
 }
 
-.logo img {
-  width: 68px;
-  height: 77px;
-}
-
-.home {
-  color: black;
-  text-decoration: underline;
-  text-underline-offset: 8px;
-  text-align: right;
-  font-family: "Josefin Sans";
-  font-size: 20px;
-  font-style: normal;
+.flex-grid-for-logo-and-logoname p {
+  color: #00230f;
+  font-size: 32px;
   font-weight: 400;
-  line-height: normal;
+  line-height: 87.31px;
+  font-family: "Anton", "sans-serif";
 }
 
-.home:hover {
-  color: #555;
+.username {
+  font-size: 14px;
+  line-height: 20px;
 }
 
-.welcome {
-  color: #000;
-  font-family: "Angkor", "Times New Roman", serif;
-  font-size: 1.5rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  text-align: center;
-  padding: 1rem;
+.text-field-login {
+  border-radius: 10px;
+  min-height: 28px;
+  min-width: 350px;
+  padding-inline: 10px;
 }
 
-.email-text-field > input {
-  width: 100%;
-}
-
-.email {
-  font-family: "Josefin Sans", serif;
-  font-size: 1.3rem;
-
-  padding-bottom: 0.5rem;
-}
-
-.email-text-field {
-  padding-bottom: 2rem;
-}
-
-.email-text-field-size {
-  min-height: 20px;
-  padding: 3px;
-  border-radius: 25px;
-  font-weight: normal;
-  font-family: "Josefin Sans";
-  padding-left: 10px;
-}
-
-.password {
-  font-family: "Josefin Sans", sans-serif;
-  font-size: 1.3rem;
-
-  padding-bottom: 0.5rem;
-}
-
-.password-text-field {
-  min-height: 20px;
-  padding-bottom: 0.5rem;
-}
-
-.password-text-field > input {
-  width: 100%;
-}
-
-.password-text-field-size {
-  min-height: 20px;
-  padding: 3px;
-  border-radius: 25px;
-  font-family: "Josefin Sans", sans-serif;
-  padding-left: 10px;
+.password-container {
+  margin-top: 20px;
 }
 
 .login-button {
-  padding: 2rem;
-  padding-left: 12rem;
-  top: 50%;
-  left: 50%;
+  background-color: #ff5f35;
+  border-radius: 5px;
+  border: none;
+  min-height: 28px;
+  min-width: 350px;
+  margin-top: 33px;
 }
 
-.login-button-size {
-  height: 45px;
-  width: 150px;
-  margin-top: 1rem;
-  border-radius: 10rem;
-  background-color: #9dcdb5;
+.login-button:hover {
+  cursor: pointer;
 }
 
-.login-font {
+.login-button p {
+  padding-block: 2px;
+  color: white;
+  
+}
+
+.no-account {
   text-align: center;
-  font-family: "Josefin Sans", serif;
-  font-size: 1.2rem;
-  line-height: 37%;
-  font-weight: 500;
+  margin-top: 200px;
 }
 
-.no-account-text {
-  text-align: center;
-  font-family: "Josefin Sans", serif;
-  font-size: 1.3rem;
+
+.no-account a {
+  color: black;
 }
 
-.sign-up-button {
-  height: 40px;
-  width: 110px;
-  margin-top: 1rem;
-  border-radius: 10rem;
-  background-color: #d9d9d9;
-}
-
-.sign-up-font {
-  text-align: center;
-  font-family: "Josefin Sans", serif;
-  font-size: 1.2rem;
-  line-height: 0%;
-  font-weight: 500;
-}
-
-.flex-container {
-  display: flex;
-  flex-direction: row;
-  margin-left: 6.5rem;
-  align-items: first baseline;
-  margin-top: -1.5rem;
-}
-
-.the-catchphrase-font {
-  font-family: "Josefin Sans";
-  font-size: 3rem;
-  text-align: right;
-  font-weight: 500;
-  line-height: 3rem;
-}
-
-.the-catchphrase {
-  padding-top: 17.5rem;
-  padding-right: 2rem;
-}
-
-.the-line-in-small-font {
-  font-family: "Josefin Sans";
-  text-align: right;
-  padding-left: 8rem;
-  padding-right: 2rem;
-  padding-top: 1.5rem;
-  font-size: 1.5rem;
-  line-height: 1.6rem;
+.right-grid-container {
+  background-image: url("./image1.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 20px;
 }
