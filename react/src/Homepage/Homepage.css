@@ -183,6 +183,10 @@
   line-height: var(--line-height-large);
 }
 
+.homepage-content-intro p {
+  letter-spacing: -1px;
+}
+
 .homepage-gallery {
   container-type: size;
 
