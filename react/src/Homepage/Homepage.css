@@ -306,16 +306,9 @@
   text-align: end;
 }
 
-.custom-shape-divider-wrapper {
-  display: flex;
-  justify-content: center;
-}
-
 .custom-shape-divider-footer {
-  flex-shrink: 0;
-  width: max(1920px, 100lvw);
+  width: 100%;
   overflow: hidden;
-  line-height: 0;
   transform: rotate(180deg);
 }
 
