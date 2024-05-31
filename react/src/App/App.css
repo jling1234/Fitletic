@@ -1,7 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Angkor&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Antonio&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
 
 :root {
-  --color-background: #d9d9d996;
+  --color-background: #ffffff;
+  --color-text: #000000;
+  --color-accent: #fb5d35;
 
   --font-size-extra-large: clamp(3rem, 3.636vw + 2.091rem, 5rem);
   --line-height-extra-large: clamp(3rem, 5.455vw + 1.636rem, 6rem);
@@ -11,10 +13,14 @@
   --line-height-medium: clamp(1.3rem, 0.909vw + 1.073rem, 1.8rem);
   --font-size-small: clamp(1rem, 0.455vw + 0.636rem, 1.2rem);
   --line-height-small: clamp(0.975rem, 0.409vw + 0.873rem, 1.2rem);
+
+  --heading-font: "Anton", sans-serif;
+  --text-font: "Josefin Sans", sans-serif;
+  --banner-font: "Antonio", sans-serif;
 }
 
 body {
-  font-family: "Josefin Sans", sans-serif;
+  font-family: var(--text-font), sans-serif;
   font-weight: 360;
 
   font-size: var(--font-size-medium);
@@ -27,7 +33,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Angkor", serif;
+  font-family: var(--heading-font), sans-serif;
   font-weight: 400;
 }
 
