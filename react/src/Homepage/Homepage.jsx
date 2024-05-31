@@ -37,6 +37,36 @@ function Header() {
   );
 }
 
+function CallToAction() {
+  return (
+    <section className="call-to-action-wrapper">
+      <div className="call-to-action">
+        <div className="call-to-action-text-wrapper">
+          <h1>Your Gateway To Gains</h1>
+          <p>
+            Your ultimate destination for comprehensive support in both
+            nutrition and workouts. Make every rep count and every movement
+            matter. Embrace the grind, challenge your limits, and push yourself
+            further.
+          </p>
+        </div>
+        <div className="call-to-action-button-wrapper">
+          <button type="button">Join Now</button>
+          <button type="button">Login</button>
+        </div>
+      </div>
+
+      <div className="call-to-action-rectangle-wrapper">
+        <div className="rectangle-1"></div>
+        <div className="rectangle-2"></div>
+        <div className="rectangle-3"></div>
+        <div className="rectangle-4"></div>
+        <div className="rectangle-5"></div>
+      </div>
+    </section>
+  );
+}
+
 function HomepageContent() {
   return (
     <section className="homepage-content">
@@ -103,31 +133,7 @@ function Homepage() {
       <Header></Header>
 
       <main>
-        <section className="call-to-action-wrapper">
-          <div className="call-to-action">
-            <div className="call-to-action-text-wrapper">
-              <h1>Your Gateway To Gains</h1>
-              <p>
-                Your ultimate destination for comprehensive support in both
-                nutrition and workouts. Make every rep count and every movement
-                matter. Embrace the grind, challenge your limits, and push
-                yourself further.
-              </p>
-            </div>
-            <div className="call-to-action-button-wrapper">
-              <button type="button">Join Now</button>
-              <button type="button">Login</button>
-            </div>
-          </div>
-
-          <div className="call-to-action-rectangle-wrapper">
-            <div className="rectangle-1"></div>
-            <div className="rectangle-2"></div>
-            <div className="rectangle-3"></div>
-            <div className="rectangle-4"></div>
-            <div className="rectangle-5"></div>
-          </div>
-        </section>
+        <CallToAction></CallToAction>
 
         <HomepageContent></HomepageContent>
 
