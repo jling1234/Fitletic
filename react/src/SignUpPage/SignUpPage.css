@@ -1,0 +1,84 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+
+.signup-page-grid-container {
+  display: grid;
+  grid-template: 1fr/ 1fr 1fr;
+  min-height: 100dvh;
+  font-family: "Josefin Sans", sans-serif;
+}
+
+.left-grid-container {
+  margin-inline: auto;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.flexgrid-logo {
+  display: flex;
+}
+
+.logo {
+  width: 58px;
+  height: 67px;
+}
+
+.flexgrid-logo p {
+  color: #00230f;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 87.31px;
+  font-family: "Anton", "sans-serif";
+}
+
+.username-container {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.text-field-info {
+  border-radius: 10px;
+  min-height: 28px;
+  min-width: 350px;
+  padding-inline: 10px;
+}
+
+.password-container {
+  margin-top: 20px;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.confirm-password-container {
+  margin-top: 20px;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.next-button {
+  background-color: #ff5f35;
+  border-radius: 5px;
+  border: none;
+  min-height: 28px;
+  min-width: 350px;
+  margin-top: 33px;
+}
+
+.next-button:hover {
+  cursor: pointer;
+}
+
+.next-button p {
+  padding-block: 2px;
+  color: white;
+  
+}
+
+.right-grid-container {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 20px;
+}
