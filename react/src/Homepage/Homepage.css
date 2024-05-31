@@ -91,7 +91,14 @@
 }
 
 .call-to-action-wrapper {
-  background: linear-gradient(90deg, #5d987a, #2c4739, #1f3229);
+  background: linear-gradient(
+    0deg,
+    #5d987a,
+    #2c4739,
+    #1f3229,
+    #2c4739,
+    #5d987a
+  );
   color: white;
 
   display: flex;
@@ -299,6 +306,28 @@
   text-align: end;
 }
 
+.custom-shape-divider-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.custom-shape-divider-footer {
+  flex-shrink: 0;
+  width: max(1920px, 100lvw);
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-footer svg {
+  width: 100%;
+  height: 150px;
+}
+
+.custom-shape-divider-footer .shape-fill {
+  fill: #a4cbb7;
+}
+
 .footer {
   padding: 4rem 2rem;
 
@@ -336,27 +365,4 @@
 
 .footer .footer-links li:hover {
   transform: scale(1.1);
-}
-
-/* Wave dividers  */
-
-.custom-shape-divider-wrapper {
-  --wave-rotate: 180deg;
-  --wave-height: 100px;
-
-  display: flex;
-  justify-content: center;
-}
-
-.custom-shape-divider {
-  flex-shrink: 0;
-  width: max(1920px, 100lvw);
-  overflow: hidden;
-  line-height: 0;
-  transform: rotate(var(--wave-rotate));
-}
-
-.custom-shape-divider svg {
-  width: 100%;
-  height: var(--wave-height);
 }
