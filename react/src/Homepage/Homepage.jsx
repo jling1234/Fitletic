@@ -1,33 +1,54 @@
 import "./Homepage.css";
 import logo from "../Shared/logo_fit.png";
+import { useLayoutEffect, useRef } from "react";
 
 function Header() {
+  const opacityFillStart = 0;
+  const opacityFillStop = 400;
+
+  const backgroundRef = useRef(null);
+  const updateBackgroundOpacity = () => {
+    const scrollPosition = window.scrollY;
+
+    let opacity = (scrollPosition - opacityFillStart) / opacityFillStop;
+    if (opacity < 0) opacity = 0;
+    else if (opacity > 1) opacity = 1;
+
+    backgroundRef.current.style.opacity = opacity;
+  };
+
+  useLayoutEffect(() => {
+    updateBackgroundOpacity();
+    window.addEventListener("scroll", updateBackgroundOpacity);
+    return () => window.removeEventListener("scroll", updateBackgroundOpacity);
+  }, []);
+
   return (
     <header className="header">
-      <div className="logo-wrapper">
-        <img src={logo} alt="fitletic logo" />
-        <p>FITLETIC</p>
-      </div>
+      <div ref={backgroundRef} className="header-background"></div>
+      <div className="header-content">
+        <div className="logo-wrapper">
+          <img src={logo} alt="fitletic logo" />
+          <p>FITLETIC</p>
+        </div>
 
-      <nav>
-        <ul>
-          <li>
-            <a href="">HOME</a>
-          </li>
-          <li>
-            <a href="">PROFILE</a>
-          </li>
-          <li>
-            <a href="">WORKOUTS</a>
-          </li>
-          <li>
-            <a href="">MEALS</a>
-          </li>
-          <li>
-            <a href="">ABOUT US</a>
-          </li>
-        </ul>
-      </nav>
+        <nav>
+          <ul>
+            <li>
+              <a href="">HOME</a>
+            </li>
+            <li>
+              <a href="">PROFILE</a>
+            </li>
+            <li>
+              <a href="">WORKOUTS</a>
+            </li>
+            <li>
+              <a href="">MEALS</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </header>
   );
 }
