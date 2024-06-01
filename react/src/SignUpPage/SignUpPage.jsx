@@ -1,22 +1,21 @@
 import logo from "./logo fit.png";
-import "./SignUpPage.css";
 
+import "./Signuppage.css";
 
-export function EmailAndPassword() {
-    return (
-      <>
-        <div className="username-container">
-          <p className="username">Username</p>
-          <input className="text-field-info" type="text" />
-        </div>
-        <div className="password-container">
-          <p className="password">Password</p>
-          <input className="text-field-info" type="text" />
-        </div>
-      </>
-    );
-  }
-  
+function EmailAndPassword() {
+  return (
+    <>
+      <div className="username-container">
+        <p className="username">Username</p>
+        <input className="text-field-info" type="text" />
+      </div>
+      <div className="password-container">
+        <p className="password">Password</p>
+        <input className="text-field-info" type="text" />
+      </div>
+    </>
+  );
+}
 
 function SignupPage() {
   return (
@@ -47,10 +46,12 @@ function SignupPage() {
 
         </div>
 
-        <div className="right-grid-container" />
-
+        <div className="right-grid-container">
+          
+        </div>
       </div>
     </>
   );
 }
+
 export default SignupPage;

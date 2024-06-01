@@ -77,8 +77,10 @@
 }
 
 .right-grid-container {
+    background-image: url('.image1.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   border-radius: 20px;
+  
 }

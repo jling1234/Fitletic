@@ -1,12 +1,10 @@
 import "./App.css";
-import LoginPage from "../LoginPage/LoginPage.jsx";
-import SignupPage from "../SignUpPage/SignUpPage.jsx";
+import SignupPage from "../Signuppage/Signuppage.jsx";
 
 function App() {
   return (
     <>
-    <LoginPage />
-      <SignupPage />
+    <SignupPage/>
     </>
   );
 }
