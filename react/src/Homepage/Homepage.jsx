@@ -67,10 +67,16 @@ function BannerText() {
       const isColored = (i * repeat + j) % 2 === 0;
 
       textItems.push(
-        <span className={isColored ? "accent-text" : ""}>{text + " "}</span>,
+        <span key={j} className={isColored ? "accent-text" : ""}>
+          {text + " "}
+        </span>,
       );
     }
-    rowDivs.push(<div className="homepage-banner-text">{textItems}</div>);
+    rowDivs.push(
+      <div key={i} className="homepage-banner-text">
+        {textItems}
+      </div>,
+    );
   }
 
   return <div className="homepage-banner-text-wrapper">{rowDivs}</div>;
