@@ -74,10 +74,10 @@
 .next-button p {
   padding-block: 2px;
   color: white;
-  
 }
 
 .right-grid-container {
+  background-image: url("./image1.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
