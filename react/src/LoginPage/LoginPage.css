@@ -18,6 +18,7 @@
 
 .flex-grid-for-logo-and-logoname {
   display: flex;
+  padding-left: 80px;
 }
 
 .logo {

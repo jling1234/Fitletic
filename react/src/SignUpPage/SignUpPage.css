@@ -9,6 +9,7 @@
 }
 
 .left-grid-container {
+  background-color: white;
   margin-inline: auto;
   align-self: center;
   display: flex;

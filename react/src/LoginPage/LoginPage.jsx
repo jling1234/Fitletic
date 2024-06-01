@@ -1,5 +1,4 @@
 import logo from "./logo fit.png";
-
 import "./LoginPage.css";
 
 export function EmailAndPassword() {
