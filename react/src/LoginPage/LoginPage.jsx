@@ -46,7 +46,7 @@ function LoginPage() {
           </div>
         </div>
 
-        <div className="right-grid-container"></div>
+        <div className="right-grid-container-signup-page"></div>
       </div>
     </>
   );
