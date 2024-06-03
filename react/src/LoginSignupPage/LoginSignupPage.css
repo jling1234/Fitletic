@@ -1,0 +1,101 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+
+
+.signup-page-grid-container,
+.login-page-grid-container {
+  display: grid;
+  grid-template: 1fr / 1fr 1fr;
+  min-height: 100dvh;
+  font-family: "Josefin Sans", sans-serif;
+}
+
+.left-grid-container {
+  margin-inline: auto;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  background-color: white;
+}
+
+.logo {
+  width: 58px;
+  height: 67px;
+}
+
+.flex-grid-for-logo-and-logoname,
+.flexgrid-logo {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-grid-for-logo-and-logoname p,
+.flexgrid-logo p {
+  color: #00230f;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 87.31px;
+  font-family: "Anton", "sans-serif";
+}
+
+.username-container,
+.password-container,
+.confirm-password-container,
+.age,
+.height,
+.weight,
+.activity-level,
+.goal {
+  font-size: 14px;
+  line-height: 20px;
+  margin-top: 10px;
+}
+
+.text-field-info,
+.number-field-size,
+.dropdown {
+  border-radius: 5px;
+  min-height: 28px;
+  min-width: 350px;
+  padding-inline: 10px;
+  margin-top: 3px;
+}
+
+.next-button,
+.signup-button,
+.login-button {
+  background-color: #ff5f35;
+  border-radius: 5px;
+  border: none;
+  min-height: 28px;
+  min-width: 350px;
+  margin-top: 33px;
+  color: white;
+  padding-block: 2px;
+}
+
+.next-button:hover,
+.signup-button:hover,
+.login-button:hover {
+  cursor: pointer;
+}
+
+.no-account {
+  text-align: center;
+  margin-top: 200px;
+}
+
+.no-account a {
+  color: black;
+}
+
+.right-grid-container {
+  background-image: url("./image1.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 0px;
+}
+
+

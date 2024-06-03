@@ -104,3 +104,16 @@ h6 {
 #__next {
   isolation: isolate;
 }
+
+
+:root {
+
+  --font-size-extra-large: clamp(3rem, 3.636vw + 2.091rem, 5rem);
+  --line-height-extra-large: clamp(3rem, 5.455vw + 1.636rem, 6rem);
+  --font-size-large: clamp(2rem, 1.818vw + 1.545rem, 3rem);
+  --line-height-large: clamp(1.998rem, 2.913vw + 1.27rem, 3.6rem);
+  --font-size-medium: clamp(1.2rem, 0.909vw + 0.773rem, 1.5rem);
+  --line-height-medium: clamp(1.3rem, 0.909vw + 1.073rem, 1.8rem);
+  --font-size-small: clamp(1rem, 0.455vw + 0.636rem, 1.2rem);
+  --line-height-small: clamp(0.975rem, 0.409vw + 0.873rem, 1.2rem);
+}

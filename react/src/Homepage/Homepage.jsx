@@ -1,5 +1,5 @@
 import "./Homepage.css";
-import logo from "../Shared/logo_fit.png";
+import logo from "../LoginSignupPage/logo fit.png";
 import { useLayoutEffect, useRef } from "react";
 
 function Header() {
