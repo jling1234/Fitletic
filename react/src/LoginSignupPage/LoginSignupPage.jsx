@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import "./LoginSignupPage.css";
-import logo from "./logo fit.png";
+import logo from "../Shared/logo_fit.png";
 
-function LoginSignupPage({ step, handleNext, handleSignup, handleLoginToSignup }) {
+function LoginSignupPage({
+  step,
+  handleNext,
+  handleSignup,
+  handleLoginToSignup,
+}) {
   return (
     <>
       <div className="signup-page-grid-container">
@@ -70,7 +75,11 @@ function LoginSignupPage({ step, handleNext, handleSignup, handleLoginToSignup }
               <div>
                 <p className="height">Height</p>
                 <div className="height-number-field">
-                  <input type="number" min="100" className="number-field-size" />
+                  <input
+                    type="number"
+                    min="100"
+                    className="number-field-size"
+                  />
                 </div>
               </div>
               <div>
@@ -124,7 +133,7 @@ function LoginSignupcontainer() {
   const [step, setStep] = useState(1);
 
   const handleNext = () => {
-    setStep(prevStep => prevStep + 1);
+    setStep((prevStep) => prevStep + 1);
   };
 
   const handleSignup = () => {

@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Anton&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
 
-
 .signup-page-grid-container,
 .login-page-grid-container {
   display: grid;
@@ -91,11 +90,9 @@
 }
 
 .right-grid-container {
-  background-image: url("./image1.jpg");
+  background-image: url("Assets/image1.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   border-radius: 0px;
 }
-
-
