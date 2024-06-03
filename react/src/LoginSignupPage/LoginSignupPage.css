@@ -10,32 +10,24 @@
   font-family: "Josefin Sans", sans-serif;
 }
 
-
 .left-grid-container {
   margin-inline: auto;
   align-self: center;
   display: flex;
   flex-direction: column;
   gap: 3rem;
+  background-color: white;
 }
 
-.left-grid-container.signup {
-  background-color: white;
+.logo {
+  width: 58px;
+  height: 67px;
 }
 
 .flex-grid-for-logo-and-logoname,
 .flexgrid-logo {
   display: flex;
-}
-
-.flex-grid-for-logo-and-logoname {
-  padding-left: 80px;
-}
-
-/* Logo */
-.logo {
-  width: 58px;
-  height: 67px;
+  justify-content: center;
 }
 
 .flex-grid-for-logo-and-logoname p,
@@ -46,7 +38,6 @@
   line-height: 87.31px;
   font-family: "Anton", "sans-serif";
 }
-
 
 .username-container,
 .password-container,
@@ -61,7 +52,6 @@
   margin-top: 10px;
 }
 
-.text-field-login,
 .text-field-info,
 .number-field-size,
 .dropdown {
@@ -105,9 +95,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  border-radius: 20px;
-}
-
-.right-grid-container.signup {
   border-radius: 0px;
 }
+
+
