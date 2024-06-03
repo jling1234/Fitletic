@@ -1,11 +1,11 @@
 import "./App.css";
-import SignupPage from "../SignUpPage/SignUpPage.jsx";
-import LoginPage from "../LoginPage/LoginPage.jsx";
+import LoginSignupcontainer from "../LoginSignupPage/LoginSignupPage.jsx";
+
 
 function App() {
   return (
     <>
-      <LoginPage></LoginPage>
+      <LoginSignupcontainer></LoginSignupcontainer>
     </>
   );
 }
