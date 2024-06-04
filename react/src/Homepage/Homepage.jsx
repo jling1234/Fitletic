@@ -1,6 +1,7 @@
 import "./Homepage.css";
 import logo from "../Shared/logo_fit.png";
 import { useLayoutEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 
 function Header() {
   const opacityFillStart = 0;
@@ -35,16 +36,16 @@ function Header() {
         <nav>
           <ul>
             <li>
-              <a href="">HOME</a>
+              <Link to={"/"}>HOME</Link>
             </li>
             <li>
-              <a href="">PROFILE</a>
+              <Link to={"/"}>PROFILE</Link>
             </li>
             <li>
-              <a href="">WORKOUTS</a>
+              <Link to={"/"}>WORKOUTS</Link>
             </li>
             <li>
-              <a href="">MEALS</a>
+              <Link to={"/"}>MEALS</Link>
             </li>
           </ul>
         </nav>
@@ -189,8 +190,8 @@ function Homepage() {
         <Banner></Banner>
 
         <div className="homepage-button-wrapper">
-          <button type="button">Login</button>
-          <button type="button">Join Now</button>
+          <Link to={"login"}>Login</Link>
+          <Link to={"login"}>Join Now</Link>
         </div>
 
         <HomepageContent></HomepageContent>
