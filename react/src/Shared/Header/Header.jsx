@@ -10,6 +10,8 @@ export default function Header() {
   const opacityFillStop = 400;
 
   const backgroundRef = useRef(null);
+  const navRef = useRef(null);
+
   const updateBackgroundOpacity = () => {
     const scrollPosition = window.scrollY;
 
@@ -20,9 +22,14 @@ export default function Header() {
     backgroundRef.current.style.opacity = opacity;
   };
 
+  const toggleMenu = () => {
+    navRef.current.classList.toggle("header-nav-open");
+  };
+
   useLayoutEffect(() => {
     updateBackgroundOpacity();
     window.addEventListener("scroll", updateBackgroundOpacity);
+
     return () => window.removeEventListener("scroll", updateBackgroundOpacity);
   }, []);
 
@@ -31,7 +38,8 @@ export default function Header() {
       <div ref={backgroundRef} className="header-background"></div>
       <div className="header-content">
         <HomepageLinkLogo></HomepageLinkLogo>
-        <nav>
+        <button onClick={toggleMenu}>≡</button>
+        <nav ref={navRef}>
           <ul>
             <li>
               <Link to={"/"}>HOME</Link>
