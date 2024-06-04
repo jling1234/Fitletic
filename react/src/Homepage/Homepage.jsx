@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import Header from "../Shared/Header/Header.jsx";
-import Footer, { FooterWaveDivider } from "../Shared/Footer/Footer.jsx";
+import FooterWithWaves from "../Shared/Footer/Footer.jsx";
 
 import "./Homepage.css";
 
@@ -92,8 +92,7 @@ function Homepage() {
         </div>
 
         <HomepageContent></HomepageContent>
-        <FooterWaveDivider></FooterWaveDivider>
-        <Footer></Footer>
+        <FooterWithWaves></FooterWithWaves>
       </main>
     </div>
   );
