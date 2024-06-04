@@ -20,7 +20,8 @@
   font-family: var(--banner-font), sans-serif;
   font-weight: 100;
 
-  min-height: clamp(25rem, 25vw + 15rem, 35rem);
+  min-height: clamp(20rem, 25vw + 15rem, 35rem);
+  padding-bottom: clamp(0rem, 10rem - 10vw, 5rem);
 
   overflow-x: clip;
 
