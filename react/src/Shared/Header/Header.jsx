@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
-import { HomepageLinkLogo } from "../Logo.jsx";
+import { HomepageLinkLogo } from "../Logo/Logo.jsx";
 
 import "./Header.css";
 

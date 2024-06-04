@@ -1,5 +1,5 @@
 import "./Logo.css";
-import logo from "./logo_fit.png";
+import logo from "../logo_fit.png";
 import { Link } from "react-router-dom";
 
 export default function Logo() {
