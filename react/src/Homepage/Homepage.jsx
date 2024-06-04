@@ -190,8 +190,8 @@ function Homepage() {
         <Banner></Banner>
 
         <div className="homepage-button-wrapper">
-          <Link to={"login"}>Login</Link>
-          <Link to={"login"}>Join Now</Link>
+          <Link to={"/login"}>Login</Link>
+          <Link to={"/signup"}>Join Now</Link>
         </div>
 
         <HomepageContent></HomepageContent>
