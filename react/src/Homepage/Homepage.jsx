@@ -131,16 +131,16 @@ function Footer() {
 
       <ul className="footer-links">
         <li>
-          <a href="">FAQ</a>
+          <Link to={"/"}>FAQ</Link>
         </li>
         <li>
-          <a href="">Our Mission</a>
+          <Link to={"/"}>Our Mission</Link>
         </li>
         <li>
-          <a href="">About Us</a>
+          <Link to={"/"}>About Us</Link>
         </li>
         <li>
-          <a href="">Contact Us</a>
+          <Link to={"/"}>Contact Us</Link>
         </li>
       </ul>
     </footer>
