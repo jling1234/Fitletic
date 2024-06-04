@@ -16,65 +16,6 @@
   padding: 4rem 2rem;
 }
 
-.header {
-  font-size: var(--font-size-small);
-  line-height: var(--line-height-small);
-
-  padding: 2rem 2rem;
-
-  position: sticky;
-  top: 0;
-  z-index: 1;
-
-  width: 100%;
-}
-
-.header .header-background {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-
-  background-color: var(--color-background);
-  border-bottom: 1px solid hsl(0, 0%, 80%);
-
-  opacity: 0;
-
-  z-index: -1;
-}
-
-.header-content {
-  display: flex;
-  gap: 2rem;
-  align-items: end;
-}
-
-.header nav ul {
-  list-style: none;
-  display: flex;
-  gap: 1rem;
-
-  padding-left: 0;
-}
-
-.header nav ul > * {
-  flex-shrink: 0;
-}
-
-.header nav a {
-  text-decoration: none;
-  color: unset;
-}
-
-.header nav li {
-  transition: transform 0.1s ease-in-out;
-}
-
-.header nav li:hover {
-  transform: scale(1.1);
-}
-
 .homepage-banner {
   font-family: var(--banner-font), sans-serif;
   font-weight: 100;
