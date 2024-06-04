@@ -18,24 +18,8 @@
   background-color: white;
 }
 
-.logo {
-  width: 58px;
-  height: 67px;
-}
-
-.flex-grid-for-logo-and-logoname,
-.flexgrid-logo {
-  display: flex;
-  justify-content: center;
-}
-
-.flex-grid-for-logo-and-logoname p,
-.flexgrid-logo p {
-  color: #00230f;
-  font-size: 32px;
-  font-weight: 400;
-  line-height: 87.31px;
-  font-family: "Anton", "sans-serif";
+.left-grid-container .fitletic-logo-wrapper {
+  align-self: center;
 }
 
 .username-container,

@@ -1,7 +1,7 @@
 import "./Homepage.css";
-import logo from "../Shared/logo_fit.png";
 import { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import Logo, { HomepageLinkLogo } from "../Shared/Logo.jsx";
 
 function Header() {
   const opacityFillStart = 0;
@@ -28,11 +28,7 @@ function Header() {
     <header className="header">
       <div ref={backgroundRef} className="header-background"></div>
       <div className="header-content">
-        <div className="logo-wrapper">
-          <img src={logo} alt="fitletic logo" />
-          <p>FITLETIC</p>
-        </div>
-
+        <HomepageLinkLogo></HomepageLinkLogo>
         <nav>
           <ul>
             <li>
@@ -131,10 +127,7 @@ function HomepageContent() {
 function Footer() {
   return (
     <footer className="footer">
-      <div className="logo-wrapper">
-        <img src={logo} alt="fitletic logo" />
-        <p>FITLETIC</p>
-      </div>
+      <Logo></Logo>
 
       <ul className="footer-links">
         <li>

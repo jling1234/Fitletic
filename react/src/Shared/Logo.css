@@ -1,0 +1,22 @@
+.fitletic-logo-wrapper {
+  display: flex;
+  align-items: end;
+  gap: 0.3rem;
+
+  font-family: var(--heading-font), serif;
+  font-size: 1.6rem;
+  line-height: 1.9rem;
+}
+
+.fitletic-logo-wrapper img {
+  max-width: 40px;
+}
+
+a.fitletic-logo-wrapper {
+  text-decoration: none;
+  color: inherit;
+}
+
+a.fitletic-logo-wrapper:hover {
+  color: inherit;
+}
