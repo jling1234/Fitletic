@@ -1,8 +1,44 @@
-.footer-profilepage {
-    margin-top: auto;
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+
+.grid-container-profilepage {
+  display: grid;
+  grid-template: 1fr / 2fr 1fr;
+  font-family: Anton;
 }
 
-.flex-container-profilepage {
-   min-height: 100vh;
+.grid-container-profilepage .left-grid-container-pp {
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
 }
 
+.grid-container-profilepage .right-grid-container-pp {
+  background-color: aqua;
+}
+
+.img-container-profilepage img {
+  border-radius: 30px;
+}
+
+.cal-button-flex-container {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+}
+
+.text-cal {
+  font-family: Josefin Sans;
+  font-size: 14px;
+}
+
+.goal-cal {
+  border-radius: 30px;
+  min-height: 75px;
+  font-size: 36px;
+}
+
+.goal-cal:hover {
+    cursor: pointer;
+}
