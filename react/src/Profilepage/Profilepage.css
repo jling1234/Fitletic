@@ -15,13 +15,19 @@
 }
 
 .grid-container-profilepage .right-grid-container-pp {
-  background-color: aqua;
+  
 }
 
-.img-container-profilepage img {
+.img-container-profilepage  {
   border-radius: 30px;
+  background-image: url("./Assets/profilepage.jpg");
+  min-height: 50rem;
 }
-
+.img-container-profilepage p {
+  text-align: left;
+  color:  white;
+  
+}
 .cal-button-flex-container {
   display: flex;
   flex-direction: row;
@@ -42,3 +48,31 @@
 .goal-cal:hover {
     cursor: pointer;
 }
+
+.button-profilepage {
+  background-color: #fb5d35;
+  border: none;
+  border-radius: 25px;
+  min-height: 28px;
+  min-width: 250px;
+  justify-content: center;
+  align-self: center;
+}
+
+.button-profilepage p {
+  color: white ;
+  font-size: 15px;
+  font-family: Josefin Sans;
+}
+
+.login-buttons-profilepage {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.button-profilepage:hover {
+  cursor: pointer;
+}
+

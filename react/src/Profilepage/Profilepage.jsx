@@ -1,12 +1,13 @@
 import Header from "../Shared/Header/Header";
 import "./Profilepage.css";
 import "../Homepage/Homepage.css";
-import profilepage from "./Assets/profilepage.jpg";
+
 
 function ImageProfilePage() {
   return (
     <div className="img-container-profilepage">
-      <img src={profilepage} alt="shoes-photo"></img>
+      <p>Hello,  <br></br>Username</p>
+      
     </div>
   );
 }
@@ -38,11 +39,42 @@ function OverviewProfilePage() {
   );
 }
 
-function LoginButtonsProfilePage() {}
+function LoginButtonsProfilePage() {
+  return (
+    <div className="login-buttons-profilepage">
+      <LoginWorkoutProfilePageButton />
+      <LoginMealProfilePageButton />
+    </div>
+  );
+}
 
-function LoginWorkoutProfilePageButton() {}
+function LoginWorkoutProfilePageButton() {
+  return (
+    <div>
+      <button
+        type=" button"
+        className="button-profilepage"
+        onClick={() => alert("login a workout was clicked ")}
+      >
+        <p> Login a Workout</p>
+      </button>
+    </div>
+  );
+}
 
-function LoginMealProfilePageButton() {}
+function LoginMealProfilePageButton() {
+  return (
+    <div>
+      <button
+        type=" button"
+        className="button-profilepage"
+        onClick={() => alert("login a meal was clicked ")}
+      >
+        <p> Login a Meal</p>
+      </button>
+    </div>
+  );
+}
 
 function Profilepage() {
   return (
@@ -54,6 +86,7 @@ function Profilepage() {
 
           <ImageProfilePage />
           <OverviewProfilePage />
+          <LoginButtonsProfilePage />
         </div>
         <div className="right-grid-container-pp"></div>
 
