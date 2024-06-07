@@ -2,7 +2,6 @@ import { useState } from "react";
 import * as PropTypes from "prop-types";
 
 import "./LoginSignupPage.css";
-import logo from "../Shared/logo_fit.png";
 import { Link } from "react-router-dom";
 import { HomepageLinkLogo } from "../Shared/Logo/Logo.jsx";
 
