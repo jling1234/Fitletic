@@ -1,6 +1,7 @@
 package com.fitletic.spring.Controller;
 
 import com.fitletic.spring.Repository.UserAuthRepository;
+import com.fitletic.spring.Service.UserDetailsAuthService;
 import com.fitletic.spring.entity.UserAuthentication;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
