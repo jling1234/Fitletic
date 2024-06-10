@@ -11,23 +11,41 @@
   margin-inline: auto;
   display: flex;
   flex-direction: column;
+
   gap: 3rem;
 }
 
 .grid-container-profilepage .right-grid-container-pp {
-  
+  background-color: #fb5d35;
 }
 
-.img-container-profilepage  {
-  border-radius: 30px;
+.img-container-profilepage {
   background-image: url("./Assets/profilepage.jpg");
-  min-height: 50rem;
+  border-radius: 30px;
+  min-height: 8.75rem;
+  min-width: 2rem;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-radius: 20px;
+  border: black;
+  border-image-width: 1rem;
 }
-.img-container-profilepage p {
+.img-overlay {
+  background: rgba(0, 0, 0, 0.35);
+  min-height: 8.75rem;
+  min-width: 2rem;
+  border-radius: 20px;
+}
+.img-container-profilepage .img-overlay p {
   text-align: left;
-  color:  white;
-  
+  color: white;
+  margin-left: 1.5rem;
+
+  font-size: larger;
+  line-height: 3rem;
+ 
 }
+
 .cal-button-flex-container {
   display: flex;
   flex-direction: row;
@@ -46,7 +64,7 @@
 }
 
 .goal-cal:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .button-profilepage {
@@ -60,7 +78,7 @@
 }
 
 .button-profilepage p {
-  color: white ;
+  color: white;
   font-size: 15px;
   font-family: Josefin Sans;
 }
@@ -75,4 +93,3 @@
 .button-profilepage:hover {
   cursor: pointer;
 }
-

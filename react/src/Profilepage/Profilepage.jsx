@@ -1,14 +1,20 @@
 import Header from "../Shared/Header/Header";
 import "./Profilepage.css";
 import "../Homepage/Homepage.css";
-
+import { func } from "prop-types";
 
 function ImageProfilePage() {
   return (
-    <div className="img-container-profilepage">
-      <p>Hello,  <br></br>Username</p>
+    <>
       
-    </div>
+        <div className="img-container-profilepage">
+        <div className="img-overlay">
+          <p>
+            Hello, <br></br>Username
+          </p>
+        </div>
+      </div>
+    </>
   );
 }
 
@@ -89,8 +95,6 @@ function Profilepage() {
           <LoginButtonsProfilePage />
         </div>
         <div className="right-grid-container-pp"></div>
-
-        {/*to write the 3 boxes */}
       </div>
     </>
   );
