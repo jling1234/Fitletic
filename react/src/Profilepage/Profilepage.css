@@ -3,47 +3,50 @@
 
 .grid-container-profilepage {
   display: grid;
-  grid-template: 1fr / 2fr 1fr;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 5rem;
   font-family: Anton;
+  
+
 }
 
 .grid-container-profilepage .left-grid-container-pp {
-  margin-inline: auto;
+  margin-inline-start:auto;
   display: flex;
   flex-direction: column;
-
-  gap: 3rem;
+  gap: 1.8rem;
 }
 
 .grid-container-profilepage .right-grid-container-pp {
-  background-color: #fb5d35;
+  display: flex;
+  flex-direction: column;
 }
 
 .img-container-profilepage {
-  background-image: url("./Assets/profilepage.jpg");
+  background-image: url("./Assets/ppimage.png");
   border-radius: 30px;
-  min-height: 8.75rem;
-  min-width: 2rem;
+  min-height: 11rem;
+  min-width: 40rem;
   background-repeat: no-repeat;
   background-size: contain;
   border-radius: 20px;
   border: black;
   border-image-width: 1rem;
+  
 }
-.img-overlay {
-  background: rgba(0, 0, 0, 0.35);
-  min-height: 8.75rem;
-  min-width: 2rem;
-  border-radius: 20px;
-}
-.img-container-profilepage .img-overlay p {
+
+.img-container-profilepage p {
   text-align: left;
   color: white;
   margin-left: 1.5rem;
+  margin-top: 3rem;
+  font-size: 30px;
+  line-height: 3.5rem;
+}
 
-  font-size: larger;
-  line-height: 3rem;
- 
+.overview-text p{
+text-align: center;
+font-size: larger;
 }
 
 .cal-button-flex-container {
@@ -52,15 +55,29 @@
   gap: 3rem;
 }
 
+.number-cal{
+  text-align: left;
+  margin-left: 17px;
+  line-height: 4rem;
+  font-size: 36px;
+}
+
 .text-cal {
   font-family: Josefin Sans;
   font-size: 14px;
+  text-align: left;
+  margin-left: 17px;
 }
 
 .goal-cal {
-  border-radius: 30px;
-  min-height: 75px;
-  font-size: 36px;
+  border-radius: 10px;
+  min-height: 8rem;
+  min-width: 11.5rem;
+  font-size: 30px;
+  background-color: white;
+  border-color: black;
+  border-width: 5px solid;
+ 
 }
 
 .goal-cal:hover {
@@ -93,3 +110,42 @@
 .button-profilepage:hover {
   cursor: pointer;
 }
+
+.Rectangle-container {
+  background-color: #fb5d35;
+  min-height: 35rem;
+  width: 23rem;
+  min-width: 20rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 30px;
+}
+
+.top-white-rectangle {
+  margin-bottom: 0.25rem;
+}
+
+.top-white-rectangle,
+.bottom-white-rectangle{
+  background-color: white;
+  margin: 1rem; 
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  border-radius: 30px;
+  min-height: 16rem;
+
+}
+
+
+.top-white-rectangle p ,
+.bottom-white-rectangle p {
+  margin: 1rem;
+  line-height: 2rem;
+  font-size: 16px;
+  align-items: left;
+  font-family: Josefin Sans;
+}
+
+

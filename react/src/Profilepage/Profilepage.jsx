@@ -6,14 +6,12 @@ import { func } from "prop-types";
 function ImageProfilePage() {
   return (
     <>
-      
-        <div className="img-container-profilepage">
-        <div className="img-overlay">
+      <div className="img-container-profilepage">
           <p>
             Hello, <br></br>Username
           </p>
         </div>
-      </div>
+      
     </>
   );
 }
@@ -21,6 +19,11 @@ function ImageProfilePage() {
 function OverviewProfilePage() {
   return (
     <>
+      <div className="overview-text">
+        <p>
+          OVERVIEW
+        </p>
+      </div>
       <div className="cal-button-flex-container">
         <div className="grid-container-goal-cal">
           <button type="button" className="goal-cal">
@@ -81,6 +84,33 @@ function LoginMealProfilePageButton() {
     </div>
   );
 }
+function UserProfileRectangle() {
+  return (
+    <div className="Rectangle-container">
+      <div className="top-white-rectangle">
+        <p>
+          Username: <br></br>
+          Age:<br></br>
+          Gender:<br></br>
+          Activity Level:<br></br>
+          Goal:
+        </p>
+      </div>
+      <div className="bottom-white-rectangle">
+        <p>
+          Height:<br></br>
+          Weight:<br></br>
+          BMI:<br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+
 
 function Profilepage() {
   return (
@@ -94,7 +124,10 @@ function Profilepage() {
           <OverviewProfilePage />
           <LoginButtonsProfilePage />
         </div>
-        <div className="right-grid-container-pp"></div>
+        <div className="right-grid-container-pp">
+          <UserProfileRectangle />
+          
+        </div>
       </div>
     </>
   );
