@@ -25,6 +25,7 @@
 .username-container,
 .password-container,
 .confirm-password-container,
+.gender,
 .age,
 .height,
 .weight,
@@ -57,6 +58,12 @@
   color: white;
   padding-block: 2px;
 }
+.next-button p,
+.signup-button p,
+.login-button p,
+.no-account p{
+  font-size: large;
+}
 
 .next-button:hover,
 .signup-button:hover,
@@ -68,6 +75,7 @@
   text-align: center;
   margin-top: 200px;
 }
+
 
 .no-account a {
   color: black;

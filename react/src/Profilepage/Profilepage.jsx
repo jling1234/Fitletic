@@ -6,12 +6,13 @@ import { func } from "prop-types";
 function ImageProfilePage() {
   return (
     <>
-      <div className="img-container-profilepage">
-          <p>
-            Hello, <br></br>Username
-          </p>
+      <div className="img-profilepage">
+        <div className="img-text">
+          Hello,<br></br>
+          Username
         </div>
-      
+      </div>
+
     </>
   );
 }
@@ -24,29 +25,30 @@ function OverviewProfilePage() {
           OVERVIEW
         </p>
       </div>
-      <div className="cal-button-flex-container">
-        <div className="grid-container-goal-cal">
-          <button type="button" className="goal-cal">
-            <p className="number-cal">2450/2500</p>
-            <p className="text-cal">Goal Calories </p>
-          </button>
+      <div className="cal-values-flex-container">
+        <div className="cal-values">
+          <p className="number-cal">450 Kcal</p>
+
+          <p className="text-cal">Burnt Calories</p>
         </div>
-        <div className="grid-container-cal-burnt">
-          <button type="button" className="goal-cal">
-            <p className="number-cal">450 kcal</p>
-            <p className="text-cal">Burnt Calories </p>
-          </button>
-        </div>
-        <div className="grid-container-cal-intake">
-          <button type="button" className="goal-cal">
-            <p className="number-cal">2800kcal</p>
-            <p className="text-cal">Intake Calories </p>
-          </button>
+        <div className="cal-values">
+          <p className="number-cal">2800 Kcal</p>
+          <p className="text-cal">Intake Calories</p>
         </div>
       </div>
     </>
   );
 }
+
+function RingTracker() {
+  return (
+    <div className="circle">
+      <p className="number-cal">2450/2500</p>
+      <p className="text-cal">Goal Calories</p>
+    </div>
+  );
+}
+
 
 function LoginButtonsProfilePage() {
   return (
@@ -84,49 +86,78 @@ function LoginMealProfilePageButton() {
     </div>
   );
 }
-function UserProfileRectangle() {
+function UserProfileRectangleLeft() {
   return (
-    <div className="Rectangle-container">
-      <div className="top-white-rectangle">
+    <>
+      <div className="left-white-rectangle">
         <p>
           Username: <br></br>
           Age:<br></br>
           Gender:<br></br>
-          Activity Level:<br></br>
           Goal:
         </p>
       </div>
-      <div className="bottom-white-rectangle">
-        <p>
-          Height:<br></br>
-          Weight:<br></br>
-          BMI:<br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-        </p>
+      <div>
+        <button
+          type=" button"
+          className="button-small-profilepage"
+          onClick={() => alert("save changes was clicked ")}
+        >
+          <p> Save Changes</p>
+        </button>
       </div>
-    </div>
+    </>
   );
 }
 
+function UserProfileRectangleRight() {
+  return (
+    <><div className="right-white-rectangle">
+      <p>
+        Activity Level:<br></br>
+        Height:<br></br>
+        Weight:<br></br>
+        BMI:<br></br>
+      </p>
+    </div>
+      <div>
+        <button
+          type=" button"
+          className="button-small-profilepage"
+          onClick={() => alert("log out was clicked ")}
+        >
+          <p> Log Out</p>
+        </button>
+      </div>
+
+    </>
+
+  )
+}
 
 
 function Profilepage() {
   return (
     <>
       <Header />
-      <div className="grid-container-profilepage">
-        <div className="left-grid-container-pp">
-          <p> MY PROFILE</p>
-
-          <ImageProfilePage />
-          <OverviewProfilePage />
-          <LoginButtonsProfilePage />
-        </div>
-        <div className="right-grid-container-pp">
-          <UserProfileRectangle />
-          
+      <div className="biggest-container">
+        <div className="grid-container-profilepage">
+          <div className="left-grid-container-pp-12">
+            <ImageProfilePage />
+          </div>
+          <div className="top-grid-container-pp-1">
+            <RingTracker />
+          </div>
+          <div className="top-grid-container-pp-2">
+            <OverviewProfilePage />
+            <LoginButtonsProfilePage />
+          </div>
+          <div className="bottom-grid-container-pp-1">
+            <UserProfileRectangleLeft />
+          </div>
+          <div className="bottom-grid-container-pp-2">
+            <UserProfileRectangleRight />
+          </div>
         </div>
       </div>
     </>

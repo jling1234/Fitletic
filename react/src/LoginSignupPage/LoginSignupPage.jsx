@@ -67,6 +67,16 @@ function SignUpForm2() {
   return (
     <form className="signup-data-container">
       <div>
+        <p className="gender"> Gender</p>
+        <div className="gender-select-field">
+          <select className="dropdown">
+            <option value="">Select</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+      </div>
+      <div>
         <p className="age">Age</p>
         <div className="age-number-field">
           <input type="number" min="16" className="number-field-size" />

@@ -1,87 +1,123 @@
 @import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Anton&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
 
+.biggest-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
 .grid-container-profilepage {
   display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: 5rem;
-  font-family: Anton;
+  grid-template: repeat(2, 1fr) / repeat(3, 1fr);
+  gap: 0rem;
+  align-self: center;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.grid-container-profilepage .left-grid-container-pp-12 {
+  grid-row: 1 / span 2;
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-container-profilepage .top-grid-container-pp-1 {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   
-
 }
 
-.grid-container-profilepage .left-grid-container-pp {
-  margin-inline-start:auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1.8rem;
-}
-
-.grid-container-profilepage .right-grid-container-pp {
+.grid-container-profilepage .top-grid-container-pp-2 {
+  grid-column: 3;
+  grid-row: 1;
   display: flex;
   flex-direction: column;
 }
 
-.img-container-profilepage {
-  background-image: url("./Assets/ppimage.png");
+.grid-container-profilepage  .bottom-grid-container-pp-1 {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-container-profilepage .bottom-grid-container-pp-2 {
+  grid-column: 3;
+  grid-row: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.img-profilepage {
+  background-image: url("./Assets/profpimage.png");
   border-radius: 30px;
-  min-height: 11rem;
-  min-width: 40rem;
+  min-height: 100%;
   background-repeat: no-repeat;
   background-size: contain;
-  border-radius: 20px;
-  border: black;
-  border-image-width: 1rem;
-  
+  min-width: 100%;
+  margin-inline-start: 70px;
 }
 
-.img-container-profilepage p {
+.img-text {
   text-align: left;
   color: white;
+  font-family: Anton;
   margin-left: 1.5rem;
   margin-top: 3rem;
-  font-size: 30px;
+  font-size: 40px;
   line-height: 3.5rem;
+
 }
 
-.overview-text p{
-text-align: center;
-font-size: larger;
+.overview-text p {
+  font-family: "Anton";
+  text-align: center;
+  font-size: 40px;
+  font-weight: bold;
+  padding-bottom: 40px;
 }
 
-.cal-button-flex-container {
+.cal-values-flex-container {
   display: flex;
   flex-direction: row;
-  gap: 3rem;
+  gap:1rem;
+  justify-content: center
 }
 
-.number-cal{
-  text-align: left;
+.number-cal {
+  text-align: center;
   margin-left: 17px;
-  line-height: 4rem;
-  font-size: 36px;
+  font-family: "Anton";
+  line-height: 2rem;
+  font-size: 40px;
 }
 
 .text-cal {
-  font-family: Josefin Sans;
-  font-size: 14px;
-  text-align: left;
+  font-family: "Josefin Sans";
+  font-size: 16px;
+  color: grey;
+  text-align: center;
+  padding-top: 1rem;
   margin-left: 17px;
 }
 
-.goal-cal {
+.cal-values {
   border-radius: 10px;
-  min-height: 8rem;
-  min-width: 11.5rem;
-  font-size: 30px;
-  background-color: white;
-  border-color: black;
-  border-width: 5px solid;
- 
-}
-
-.goal-cal:hover {
-  cursor: pointer;
+  min-height: 7rem;
+  min-width: 10rem;
 }
 
 .button-profilepage {
@@ -97,7 +133,7 @@ font-size: larger;
 .button-profilepage p {
   color: white;
   font-size: 15px;
-  font-family: Josefin Sans;
+  font-family: "Josefin Sans";
 }
 
 .login-buttons-profilepage {
@@ -107,45 +143,59 @@ font-size: larger;
   align-items: center;
 }
 
-.button-profilepage:hover {
-  cursor: pointer;
-}
-
-.Rectangle-container {
-  background-color: #fb5d35;
-  min-height: 35rem;
-  width: 23rem;
-  min-width: 20rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border-radius: 30px;
-}
-
-.top-white-rectangle {
-  margin-bottom: 0.25rem;
-}
-
-.top-white-rectangle,
-.bottom-white-rectangle{
+.left-white-rectangle,
+.right-white-rectangle {
   background-color: white;
-  margin: 1rem; 
+  margin: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: start;
   border-radius: 30px;
-  min-height: 16rem;
-
+  min-width: 20rem;
+  border: 1px solid;
+  
 }
 
-
-.top-white-rectangle p ,
-.bottom-white-rectangle p {
+.left-white-rectangle p,
+.right-white-rectangle p {
   margin: 1rem;
-  line-height: 2rem;
-  font-size: 16px;
+  line-height: 3rem;
+  font-size: 20px;
   align-items: left;
-  font-family: Josefin Sans;
+  font-family: "Josefin Sans";
 }
 
+.circle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 15px solid #fb5d35; 
+  border-radius: 50%;
+  width: 270px;  
+  height: 270px; 
+  background-color: white;
+ 
+}
 
+.button-small-profilepage{
+  background-color: #fb5d35;
+  border: none;
+  border-radius: 25px;
+  min-height: 28px;
+  min-width: 150px;
+  justify-content: center;
+  align-self: center;
+
+}
+
+.button-small-profilepage p{
+  color: white;
+  font-size: 15px;
+  font-family: "Josefin Sans";
+}
+
+.button-small-profilepage:hover,
+.button-profilepage{
+  cursor: pointer;
+}
