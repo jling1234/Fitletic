@@ -6,7 +6,7 @@
 
 .custom-shape-divider-footer svg {
   width: 100%;
-  height: 150px;
+  height: 8dvw;
 }
 
 .custom-shape-divider-footer .shape-fill {
@@ -56,4 +56,8 @@
 
 .footer .footer-links li:hover {
   transform: scale(1.1);
+}
+
+.footer-wave-container .custom-shape-divider-footer {
+  margin-bottom: -2px; /* Remove random gaps */
 }

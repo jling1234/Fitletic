@@ -31,7 +31,7 @@ export function FooterWaveDivider() {
   );
 }
 
-export default function Footer() {
+export function Footer() {
   return (
     <footer className="footer">
       <Logo></Logo>
@@ -51,5 +51,14 @@ export default function Footer() {
         </li>
       </ul>
     </footer>
+  );
+}
+
+export default function FooterWithWaves() {
+  return (
+    <div className="footer-wave-container">
+      <FooterWaveDivider></FooterWaveDivider>
+      <Footer></Footer>
+    </div>
   );
 }

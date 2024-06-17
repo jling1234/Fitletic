@@ -14,9 +14,9 @@
 
 a.fitletic-logo-wrapper {
   text-decoration: none;
-  color: inherit;
+  color: var(--color-text);
 }
 
-a.fitletic-logo-wrapper:hover {
-  color: inherit;
+a.fitletic-logo-wrapper:hover p {
+  color: var(--color-text);
 }
