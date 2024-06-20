@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Anton&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
 
-.biggest-container{
+.biggest-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,7 +33,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
 }
 
 .grid-container-profilepage .top-grid-container-pp-2 {
@@ -43,7 +42,7 @@
   flex-direction: column;
 }
 
-.grid-container-profilepage  .bottom-grid-container-pp-1 {
+.grid-container-profilepage .bottom-grid-container-pp-1 {
   grid-column: 2;
   grid-row: 2;
   display: flex;
@@ -79,7 +78,6 @@
   margin-top: 3rem;
   font-size: 40px;
   line-height: 3.5rem;
-
 }
 
 .overview-text p {
@@ -93,8 +91,8 @@
 .cal-values-flex-container {
   display: flex;
   flex-direction: row;
-  gap:1rem;
-  justify-content: center
+  gap: 1rem;
+  justify-content: center;
 }
 
 .number-cal {
@@ -153,7 +151,6 @@
   border-radius: 30px;
   min-width: 20rem;
   border: 1px solid;
-  
 }
 
 .left-white-rectangle p,
@@ -161,7 +158,8 @@
   margin: 1rem;
   line-height: 3rem;
   font-size: 20px;
-  align-items: left;
+  align-items: center;
+  justify-items: center;
   font-family: "Josefin Sans";
 }
 
@@ -170,15 +168,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 15px solid #fb5d35; 
+  border: 15px solid #fb5d35;
   border-radius: 50%;
-  width: 270px;  
-  height: 270px; 
+  width: 270px;
+  height: 270px;
   background-color: white;
- 
 }
 
-.button-small-profilepage{
+.button-small-profilepage {
   background-color: #fb5d35;
   border: none;
   border-radius: 25px;
@@ -186,16 +183,58 @@
   min-width: 150px;
   justify-content: center;
   align-self: center;
-
 }
 
-.button-small-profilepage p{
+.button-small-profilepage p {
   color: white;
   font-size: 15px;
   font-family: "Josefin Sans";
 }
 
 .button-small-profilepage:hover,
-.button-profilepage{
+.button-profilepage {
   cursor: pointer;
+}
+
+.activity-lvl {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.activity-lvl input {
+  height: 2rem;
+  max-width: 15rem;
+ margin: 10px;
+
+}
+
+.height-pp {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.height-pp input {
+  margin: 10px;
+  height: 2rem;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.weight-pp {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.weight-pp input {
+  margin: 10px;
+  height: 2rem;
 }

@@ -1,7 +1,8 @@
 import Header from "../Shared/Header/Header";
 import "./Profilepage.css";
 import "../Homepage/Homepage.css";
-import { func } from "prop-types";
+
+import { useState, useEffect } from "react";
 
 function ImageProfilePage() {
   return (
@@ -12,7 +13,6 @@ function ImageProfilePage() {
           Username
         </div>
       </div>
-
     </>
   );
 }
@@ -21,9 +21,7 @@ function OverviewProfilePage() {
   return (
     <>
       <div className="overview-text">
-        <p>
-          OVERVIEW
-        </p>
+        <p>OVERVIEW</p>
       </div>
       <div className="cal-values-flex-container">
         <div className="cal-values">
@@ -48,7 +46,6 @@ function RingTracker() {
     </div>
   );
 }
-
 
 function LoginButtonsProfilePage() {
   return (
@@ -86,6 +83,7 @@ function LoginMealProfilePageButton() {
     </div>
   );
 }
+
 function UserProfileRectangleLeft() {
   return (
     <>
@@ -110,16 +108,60 @@ function UserProfileRectangleLeft() {
   );
 }
 
+//has BMI calculation in it
 function UserProfileRectangleRight() {
+  const [height, setHeight] = useState("");
+  const [weight, setWeight] = useState("");
+  const [bmi, setBmi] = useState("");
+
+  useEffect(() => {
+    if (height > 0 && weight > 0) {
+      const bmi = (weight / (height * height)).toFixed(2);
+      setBmi(bmi);
+    } else {
+      setBmi("");
+    }
+  });
+
+  const disableScroll = (e) => {
+    e.target.blur();
+  };
+
   return (
-    <><div className="right-white-rectangle">
-      <p>
-        Activity Level:<br></br>
-        Height:<br></br>
-        Weight:<br></br>
-        BMI:<br></br>
-      </p>
-    </div>
+    <>
+      <div className="right-white-rectangle">
+        <p>
+          <div className="activity-lvl">
+            Activity Level:<br></br> <input type="text" />
+          </div>
+          <div className="height-pp">
+            Height(m):
+            <input
+              type="number"
+              value={height}
+              onChange={(e) => setHeight(e.target.value)}
+              onClick={(e) => e.preventDefault()}
+              onWheel={disableScroll}
+            ></input>
+          </div>
+          <div className="weight-pp">
+            Weight(kg):<br></br>
+            <input
+              type="number"
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
+              onWheel={disableScroll}
+            />
+          </div>
+          <div className="BMI-profile">
+            <p>
+              BMI: {""} 
+               {bmi}
+            </p>
+            <br></br>
+          </div>
+        </p>
+      </div>
       <div>
         <button
           type=" button"
@@ -129,12 +171,9 @@ function UserProfileRectangleRight() {
           <p> Log Out</p>
         </button>
       </div>
-
     </>
-
-  )
+  );
 }
-
 
 function Profilepage() {
   return (
