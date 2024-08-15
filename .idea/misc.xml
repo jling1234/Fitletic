@@ -4,7 +4,6 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/Fitletic/pom.xml" />
         <option value="$PROJECT_DIR$/spring/pom.xml" />
       </list>
     </option>
