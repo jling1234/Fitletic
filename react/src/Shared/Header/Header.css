@@ -95,7 +95,7 @@
 
     transition:
       grid-template-rows 0.5s ease-in-out,
-      row-gap 1s ease-in-out;
+      row-gap 0.67s ease-out;
   }
 
   .header-content:has(.header-nav-open) {
