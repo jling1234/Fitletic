@@ -5,12 +5,13 @@ import "../Homepage/Homepage.css";
 import { useState, useEffect } from "react";
 
 function ImageProfilePage() {
+  const username = "Fitletic"
   return (
     <>
       <div className="img-profilepage">
         <div className="img-text">
           Hello,<br></br>
-          Username
+          {username}
         </div>
       </div>
     </>
@@ -23,26 +24,56 @@ function OverviewProfilePage() {
       <div className="overview-text">
         <p>OVERVIEW</p>
       </div>
-      <div className="cal-values-flex-container">
-        <div className="cal-values">
-          <p className="number-cal">450 Kcal</p>
-
-          <p className="text-cal">Burnt Calories</p>
+      <div className = "cal-values-flex-container">
+        <div className = "cal-values">
+          <p className = "number-cal">450 Kcal</p>
+          <p className = "text-cal">Burnt Calories</p>
         </div>
-        <div className="cal-values">
-          <p className="number-cal">2800 Kcal</p>
-          <p className="text-cal">Intake Calories</p>
+        <div className = "cal-values">
+          <p className = "number-cal">2800 Kcal</p>
+          <p className = "text-cal">Intake Calories</p>
         </div>
       </div>
     </>
   );
 }
 
-function RingTracker() {
+function RingTracker({ consumed, target }) {
+  const radius = 135;
+  const strokeWidth = 10;
+  const normalizedRadius = radius - strokeWidth * 2;
+  const circumference = normalizedRadius * 2 * Math.PI;
+  const strokeDashoffset = circumference - (consumed / target) * circumference;
+
   return (
-    <div className="circle">
-      <p className="number-cal">2450/2500</p>
-      <p className="text-cal">Goal Calories</p>
+    <div className="ring-container">
+      <svg className="ring-svg" height={radius * 2} width={radius * 2}>
+        {/* Background Circle*/}
+        <circle
+          stroke="#fb5d35"
+          fill="transparent"
+          strokeWidth={strokeWidth}
+          strokeDasharray={`${circumference} ${circumference}`}
+          style = {{ strokeDashoffset }}
+          r = {normalizedRadius}
+          cx = {radius}
+          cy = {radius}
+        />
+        
+        <circle
+          stroke="white"
+          fill="transparent"
+          strokeWidth={strokeWidth}
+          strokeDasharray={`${circumference} ${circumference}`}
+          style={{ normalizedRadius }}
+          cx = {radius}
+          cy = {radius}
+          strokeLinecap = "round"
+          transform={`rotate(-90 ${radius} ${radius})`}
+        />
+      </svg>
+      <div className="ring-label">{consumed}/2500</div>
+      <p className="ring-tracker-goal-calories">Goal Calories</p>
     </div>
   );
 }
@@ -155,8 +186,8 @@ function UserProfileRectangleRight() {
           </div>
           <div className="BMI-profile">
             <p>
-              BMI: {""} 
-               {bmi}
+              BMI: {""}
+              {bmi}
             </p>
             <br></br>
           </div>
@@ -185,7 +216,7 @@ function Profilepage() {
             <ImageProfilePage />
           </div>
           <div className="top-grid-container-pp-1">
-            <RingTracker />
+            <RingTracker consumed={2600} target={2500} />
           </div>
           <div className="top-grid-container-pp-2">
             <OverviewProfilePage />

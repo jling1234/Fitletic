@@ -163,16 +163,46 @@
   font-family: "Josefin Sans";
 }
 
-.circle {
+.ring-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 15px solid #fb5d35;
+  border: 15px ;
   border-radius: 50%;
   width: 270px;
   height: 270px;
-  background-color: white;
+  position: relative;
+  
+  
+}
+
+
+
+.ring-container .ring-svg {
+  position: absolute;
+   
+}
+
+.ring-container .ring-svg circle {
+  border: black;
+}
+
+
+.ring-container .ring-label {
+  font-size: 40px;
+  font-family: "Anton";
+  color: black;
+  text-align: center;
+}
+
+.ring-tracker-goal-calories {
+  font-family: "Josephin Sans";
+  font-size: 16px;
+  color: grey;
+  text-align: center;
+  padding-top: .5rem;
+
 }
 
 .button-small-profilepage {
