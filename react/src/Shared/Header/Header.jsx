@@ -48,7 +48,7 @@ export default function Header() {
               <Link to={"/profile"}>PROFILE</Link>
             </li>
             <li>
-              <Link to={"/"}>WORKOUTS</Link>
+              <Link to={"/workout"}>WORKOUTS</Link>
             </li>
             <li>
               <Link to={"/"}>MEALS</Link>
