@@ -1,42 +1,51 @@
 package com.fitletic.spring.Service;
 
 
-import ch.qos.logback.classic.encoder.JsonEncoder;
-import com.fitletic.spring.entity.UserAuthentication;
+import com.fitletic.spring.DTO.LoginUserDTO;
+import com.fitletic.spring.DTO.RegisterUserDTO;
+import com.fitletic.spring.Entity.UserAuthentication;
 import com.fitletic.spring.Repository.UserAuthRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import java.util.Optional;
 
 @Service
-@AllArgsConstructor
-public class UserDetailsAuthService implements UserDetailsService {
+public class UserDetailsAuthService {
+    private final UserAuthRepository userRepository;
 
-    private final UserAuthRepository userAuthRepository;
-    private UserAuthRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserAuthentication> authUser = userAuthRepository.findByUsername(username.toLowerCase());
-        if (!authUser.isPresent()) {
-            throw new UsernameNotFoundException(username);
-        } else {
-            return User.builder()
-                    .username(authUser.get().getUsername())
-                    .password(authUser.get().getPassword())
-                    .disabled(!authUser.get().isActive())
-                    .build();
-        }
+    private final AuthenticationManager authenticationManager;
+
+    public UserDetailsAuthService(
+            UserAuthRepository userRepository,
+            AuthenticationManager authenticationManager,
+            PasswordEncoder passwordEncoder
+    ) {
+        this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public UserAuthentication signup(RegisterUserDTO input) {
+        UserAuthentication user = UserAuthentication.builder()
+                .username(input.getUsername())
+                .password(passwordEncoder.encode(input.getPassword()))
+                .build();
+        return userRepository.insert(user);
+    }
+
+    public UserAuthentication authenticate(LoginUserDTO input) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        input.getUsername(),
+                        input.getPassword()
+                )
+        );
+
+        return userRepository.findByUsername(input.getUsername())
+                .orElseThrow();
     }
 }
-
