@@ -1,6 +1,6 @@
 package com.fitletic.spring.Config;
 
-import com.fitletic.spring.Repository.UserAuthRepository;
+import com.fitletic.spring.Repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,9 +13,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class ApplicationConfiguration {
-    private final UserAuthRepository userRepository;
+    private final UserRepository userRepository;
 
-    public ApplicationConfiguration(UserAuthRepository userRepository) {
+    public ApplicationConfiguration(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

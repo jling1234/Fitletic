@@ -1,6 +1,6 @@
 package com.fitletic.spring.Controller;
 
-import com.fitletic.spring.Entity.UserAuthentication;
+import com.fitletic.spring.Entity.User;
 import com.fitletic.spring.Service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -21,17 +21,17 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<UserAuthentication> authenticatedUser() {
+    public ResponseEntity<User> authenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        UserAuthentication currentUser = (UserAuthentication) authentication.getPrincipal();
+        User currentUser = (User) authentication.getPrincipal();
 
         return ResponseEntity.ok(currentUser);
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<UserAuthentication>> allUsers() {
-        List<UserAuthentication> users = userService.allUsers();
+    public ResponseEntity<List<User>> allUsers() {
+        List<User> users = userService.allUsers();
 
         return ResponseEntity.ok(users);
     }

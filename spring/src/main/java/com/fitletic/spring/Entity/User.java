@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Document("Users")
-public class UserAuthentication implements UserDetails {
+public class User implements UserDetails {
     @Id
     private String id;
     @Indexed(unique = true)
