@@ -3,14 +3,15 @@ import "./Profilepage.css";
 import "../Homepage/Homepage.css";
 
 import { useState, useEffect } from "react";
+import { number } from "prop-types";
 
 function ImageProfilePage() {
-  const username = "Fitletic"
+  const username = "Fitletic";
   return (
     <>
       <div className="img-profilepage">
         <div className="img-text">
-          Hello,<br></br>
+          Hello,<br />
           {username}
         </div>
       </div>
@@ -24,14 +25,14 @@ function OverviewProfilePage() {
       <div className="overview-text">
         <p>OVERVIEW</p>
       </div>
-      <div className = "cal-values-flex-container">
-        <div className = "cal-values">
-          <p className = "number-cal">450 Kcal</p>
-          <p className = "text-cal">Burnt Calories</p>
+      <div className="cal-values-flex-container">
+        <div className="cal-values">
+          <p className="number-cal">450 Kcal</p>
+          <p className="text-cal">Burnt Calories</p>
         </div>
-        <div className = "cal-values">
-          <p className = "number-cal">2800 Kcal</p>
-          <p className = "text-cal">Intake Calories</p>
+        <div className="cal-values">
+          <p className="number-cal">2800 Kcal</p>
+          <p className="text-cal">Intake Calories</p>
         </div>
       </div>
     </>
@@ -91,11 +92,11 @@ function LoginWorkoutProfilePageButton() {
   return (
     <div>
       <button
-        type=" button"
+        type="button"
         className="button-profilepage"
         onClick={() => alert("login a workout was clicked ")}
       >
-        <p> Login a Workout</p>
+        <p>Login a Workout</p>
       </button>
     </div>
   );
@@ -105,42 +106,70 @@ function LoginMealProfilePageButton() {
   return (
     <div>
       <button
-        type=" button"
+        type="button"
         className="button-profilepage"
         onClick={() => alert("login a meal was clicked ")}
       >
-        <p> Login a Meal</p>
+        <p>Login a Meal</p>
       </button>
     </div>
   );
 }
 
 function UserProfileRectangleLeft() {
+  
   return (
     <>
       <div className="left-white-rectangle">
-        <p>
-          Username: <br></br>
-          Age:<br></br>
-          Gender:<br></br>
-          Goal:
-        </p>
+    
+      <div className="input-fields">
+          <label>
+          <div className="username-pp">
+            Username:
+            <input type="text" />
+            </div>
+          </label>
+        </div>
+        <div className="input-fields">
+          <label>
+          <div className="age-pp">
+            Age:
+            <input type="number" />
+            </div>
+          </label>
+        </div>
+        <div className="input-fields">
+          <label>
+          <div className="gender-pp">
+            Gender:
+            <input type="text" />
+            </div>
+          </label>
+        </div>
+        <div className="input-fields">
+          <label>
+          <div className="goal-pp">
+            Goal:
+            <input type="text" />
+            </div>
+          </label>
+        </div>
       </div>
       <div>
         <button
-          type=" button"
+          type="button"
           className="button-small-profilepage"
-          onClick={() => alert("save changes was clicked ")}
+          onClick={() => alert("save changes was clicked")}
         >
-          <p> Save Changes</p>
+          <p>Save Changes</p>
         </button>
       </div>
     </>
   );
 }
 
-//has BMI calculation in it
 function UserProfileRectangleRight() {
+  const [activityLevel, setActivityLevel] = useState("");
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
   const [bmi, setBmi] = useState("");
@@ -152,7 +181,7 @@ function UserProfileRectangleRight() {
     } else {
       setBmi("");
     }
-  });
+  }, [height, weight]);
 
   const disableScroll = (e) => {
     e.target.blur();
@@ -161,45 +190,57 @@ function UserProfileRectangleRight() {
   return (
     <>
       <div className="right-white-rectangle">
-        <p>
-          <div className="activity-lvl">
-            Activity Level:<br></br> <input type="text" />
+        <div className="activity-lvl">
+          Activity Level:
+          <div className="input-fields">
+          <input
+            type="text"
+            value={activityLevel}
+            onChange={(e) => setActivityLevel(e.target.value)}
+          />
           </div>
-          <div className="height-pp">
-            Height(m):
-            <input
-              type="number"
-              value={height}
-              onChange={(e) => setHeight(e.target.value)}
-              onClick={(e) => e.preventDefault()}
-              onWheel={disableScroll}
-            ></input>
+        </div>
+        <div className="height-pp">
+          Height(m):
+          <div className="input-fields">
+          <input
+            type="number"
+            value={height}
+            onChange={(e) => setHeight(e.target.value)}
+            onClick={(e) => e.preventDefault()}
+            onWheel={disableScroll}
+          />
           </div>
-          <div className="weight-pp">
-            Weight(kg):<br></br>
-            <input
-              type="number"
-              value={weight}
-              onChange={(e) => setWeight(e.target.value)}
-              onWheel={disableScroll}
-            />
+        </div>
+        <div className="weight-pp">
+          Weight(kg):
+          <div className="input-fields">
+          <input
+            type="number"
+            value={weight}
+            onChange={(e) => setWeight(e.target.value)}
+            onWheel={disableScroll}
+          />
           </div>
-          <div className="BMI-profile">
-            <p>
-              BMI: {""}
-              {bmi}
-            </p>
-            <br></br>
+        </div>
+        <div className="BMI-profile">
+          BMI:
+          <div className="input-fields">
+          <input 
+            type="number"
+            value={bmi} 
+            readOnly 
+          />
           </div>
-        </p>
+        </div>
       </div>
       <div>
         <button
-          type=" button"
+          type="button"
           className="button-small-profilepage"
-          onClick={() => alert("log out was clicked ")}
+          onClick={() => alert("log out was clicked")}
         >
-          <p> Log Out</p>
+          <p>Log Out</p>
         </button>
       </div>
     </>
@@ -216,7 +257,7 @@ function Profilepage() {
             <ImageProfilePage />
           </div>
           <div className="top-grid-container-pp-1">
-            <RingTracker consumed={2600} target={2500} />
+            <RingTracker consumed={100} target={2500} />
           </div>
           <div className="top-grid-container-pp-2">
             <OverviewProfilePage />

@@ -27,9 +27,6 @@ const router = createBrowserRouter([
   }, {
     path: "workout",
     element: <Workoutspage />
-  }, {
-    path: "workoutlogin",
-    element: <Workoutloginpage />
   }
 ]);
 

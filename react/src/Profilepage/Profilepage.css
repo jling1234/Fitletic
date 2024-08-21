@@ -65,9 +65,9 @@
   border-radius: 30px;
   min-height: 100%;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   min-width: 100%;
-  margin-inline-start: 70px;
+  margin-inline-start: 0px;
 }
 
 .img-text {
@@ -147,27 +147,81 @@
   margin: 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  border-radius: 30px;
+  justify-content: space-between;
+  align-items: start;
+  border-radius: 10px;
   min-width: 20rem;
-  border: 1px solid;
+  line-height: 0.5rem;
+  width: 95%; 
+  border: 1px solid #ddd; 
 }
 
-.left-white-rectangle p,
-.right-white-rectangle p {
-  margin: 1rem;
-  line-height: 3rem;
-  font-size: 20px;
-  align-items: center;
-  justify-items: center;
-  font-family: "Josefin Sans";
+.input-fields {
+  display: flex;
+  flex-direction: column; 
+  margin-top: 0.5rem;
 }
+
+.input-fields label {
+  font-size: 18px; 
+  line-height: 1.2; 
+}
+
+.input-fields input {
+  height: 2rem;
+  max-width: 15rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.username-pp,
+.goal-pp,
+.gender-pp,
+.age-pp,
+.activity-lvl,
+.height-pp,
+.weight-pp,
+.BMI-profile{
+  font-size: 18px;
+  margin-bottom: 1rem; 
+  width: 100%;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box; 
+  margin-left: 1rem;
+  margin-left: 0.5rem; 
+  margin-top: 0.3rem;
+}
+.username-pp input,
+.goal-pp input,
+.gender-pp input,
+.age-pp input,
+.activity-lvl input,
+.height-pp input,
+.weight-pp input,
+.BMI-profile input {
+  height: 2rem;
+  max-width: 15rem;
+  margin-left: 10px; 
+  box-sizing: border-box; 
+}
+
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 
 .ring-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border: 15px ;
   border: 15px ;
   border-radius: 50%;
   width: 270px;
@@ -224,47 +278,4 @@
 .button-small-profilepage:hover,
 .button-profilepage {
   cursor: pointer;
-}
-
-.activity-lvl {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.activity-lvl input {
-  height: 2rem;
-  max-width: 15rem;
- margin: 10px;
-
-}
-
-.height-pp {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-
-.height-pp input {
-  margin: 10px;
-  height: 2rem;
-}
-
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.weight-pp {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-
-.weight-pp input {
-  margin: 10px;
-  height: 2rem;
 }
