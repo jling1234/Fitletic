@@ -7,6 +7,7 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.dao.DuplicateKeyException;
@@ -32,6 +33,11 @@ public class GlobalExceptionHandler {
         }
 
         if (exception instanceof AccessDeniedException) {
+            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
+            errorDetail.setProperty("description", "You are not authorized to access this resource");
+        }
+
+        if (exception instanceof AuthorizationDeniedException) {
             errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
             errorDetail.setProperty("description", "You are not authorized to access this resource");
         }
