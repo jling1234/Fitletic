@@ -1,6 +1,7 @@
 package com.fitletic.spring.Service;
 
 
+import com.fitletic.spring.DTO.ChangePasswordDTO;
 import com.fitletic.spring.DTO.LoginUserDTO;
 import com.fitletic.spring.DTO.RegisterUserDTO;
 import com.fitletic.spring.Entity.Role;
@@ -63,5 +64,18 @@ public class AuthenticationService {
 
         return userRepository.findByUsername(input.getUsername())
                 .orElseThrow();
+    }
+
+    public User changePassword(ChangePasswordDTO input) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        input.getUsername(),
+                        input.getOldPassword()
+                )
+        );
+
+        User user = userRepository.findByUsername(input.getUsername()).orElseThrow();
+        user.setPassword(passwordEncoder.encode(input.getNewPassword()));
+        return userRepository.save(user);
     }
 }

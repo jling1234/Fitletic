@@ -1,5 +1,6 @@
 package com.fitletic.spring.Controller;
 
+import com.fitletic.spring.DTO.ChangePasswordDTO;
 import com.fitletic.spring.DTO.LoginUserDTO;
 import com.fitletic.spring.DTO.RegisterUserDTO;
 import com.fitletic.spring.Entity.User;
@@ -7,6 +8,7 @@ import com.fitletic.spring.Response.LoginResponse;
 import com.fitletic.spring.Service.JwtService;
 import com.fitletic.spring.Service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,5 +42,12 @@ public class AuthenticationController {
         LoginResponse loginResponse = new LoginResponse().setToken(jwtToken).setExpiresIn(jwtService.getExpirationTime());
 
         return ResponseEntity.ok(loginResponse);
+    }
+
+    @PostMapping("/change-password")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<User> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO) {
+        User passwordChangedUser = authenticationService.changePassword(changePasswordDTO);
+        return ResponseEntity.ok(passwordChangedUser);
     }
 }
