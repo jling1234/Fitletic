@@ -1,0 +1,154 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+
+.workout-loginpage-container {
+  display: grid;
+  grid-template: 1fr / 1fr 1fr;
+  min-height: 100dvh;
+  font-family: "Josefin Sans", sans-serif;
+}
+
+.left-container-workout-loginpage {
+  margin-left: 2rem;
+}
+
+.back-arrow {
+}
+
+.routine-label-saved-exercises-add-exercise {
+  margin-top: 2rem;
+}
+
+.right-container-workout-loginpage {
+  position: relative;
+  background-image: url("./Assets/logan-weaver-lgnwvr-mi4Gfdl36yg-unsplash.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 20px;
+  margin-inline: 4rem;
+}
+/*
+.right-container-workout-loginpage .text-in-the-picture {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  color: #fff;
+  text-align: right;
+  font-family: "Anton";
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-right: 15px;
+  
+}
+  */
+
+.workout-loginpage-container {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.back-arrow {
+  text-decoration: none;
+  color: black;
+}
+
+.routine-label p {
+  font-family: "Anton";
+  font-size: 30px;
+  font-weight: bold;
+  text-align: left;
+  margin-left: 2.7rem;
+}
+
+.routine-save-delete-sign {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.save-delete-sign {
+  text-align: right;
+}
+
+.save-delete-sign .save-button {
+  border: none;
+  background-color: white;
+  background-image: url("./Assets/diskette.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  filter: brightness(0.9) contrast(1.9);
+  cursor: pointer;
+  font-size: 2.4rem;
+  min-height: 1.2rem;
+  min-width: 1.2rem;
+}
+
+.save-delete-sign .delete-button {
+  border: none;
+  cursor: pointer;
+  background-color: white;
+  margin-left: 5px;
+  background-image: url("./Assets/bin.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  filter: brightness(0.9) contrast(1.9);
+  min-height: 1.2rem;
+  min-width: 1.2rem;
+}
+
+.saved-exercises {
+  display: grid;
+  margin-top: 5rem;
+  margin-left: 2.7rem;
+}
+
+.saved-exercises .added-exercise {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 1rem;
+  text-align: center;
+  justify-content: center;
+}
+.saved-exercises .added-exercise input {
+  border-radius: 5px;
+  background-color: #fda172;
+  font-size: large;
+}
+
+.saved-exercises .added-exercise input::placeholder {
+  color: black;
+  font-size: medium;
+  text-align: left;
+  padding-left: 0.8rem;
+}
+
+.add-an-exercise {
+  text-align: center;
+  margin-top: 10rem;
+}
+
+.add-an-exercise button {
+  background-color: #fb5d35;
+  border: none;
+  border-radius: 5px;
+  min-width: 19rem;
+  cursor: pointer;
+}
+
+.add-an-exercise p {
+  color: white;
+  font-size: 20px;
+}
+
+.saved-exercises-add-exercise-container {
+  margin-top: 10rem;
+  justify-content: center;
+}
+
+.saved-exercises ul {
+  list-style: none;
+}

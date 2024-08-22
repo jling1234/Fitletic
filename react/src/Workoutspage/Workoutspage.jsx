@@ -13,24 +13,16 @@ function Workoutspage() {
             <p>WORKOUTS</p>
           </div>
           <div className="Cal-burnt-from-workout-container">
-            <Link link to = {"/workoutlogin"}>
-              <button
-                type="button"
-                className="Cal-burnt-from-workout-button"
-                onClick={() => history.pushState()}
-              >
-                <p>Calories burnt from Workouts</p>
-              </button>
-            </Link>
+            <button type="button" className="Cal-burnt-from-workout-button">
+              <p>Calories burnt from Workouts</p>
+            </button>
           </div>
           <div className="Login-a-workout-container">
-            <button
-              type="button"
-              className="login-a-workout-button"
-              onClick={() => alert("Logged a workout!")}
-            >
-              <p>Login a Workout</p>
-            </button>
+            <Link link to={"/workoutlogin"}>
+              <button type="button" className="login-a-workout-button">
+                <p>Login a Workout</p>
+              </button>
+            </Link>
           </div>
         </div>
         <div className="right-grid-container-workoutspage">

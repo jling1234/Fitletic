@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LoginPage, SignUpPage } from "../LoginSignupPage/LoginSignupPage.jsx";
 import Profilepage from "../Profilepage/Profilepage.jsx";
 import Workoutspage from "../Workoutspage/Workoutspage.jsx";
+import Workoutloginpage from "../Workoutloginpage/Workoutloginpage.jsx";
 
 
 
@@ -27,6 +28,9 @@ const router = createBrowserRouter([
   }, {
     path: "workout",
     element: <Workoutspage />
+  }, {
+    path: "workoutlogin",
+    element: <Workoutloginpage/>
   }
 ]);
 

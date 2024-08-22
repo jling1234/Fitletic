@@ -160,6 +160,59 @@
   display: flex;
   flex-direction: column; 
   margin-top: 0.5rem;
+  
+}
+
+.input-fields label {
+  font-size: 18px; 
+  line-height: 1.2; 
+}
+
+.input-fields input {
+  height: 2rem;
+  max-width: 15rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.username-pp,
+.goal-pp,
+.gender-pp,
+.age-pp,
+.activity-lvl,
+.height-pp,
+.weight-pp,
+.BMI-profile{
+  font-size: 18px;
+  margin-bottom: 1rem; 
+  width: 100%;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box; 
+  margin-left: 1rem;
+  margin-left: 0.5rem; 
+  margin-top: 0.3rem;
+}
+.username-pp input,
+.goal-pp input,
+.gender-pp input,
+.age-pp input,
+.activity-lvl input,
+.height-pp input,
+.weight-pp input,
+.BMI-profile input {
+  height: 2rem;
+  max-width: 15rem;
+  margin-left: 10px; 
+  box-sizing: border-box; 
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .input-fields label {
@@ -231,8 +284,6 @@ input[type="number"]::-webkit-inner-spin-button {
   
 }
 
-
-
 .ring-container .ring-svg {
   position: absolute;
    
@@ -241,7 +292,6 @@ input[type="number"]::-webkit-inner-spin-button {
 .ring-container .ring-svg circle {
   border: black;
 }
-
 
 .ring-container .ring-label {
   font-size: 40px;
