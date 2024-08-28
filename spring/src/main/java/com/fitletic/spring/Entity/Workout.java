@@ -8,7 +8,7 @@ import java.util.List;
 @Document("Workout")
 public class Workout {
     @Id
-    private int id;
+    private String id;
     @Indexed
     private String username;
     private String routine;

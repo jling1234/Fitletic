@@ -1,8 +1,6 @@
 package com.fitletic.spring.Controller;
 
 import com.fitletic.spring.Entity.User;
-import com.fitletic.spring.Entity.Workout;
-import com.fitletic.spring.Repository.UserRepository;
 import com.fitletic.spring.Service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,7 +24,6 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<User> authenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         User currentUser = (User) authentication.getPrincipal();
 
         return ResponseEntity.ok(currentUser);

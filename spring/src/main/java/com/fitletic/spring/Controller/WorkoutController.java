@@ -1,13 +1,13 @@
 package com.fitletic.spring.Controller;
 
+import com.fitletic.spring.Entity.User;
 import com.fitletic.spring.Entity.Workout;
 import com.fitletic.spring.Repository.WorkoutRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,18 +15,26 @@ import java.util.Optional;
 @RestController
 public class WorkoutController {
 
-    private Workout workout;
     private WorkoutRepository workoutRepository;
     @PostMapping("/routine")
     public ResponseEntity addRoutine(@RequestBody Workout workout) {
-
+       try{
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        //User currentUser = (User) authentication.getPrincipal();
         workoutRepository.save(workout);
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
+       catch (Exception e){
+           return ResponseEntity.status(HttpStatus.NO_CONTENT).body(e.getMessage());
+       }
+    }
 
     @GetMapping ("/routinefind")
-    public Optional<List<Workout>> findByUsername(String username) {
+    public Optional<List<Workout>> findByUsername() {
        try {
+           Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+           User currentUser = (User) authentication.getPrincipal();
+           String username=currentUser.getUsername();
            return workoutRepository.findByUsername(username);
        }
        catch(Exception e){
@@ -34,8 +42,15 @@ public class WorkoutController {
        }
     }
 
- /*   @PostMapping("/editroutine")
-    public ResponseEntity editRoutine(String username, String routine) {
-        Optional<Workout> routineOptional=workoutRepository.f
-    }*/
+  @PostMapping("/editroutine")
+    public ResponseEntity editRoutine(@RequestBody Workout newworkout) {
+      workoutRepository.save(newworkout);
+      return ResponseEntity.ok(HttpStatus.CREATED);
+
+  }
+  @PostMapping("/deleteroutine")
+  public ResponseEntity deleteRoutine(@RequestBody Workout workout) {
+        workoutRepository.delete(workout);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
 }

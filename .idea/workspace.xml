@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a2b50b3-eda5-4bcc-ae5b-460093adad24" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/react/src/Workoutloginpage/Assets/bin.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react/src/Workoutloginpage/Assets/diskette.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react/src/Workoutloginpage/Assets/logan-weaver-lgnwvr-mi4Gfdl36yg-unsplash.jpg" afterDir="false" />
+    <list default="true" id="4fb8b499-0438-420b-b2ea-b68f44234f86" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Controller/WorkoutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Controller/WorkoutController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Entity/Workout.java" beforeDir="false" afterPath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Entity/Workout.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/spring/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,10 +29,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2lBn4hG0tMOwrL85cIf8UOEzM6n" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -40,9 +40,14 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.Application.executor": "Run",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Fitletic/react/src/Workoutloginpage/Assets",
+    "last_opened_file_path": "D:/Fitletic/spring/src/main/java/com/fitletic/spring",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -77,12 +82,16 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="4a2b50b3-eda5-4bcc-ae5b-460093adad24" name="Changes" comment="" />
+      <changelist id="4fb8b499-0438-420b-b2ea-b68f44234f86" name="Changes" comment="" />
       <created>1724662153218</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724662153218</updated>
       <workItem from="1724662154720" duration="9905000" />
+      <workItem from="1724761968788" duration="606000" />
+      <workItem from="1724836158588" duration="3373000" />
+      <workItem from="1724847505880" duration="793000" />
+      <workItem from="1724848365764" duration="1241000" />
     </task>
     <servers />
   </component>
