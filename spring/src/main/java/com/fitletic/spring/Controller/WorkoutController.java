@@ -29,7 +29,7 @@ public class WorkoutController {
        }
     }
 
-    @GetMapping ("/routinefind")
+    @GetMapping ("/findroutine")
     public Optional<List<Workout>> findByUsername() {
        try {
            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
