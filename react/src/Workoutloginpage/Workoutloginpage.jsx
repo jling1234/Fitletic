@@ -2,6 +2,7 @@ import "../Workoutloginpage/Workoutloginpage.css";
 import Header from "../Shared/Header/Header";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
+import { FaSearch } from "react-icons/fa";
 
 export function Exercise({ exerciseNumber }) {
   return (
@@ -14,41 +15,23 @@ export function Exercise({ exerciseNumber }) {
   );
 }
 
-export function ExerciseList() {
-  const [exercises, setExercises] = useState([
-    { exerciseNumber: 1 },
-    { exerciseNumber: 2 },
-    { exerciseNumber: 3 },
-  ]);
-
-  //to add a new exercise
-  const handleAddExercise = () => {
-    const newExercise = { exerciseNumber: exercises.length + 1 };
-    setExercises([...exercises, newExercise]);
-  };
-
-  //delete an exercise?
-
+export function AddAnExerciseButton({onClick}) {
+ 
   return (
-    <div>
-      <ul>
-        {exercises.map((exercise, index) => (
-          <li key={index}>
-            <Exercise exerciseNumber={exercise.exerciseNumber} />
-          </li>
-        ))}
-      </ul>
-
-      <div className="add-an-exercise">
-        <button type="button" onClick={handleAddExercise}>
-          <p>Add an Exercise</p>
-        </button>
-      </div>
+    <div className="add-an-exercise-container">
+      <button type="button" onClick={onClick}>
+        <p>Add an Exercise</p>
+      </button>
     </div>
   );
 }
 
 function Workoutloginpage() {
+  const [showSearchBar, setShowSearchBar] = useState(false);
+
+  const handleAddAnExerciseClick = () => {
+    setShowSearchBar(true);
+  };
   return (
     <>
       <Header />
@@ -78,13 +61,28 @@ function Workoutloginpage() {
             <div className="saved-exercises-add-exercise-container">
               <div className="saved-exercises">
                 <form>
-                  <ExerciseList />
+                  {/*Exercise List */}
+                  <AddAnExerciseButton onClick={handleAddAnExerciseClick} />
                 </form>
               </div>
             </div>
           </div>
         </div>
-        <div className="right-container-workout-loginpage">
+        <div
+          className={
+            "right-container-workout-loginpage $ {showSearchBar ? 'hide' : ''}"
+          }
+        >
+          {showSearchBar && (
+            <div className="searchbar-container show">
+              <FaSearch if="search-icon" />
+              <input
+                type="text"
+                placeholder="Search for an exercise..."
+                className="search-input"
+              ></input>
+            </div>
+          )}
           {/*  <div className="text-in-the-picture">
             <p>"Exercise</p>
             <p>should be regarded</p>

@@ -1,107 +1,135 @@
 @import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Anton&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
 
-.flex-container-workoutspage {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr) ;
-  
-}
-.left-grid-container-workoutspage {
-  display: grid;
-  margin-left: 4rem;
-  margin-top: 2rem;
-  justify-items: left;
+.toppage-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
-.right-grid-container-workoutspage {
-    
-}
-.right-grid-container-workoutspage p {
-    text-align: end;
-}
-.workouts-heading {
-  display: grid;
-  text-align: center;
-  justify-content: left;
-}
-
-.workouts-heading p {
-  font-family: "Anton";
-  font-size: 40px;
-  font-weight: bold;
-  text-align: center;
-  margin-left: 15px;
-}
-
-.Cal-burnt-from-workout-container {
-  text-align: left;
-  margin-top: 6rem;
-}
-
-.Cal-burnt-from-workout-button {
-  cursor: pointer;
-  background-color: #fb5d35;
-  border-radius: 25px;
-  border: none;
-  min-height: 5rem;
-  min-width: 20rem;
-  padding-top: 3rem;
-}
-
-.Cal-burnt-from-workout-button p {
-  color: white;
-  font-size: 17px;
-  font-family: "Josefin Sans";
-  text-align: left;
-  margin-left: 10px;
-  margin-bottom: auto;
-}
-
-.Login-a-workout-container {
-  margin-top: 2rem;
-}
-
-.login-a-workout-button {
-  background-color: #fb5d35;
-  border: none;
-  border-radius: 25px;
-  min-width: 20rem;
-  min-height: 2rem;
-  cursor: pointer;
-  margin-bottom: 5rem;
-}
-
-.login-a-workout-button p {
-  color: white;
-  font-family: "Josefin Sans";
-  font-size: 17px;
-}
-
-.bottom-container-workoutspage {
+.workoutspage-image-container {
+  background-image: url("./Assets/workoutsimg.png");
+  min-height: 85vh;
+  min-width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
   align-items: center;
 }
-
-.my-routines-label {
-  margin-bottom: 1rem;
+.accessories-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 30px 10rem 30px 0px;
 }
 
-.my-routines-label p {
+.workouts-label p {
+  font-size: 70px;
   font-family: "Anton";
-  font-size: 35px;
+  color: white;
+}
+
+.burntcal-tracker-and-workoutlog {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.burntcal-tracker {
+  display: grid;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  min-width: 15rem;
+  min-height: 7rem;
+  background-color: #ff5f35;
+  opacity: 0.6;
+  border-radius: 10px;
+}
+
+.burntcal-tracker h1, h6 {
+  color: white;
+  font-family: "Anton";
+  opacity: 1;
+}
+
+.burntcal-tracker h1 {
+  margin-bottom: -30px;
+  margin-top: 10px;
+ 
+}
+
+.burntcal-tracker h6 {
+  font-family: "Josefin Sans";
+  margin-bottom: -7px;
+  margin-right: -80px;
+}
+
+
+.workoutlog button {
+  background-color: #ff5f35;
+  border: none;
+  border-radius: 5px;
+  min-width: 15rem;
+  min-height: 2rem;
+  cursor: pointer;
+  margin-top: 2rem;
+}
+
+.workoutlog p {
+  color: white;
+  font-size: 20px;
+  font-family: "Josefin Sans";
+}
+
+.bottompage-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.bottompage-container .my-routines-label p {
+  font-size: 40px;
   font-weight: bold;
-  text-align: center;
-  margin-left: 15px;
+  font-family: "Anton";
+  margin-bottom: 3rem;
 }
 
-.saved-routines-flexbox {
-  justify-items: center;
-  text-align: center;
+.routines-input-fields {
+  display: grid;
 }
 
-.saved-routine {
-  min-width: 10rem;
-  min-height: 10rem;
-  background-color: white;
-  border-radius: 20px;
-  margin: 0.5rem;
+.routines-input-fields input {
+  background-color: #fda172;
+  border-radius: 5px;
+}
+
+.routines-input-fields-row {
+  margin: 9px;
+}
+
+.routines-input-fields-row input {
+  margin-inline: 9px;
+  min-width: 20rem;
+}
+
+.build-a-new-routine-container {
+  margin: 2rem;
+}
+
+.build-a-new-routine-button {
+  background-color: #ff5f35;
+  border-radius: 9px;
+  cursor: pointer;
+  border: none;
+  min-height: 37px;
+  min-width: 20rem;
+}
+
+.build-a-new-routine-button p {
+  color: white;
 }

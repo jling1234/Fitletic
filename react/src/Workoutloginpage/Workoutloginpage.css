@@ -27,6 +27,28 @@
   background-size: cover;
   border-radius: 20px;
   margin-inline: 4rem;
+  transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+}
+
+.right-container-workout-loginpage.hide {
+  transform: scale(0);
+  opacity: 0;
+}
+
+.searchbar-container {
+  margin-top: 100px; /* Adjust depending on your layout */
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.searchbar-container.show {
+  opacity: 1;
+}
+
+.search-input {
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
 }
 /*
 .right-container-workout-loginpage .text-in-the-picture {
@@ -131,7 +153,7 @@
   margin-top: 10rem;
 }
 
-.add-an-exercise button {
+.add-an-exercise-container button {
   background-color: #fb5d35;
   border: none;
   border-radius: 5px;
@@ -139,7 +161,7 @@
   cursor: pointer;
 }
 
-.add-an-exercise p {
+.add-an-exercise-container p {
   color: white;
   font-size: 20px;
 }
