@@ -1,10 +1,11 @@
 import "../Workoutloginpage/Workoutloginpage.css";
 import Header from "../Shared/Header/Header";
-import { Link } from "react-router-dom";
+import {json, Link} from "react-router-dom";
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
-export function Exercise({ exerciseNumber }) {
+/*export function Exercise({ exerciseNumber }) {
   return (
     <>
       <div className="added-exercise">
@@ -13,8 +14,9 @@ export function Exercise({ exerciseNumber }) {
       </div>
     </>
   );
-}
+}*/
 
+// eslint-disable-next-line react/prop-types
 export function AddAnExerciseButton({onClick}) {
  
   return (
@@ -32,6 +34,37 @@ function Workoutloginpage() {
   const handleAddAnExerciseClick = () => {
     setShowSearchBar(true);
   };
+
+
+    const[exercises, setExercises]=useState("");
+  // eslint-disable-next-line no-unused-vars
+    const [results,setResults]=useState([]);
+    const [query, setQuery]=useState("");
+  const fetchData = (value) => {
+    fetch("http://localhost:8080/workout")
+        .then((response) => response.json())
+        .then((json) => {
+          if (Array.isArray(json)) {
+            const results = json.filter((exercises) => {
+              return (
+                  value &&
+                  exercises &&
+                  exercises.title &&
+                  exercises.title.toLowerCase().includes(value.toLowerCase())
+              );
+            });
+            console.log(results);
+          setResults(results);
+          }
+        })
+        .catch((error) => console.error('Error:', error));
+  };
+
+  const handleChange = (value)=>{
+    setExercises(value);
+    fetchData(value);
+  };
+
   return (
     <>
       <Header />
@@ -74,13 +107,23 @@ function Workoutloginpage() {
           }
         >
           {showSearchBar && (
-            <div className="searchbar-container show">
+            <div className="searchbar-container show"  style={{ position: 'relative', width: '300px' }}>
               <FaSearch if="search-icon" />
               <input
                 type="text"
                 placeholder="Search for an exercise..."
+                value={exercises}
+                onChange={(e)=> handleChange(e.target.value)}
                 className="search-input"
               ></input>
+              {results.length > 0 && (
+                  <ul className="dropdown-list">
+                    {results.map((exercise) => (
+                        <li key={exercise.id} onClick={() => setQuery(exercise.title)}>
+                          {exercise.title}</li>
+                    ))}
+                  </ul>
+              )}
             </div>
           )}
           {/*  <div className="text-in-the-picture">

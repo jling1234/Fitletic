@@ -43,13 +43,60 @@
 
 .searchbar-container.show {
   opacity: 1;
+  background-color: white;
+  width: 100%;
+  border-radius: 10px;
+  height: 2.5rem;
+  padding: 0 15px;
+  box-shadow: 0px 0px 8px #ddd;
+  display: flex;
+  align-items: center;
 }
 
 .search-input {
+  background-color: transparent;
   border: none;
   border-radius: 5px;
-  font-size: 1rem;
+  font-size: 1.5rem;
+  height: 100%;
+  width: 100%;
+  margin-left: 5px;
 }
+
+ul.dropdown-list {
+  position: absolute;
+  top: calc(100% + 5px);
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%; /* Makes it the same width as the input */
+  max-height: 200px; /* Set a max height for scrollability */
+  overflow-y: auto; /* Enable scrolling if there are too many items */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+  z-index: 1000; /* Ensures the dropdown appears above other elements */
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+/* Styling for each list item */
+ul.dropdown-list li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+/* Hover effect for list items */
+ul.dropdown-list li:hover {
+  background-color: #f0f0f0;
+}
+
+/* Highlight the input field when focused */
+input[type="text"]:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
 /*
 .right-container-workout-loginpage .text-in-the-picture {
   position: absolute;
