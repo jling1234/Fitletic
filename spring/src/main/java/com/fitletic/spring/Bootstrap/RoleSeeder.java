@@ -5,6 +5,7 @@ import com.fitletic.spring.Entity.RoleEnum;
 import com.fitletic.spring.Repository.RoleRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -12,7 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Component
-public class RoleSeeder implements ApplicationListener<ContextRefreshedEvent> {
+public class RoleSeeder implements ApplicationListener<ContextRefreshedEvent>, Ordered {
     private final RoleRepository roleRepository;
 
 
@@ -45,5 +46,10 @@ public class RoleSeeder implements ApplicationListener<ContextRefreshedEvent> {
                 roleRepository.insert(roleToCreate);
             });
         });
+    }
+
+    @Override
+    public int getOrder() {
+        return 10;
     }
 }
