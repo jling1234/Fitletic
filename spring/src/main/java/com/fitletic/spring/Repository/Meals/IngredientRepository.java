@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface IngredientRepository extends MongoRepository<Ingredient, String> {
-    List<Ingredient> findByDescriptionContainingIgnoreCase(String description);
+    List<Ingredient> findByDescriptionStartingWithIgnoreCaseOrderByDescriptionAsc(String description);
 }

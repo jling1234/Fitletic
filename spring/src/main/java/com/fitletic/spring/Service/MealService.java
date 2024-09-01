@@ -20,6 +20,6 @@ public class MealService {
     }
 
     public List<Ingredient> matchingIngredients(String description) {
-        return new ArrayList<>(ingredientRepository.findByDescriptionContainingIgnoreCase(description));
+        return new ArrayList<>(ingredientRepository.findByDescriptionStartingWithIgnoreCaseOrderByDescriptionAsc(description));
     }
 }
