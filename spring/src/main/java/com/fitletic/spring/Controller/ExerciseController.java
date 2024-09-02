@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 
-public class WorkoutController {
+public class ExerciseController {
     //return list of workouts that the user types in
     //return workouts with type
 
