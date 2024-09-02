@@ -1,6 +1,6 @@
 import "../Workoutloginpage/Workoutloginpage.css";
 import Header from "../Shared/Header/Header";
-import {json, Link} from "react-router-dom";
+import {Link} from "react-router-dom";
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
@@ -39,9 +39,8 @@ function Workoutloginpage() {
     const[exercises, setExercises]=useState("");
   // eslint-disable-next-line no-unused-vars
     const [results,setResults]=useState([]);
-    const [query, setQuery]=useState("");
   const fetchData = (value) => {
-    fetch("http://localhost:8080/workout")
+    fetch("http://localhost:8080/exercise")
         .then((response) => response.json())
         .then((json) => {
           if (Array.isArray(json)) {
@@ -119,7 +118,7 @@ function Workoutloginpage() {
               {results.length > 0 && (
                   <ul className="dropdown-list">
                     {results.map((exercise) => (
-                        <li key={exercise.id} onClick={() => setQuery(exercise.title)}>
+                        <li key={exercise.id} >
                           {exercise.title}</li>
                     ))}
                   </ul>

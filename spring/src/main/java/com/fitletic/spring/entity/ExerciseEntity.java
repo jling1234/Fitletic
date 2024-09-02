@@ -7,11 +7,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Builder
 @Data
-@Document("Workout")
-public class WorkoutEntity {
+@Document("Exercises")
+public class ExerciseEntity {
     @Id
-    private int id;
+    private String id;
     @Indexed
-    private String title;
-    private String type;
+    private String Title;
+    private String Type;
 }
