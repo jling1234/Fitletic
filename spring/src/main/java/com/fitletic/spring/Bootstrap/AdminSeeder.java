@@ -8,6 +8,7 @@ import com.fitletic.spring.Repository.RoleRepository;
 import com.fitletic.spring.Repository.UserRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
 
 @Component
-public class AdminSeeder implements ApplicationListener<ContextRefreshedEvent> {
+public class AdminSeeder implements ApplicationListener<ContextRefreshedEvent>, Ordered {
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
 
@@ -59,5 +60,10 @@ public class AdminSeeder implements ApplicationListener<ContextRefreshedEvent> {
                 .role(optionalRole.get())
                 .build();
         userRepository.insert(user);
+    }
+
+    @Override
+    public int getOrder() {
+        return 20;
     }
 }

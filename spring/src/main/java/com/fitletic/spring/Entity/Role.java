@@ -16,7 +16,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Role {
     @Id
     private String id;
-    @Indexed(unique = true)
     private RoleEnum name;
     private String description;
 }
