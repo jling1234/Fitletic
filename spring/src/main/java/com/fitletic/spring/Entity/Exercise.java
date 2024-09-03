@@ -5,15 +5,11 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
-
-@Document("Workouts")
-public class Workout {
+@Document("Exercises")
+public class Exercise {
     @Id
     private String id;
     @Indexed
-    private String username;
-    private String routine;
-    private int calories;
-    private List<String> exercises;
-
+    private String title;
+    private String desc;
 }

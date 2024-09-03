@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface WorkoutRepository extends MongoRepository<Workout, String> {
-  Optional<List<Workout>> findByUsername(String username);
+     Optional<List<Workout>> findByUsername(String username);
 }

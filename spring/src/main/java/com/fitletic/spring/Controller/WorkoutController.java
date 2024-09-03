@@ -1,8 +1,10 @@
 package com.fitletic.spring.Controller;
 
+import com.fitletic.spring.Entity.Exercise;
 import com.fitletic.spring.Entity.User;
 import com.fitletic.spring.Entity.Workout;
 import com.fitletic.spring.Repository.WorkoutRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -13,44 +15,25 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@AllArgsConstructor
+
 public class WorkoutController {
+ private WorkoutRepository workoutRepository;
 
-    private WorkoutRepository workoutRepository;
-    @PostMapping("/routine")
-    public ResponseEntity addRoutine(@RequestBody Workout workout) {
-       try{
+    @CrossOrigin(origins = "*", methods ={RequestMethod.POST,RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE}, allowedHeaders = "*")
+    @GetMapping("/workout")
+    public Optional<List<Workout>> findUserWorkouts() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //User currentUser = (User) authentication.getPrincipal();
+        User currentUser = (User) authentication.getPrincipal();
+        String username= currentUser.getUsername();
+        return workoutRepository.findByUsername(username);
+    }
+
+    @CrossOrigin(origins = "*", methods ={RequestMethod.POST,RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE}, allowedHeaders = "*")
+    @PostMapping("/saveworkout")
+    public ResponseEntity<Workout> saveWorkout(@RequestBody Workout workout) {
         workoutRepository.save(workout);
-        return ResponseEntity.ok(HttpStatus.CREATED);
-    }
-       catch (Exception e){
-           return ResponseEntity.status(HttpStatus.NO_CONTENT).body(e.getMessage());
-       }
-    }
-
-    @GetMapping ("/findroutine")
-    public Optional<List<Workout>> findByUsername() {
-       try {
-           Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-           User currentUser = (User) authentication.getPrincipal();
-           String username=currentUser.getUsername();
-           return workoutRepository.findByUsername(username);
-       }
-       catch(Exception e){
-           return Optional.empty();
-       }
-    }
-
-  @PostMapping("/editroutine")
-    public ResponseEntity editRoutine(@RequestBody Workout newworkout) {
-      workoutRepository.save(newworkout);
-      return ResponseEntity.ok(HttpStatus.CREATED);
-
-  }
-  @PostMapping("/deleteroutine")
-  public ResponseEntity deleteRoutine(@RequestBody Workout workout) {
-        workoutRepository.delete(workout);
-        return ResponseEntity.ok(HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.CREATED).body(workout);
     }
 }
+
