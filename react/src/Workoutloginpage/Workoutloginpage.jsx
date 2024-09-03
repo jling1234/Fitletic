@@ -2,21 +2,52 @@ import "../Workoutloginpage/Workoutloginpage.css";
 import Header from "../Shared/Header/Header";
 import { Link } from "react-router-dom";
 //eslint-disable-next-line no-unused-vars
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 
-export function Exercise({ exerciseNumber }) {
+export function Exercise({ index, onDelete }) {
+  const [showContextMenu, setShowContextMenu] = useState(false);
+  const menuRef = useRef(null);
+
+  const handleMenuClick = () => {
+    setShowContextMenu(!showContextMenu);
+  };
+
+  const handleDelete = () => {
+    onDelete(index);
+    setShowContextMenu(false);
+  };
+
+  const handleClickOutside = (event) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      setShowContextMenu(false);
+    }
+  };
+
+  useEffect(() => {
+    // Attach the event listener to the document
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      // Clean up the event listener when the component is unmounted
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
-      <div className="added-exercise">
-        <p>Exercise {exerciseNumber} </p>
-        <input type="text" placeholder="Name: def" />
-        <menu
-          type="context"
-          onClick={() => alert("You have opened a context menu!")}
-        >
+      <div ref={menuRef} className="added-exercise">
+        <p></p>
+        <input type="text" placeholder="Name: def" readOnly />
+        {/*Input field to store the time in minutes */}
+        <button type="button" className="menu-button" onClick={handleMenuClick}>
           ...
-        </menu>
+        </button>
+        {showContextMenu && (
+          <div className="context-menu">
+            <button className="delete-button" onClick={handleDelete}></button>
+          </div>
+        )}
       </div>
     </>
   );
@@ -40,7 +71,6 @@ export function AddAnExerciseButton({
   handleAddExercise,
   handleDeleteExercise,
 }) {
-  //to add a new exercise
   return (
     <>
       <div className="add-an-exercise-container">
@@ -56,20 +86,29 @@ function Workoutloginpage() {
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [inputtedExercises, setInputtedExercises] = useState("");
   const [results, setResults] = useState([]);
-  const [exercises, setExercises] = useState([{ exerciseNumber: 1 }]);
+  const [exercises, setExercises] = useState([{ id: generateUniqueId() }]);
+
+  function generateUniqueId() {
+    return Date.now() + Math.random().toString(36).substr(2, 9);
+  }
 
   const handleAddExercise = () => {
-    const newExercise = { exerciseNumber: exercises.length + 1 };
-    setExercises([...exercises, newExercise]);
+    setExercises([...exercises, { id: generateUniqueId() }]);
   };
 
-  const handleDeleteExercise = () => {
-    setExercises([{ exerciseNumber: 1 }]);
+  //delete individual exercises
+  const handleDeleteExercise = (id) => {
+    setExercises(exercises.filter((exercise) => exercise.id !== id));
   };
 
   const handleAddAnExerciseClick = () => {
     setShowSearchBar(true);
     handleAddExercise();
+  };
+
+  const handleChange = (value) => {
+    setInputtedExercises(value);
+    fetchData(value);
   };
 
   // eslint-disable-next-line no-unused-vars
@@ -95,9 +134,30 @@ function Workoutloginpage() {
       .catch((error) => console.error("Error:", error));
   };
 
-  const handleChange = (value) => {
-    setInputtedExercises(value);
-    fetchData(value);
+  //to make the routine name editable
+  const [routineName, setRoutineName] = useState("Routine 1");
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleNameChange = (event) => {
+    setRoutineName(event.target.value);
+  };
+
+  const handleNameClick = () => {
+    setIsEditing(true);
+  };
+
+ 
+  const handleBlur = () => {
+    setIsEditing(false);
+  };
+
+
+ 
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      setIsEditing(false); // Exit edit mode when Enter is pressed
+    }
   };
 
   return (
@@ -110,20 +170,28 @@ function Workoutloginpage() {
           </Link>
           <div className="routine-label-saved-exercises-add-exercise">
             <div className="routine-save-delete-sign">
-              <div className="routine-label">
-                <p>Routine 1</p>
+              {/*Routine name should be connected to the backend to display the routine name*/}
+              <div className="routine-label" >
+                {isEditing ? (
+                  <input
+                    type="text"
+                    value={routineName}
+                    onChange={handleNameChange}
+                    onBlur={() => setIsEditing(false)}
+                    onKeyDown={handleKeyDown}
+                  />
+                ) : (
+                  <p onClick={handleNameClick}>{routineName}</p>
+                )}
               </div>
               <div className="save-delete-sign">
+                {/*The save button should connect with the backend to save it */}
                 <button
                   type="button"
                   className="save-button"
                   onClick={() => alert("You have just added a new workout!")}
                 ></button>
-                <button
-                  type="button"
-                  className="delete-button"
-                  onClick={handleDeleteExercise}
-                ></button>
+               
               </div>
             </div>
             <div className="saved-exercises-add-exercise-container">
@@ -131,9 +199,12 @@ function Workoutloginpage() {
                 <form>
                   <div>
                     <ul>
-                      {exercises.map((exercise, index) => (
-                        <li key={index}>
-                          <Exercise exerciseNumber={exercise.exerciseNumber} />
+                      {exercises.map((exercise) => (
+                        <li key={exercise.id}>
+                          <Exercise
+                            index={exercise.id}
+                            onDelete={handleDeleteExercise}
+                          />
                         </li>
                       ))}
                     </ul>

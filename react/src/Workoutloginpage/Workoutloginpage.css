@@ -155,7 +155,7 @@ input[type="text"]:focus {
   min-width: 1.2rem;
 }
 
-.save-delete-sign .delete-button {
+.delete-button {
   border: none;
   cursor: pointer;
   background-color: white;
@@ -176,9 +176,9 @@ input[type="text"]:focus {
 }
 
 .saved-exercises .added-exercise {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 2rem;
   text-align: center;
   justify-content: center;
 }
@@ -186,6 +186,8 @@ input[type="text"]:focus {
   border-radius: 5px;
   background-color: #fda172;
   font-size: large;
+  margin-inline: 1rem;
+  min-width: 20rem;
 }
 
 .saved-exercises .added-exercise input::placeholder {
@@ -206,6 +208,7 @@ input[type="text"]:focus {
   border-radius: 5px;
   min-width: 19rem;
   cursor: pointer;
+  text-align: center;
 }
 
 .add-an-exercise-container p {
@@ -216,8 +219,15 @@ input[type="text"]:focus {
 .saved-exercises-add-exercise-container {
   margin-top: 10rem;
   justify-content: center;
+  text-align: center;
 }
 
 .saved-exercises ul {
   list-style: none;
+}
+
+.menu-button {
+  background-color: white;
+  border: none;
+  margin-top: -.6rem;
 }
