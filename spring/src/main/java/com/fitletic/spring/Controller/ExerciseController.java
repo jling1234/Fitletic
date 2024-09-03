@@ -1,5 +1,6 @@
 package com.fitletic.spring.Controller;
 
+
 import com.fitletic.spring.Entity.Exercise;
 import com.fitletic.spring.Repository.ExerciseRepository;
 import lombok.AllArgsConstructor;
