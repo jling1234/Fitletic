@@ -1,66 +1,102 @@
 import "../Workoutloginpage/Workoutloginpage.css";
 import Header from "../Shared/Header/Header";
-import {Link} from "react-router-dom";
-// eslint-disable-next-line no-unused-vars
-import React, { useState } from "react";
+import { Link } from "react-router-dom";
+//eslint-disable-next-line no-unused-vars
+import React, { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 
-/*export function Exercise({ exerciseNumber }) {
+export function Exercise({ exerciseNumber }) {
   return (
     <>
       <div className="added-exercise">
         <p>Exercise {exerciseNumber} </p>
         <input type="text" placeholder="Name: def" />
+        <menu
+          type="context"
+          onClick={() => alert("You have opened a context menu!")}
+        >
+          ...
+        </menu>
       </div>
     </>
   );
-}*/
+}
+
+export function ExerciseList() {
+  return (
+    <>
+      <div className="add-an-exercise">
+        <button type="button" onClick={handleAddExercise}>
+          <p>Add an Exercise</p>
+        </button>
+      </div>
+    </>
+  );
+}
 
 // eslint-disable-next-line react/prop-types
-export function AddAnExerciseButton({onClick}) {
- 
+export function AddAnExerciseButton({
+  onClick,
+  handleAddExercise,
+  handleDeleteExercise,
+}) {
+  //to add a new exercise
   return (
-    <div className="add-an-exercise-container">
-      <button type="button" onClick={onClick}>
-        <p>Add an Exercise</p>
-      </button>
-    </div>
+    <>
+      <div className="add-an-exercise-container">
+        <button type="button" onClick={handleAddExercise}>
+          <p>Add an Exercise</p>
+        </button>
+      </div>
+    </>
   );
 }
 
 function Workoutloginpage() {
   const [showSearchBar, setShowSearchBar] = useState(false);
+  const [inputtedExercises, setInputtedExercises] = useState("");
+  const [results, setResults] = useState([]);
+  const [exercises, setExercises] = useState([{ exerciseNumber: 1 }]);
+
+  const handleAddExercise = () => {
+    const newExercise = { exerciseNumber: exercises.length + 1 };
+    setExercises([...exercises, newExercise]);
+  };
+
+  const handleDeleteExercise = () => {
+    setExercises([{ exerciseNumber: 1 }]);
+  };
 
   const handleAddAnExerciseClick = () => {
     setShowSearchBar(true);
+    handleAddExercise();
   };
 
-
-    const[exercises, setExercises]=useState("");
   // eslint-disable-next-line no-unused-vars
-    const [results,setResults]=useState([]);
   const fetchData = (value) => {
-    fetch("http://localhost:8080/exercise")
-        .then((response) => response.json())
-        .then((json) => {
-          if (Array.isArray(json)) {
-            const results = json.filter((exercises) => {
-              return (
-                  value &&
-                  exercises &&
-                  exercises.title &&
-                  exercises.title.toLowerCase().includes(value.toLowerCase())
-              );
-            });
-            console.log(results);
+    fetch("http://localhost:8080/workout")
+      .then((response) => response.json())
+      .then((json) => {
+        if (Array.isArray(json)) {
+          const results = json.filter((inputtedExercises) => {
+            return (
+              value &&
+              inputtedExercises &&
+              inputtedExercises.title &&
+              inputtedExercises.title
+                .toLowerCase()
+                .includes(value.toLowerCase())
+            );
+          });
+          console.log(results);
           setResults(results);
-          }
-        })
-        .catch((error) => console.error('Error:', error));
+        }
+      })
+      .catch((error) => console.error("Error:", error));
   };
 
-  const handleChange = (value)=>{
-    setExercises(value);
+  const handleChange = (value) => {
+    setInputtedExercises(value);
     fetchData(value);
   };
 
@@ -86,15 +122,25 @@ function Workoutloginpage() {
                 <button
                   type="button"
                   className="delete-button"
-                  onClick={() => alert("You have just deleted a workout!")}
+                  onClick={handleDeleteExercise}
                 ></button>
               </div>
             </div>
             <div className="saved-exercises-add-exercise-container">
               <div className="saved-exercises">
                 <form>
-                  {/*Exercise List */}
-                  <AddAnExerciseButton onClick={handleAddAnExerciseClick} />
+                  <div>
+                    <ul>
+                      {exercises.map((exercise, index) => (
+                        <li key={index}>
+                          <Exercise exerciseNumber={exercise.exerciseNumber} />
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <AddAnExerciseButton
+                    handleAddExercise={handleAddAnExerciseClick}
+                  />
                 </form>
               </div>
             </div>
@@ -105,25 +151,30 @@ function Workoutloginpage() {
             "right-container-workout-loginpage $ {showSearchBar ? 'hide' : ''}"
           }
         >
+          {!showSearchBar && (
+            <div className="right-container-workout-loginpage"></div>
+          )}
           {showSearchBar && (
-            <div className="searchbar-container show"  style={{ position: 'relative', width: '300px' }}>
-              <FaSearch if="search-icon" />
-              <input
-                type="text"
-                placeholder="Search for an exercise..."
-                value={exercises}
-                onChange={(e)=> handleChange(e.target.value)}
-                className="search-input"
-              ></input>
-              {results.length > 0 && (
+            <>
+              <div className="searchbar-container show">
+                <FaSearch if="search-icon" />
+
+                <input
+                  type="text"
+                  placeholder="Search for an exercise..."
+                  value={inputtedExercises}
+                  onChange={(e) => handleChange(e.target.value)}
+                  className="search-input"
+                ></input>
+                {results.length > 0 && (
                   <ul className="dropdown-list">
                     {results.map((exercise) => (
-                        <li key={exercise.id} >
-                          {exercise.title}</li>
+                      <li key={exercise.id}>{exercise.title}</li>
                     ))}
                   </ul>
-              )}
-            </div>
+                )}
+              </div>
+            </>
           )}
           {/*  <div className="text-in-the-picture">
             <p>"Exercise</p>
