@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+
+.meals-loginpage-container {
+  display: grid;
+  grid-template: 1fr / 1fr 1fr;
+  min-height: 100dvh;
+  font-family: "Josefin Sans", sans-serif;
+  margin-top: 10px;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.left-container-mlp {
+    margin-inline: 4rem;
+}
+
+.left-side-content {
+  margin-top: 2rem;
+}
+
+.right-container-mlp {
+  background-image: url("./Assets/mlpbg.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 20px;
+  margin-inline: 4rem;
+  min-height: 80vh; 
+  max-height: 80vh;
+  max-width: 90%; 
+  box-sizing: border-box; }
+
+.back-arrow {
+  text-decoration: none;
+  color: black;
+}
+
+.Meal-label p {
+  font-family: "Anton";
+  font-size: 30px;
+  font-weight: 1rem;
+  text-align: left;
+  margin-left: 2.7rem;
+}
+
+.meal-info-container {
+    margin-top: 2rem;
+  }
+  
+.input-group {
+    margin-bottom: 1rem;
+  }
+  
+.input-group label {
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+.macros {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    
+    color: black;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .macros-display {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f5f5f5;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.macros-display .macro-type {
+    flex: 1;
+    font-family: "Josefin Sans", sans-serif;
+}
+
+.macro-value {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 4px;
+}
+
+.macro-label {
+    font-size: 15px;
+    color: #666;
+}

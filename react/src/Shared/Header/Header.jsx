@@ -51,7 +51,7 @@ export default function Header() {
               <Link to={"/workout"}>WORKOUTS</Link>
             </li>
             <li>
-              <Link to={"/"}>MEALS</Link>
+              <Link to={"/meals"}>MEALS</Link>
             </li>
           </ul>
         </nav>

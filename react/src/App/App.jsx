@@ -6,6 +6,8 @@ import { LoginPage, SignUpPage } from "../LoginSignupPage/LoginSignupPage.jsx";
 import Profilepage from "../Profilepage/Profilepage.jsx";
 import Workoutspage from "../Workoutspage/Workoutspage.jsx";
 import Workoutloginpage from "../Workoutloginpage/Workoutloginpage.jsx";
+import Mealspage from "../MealsPage/MealsPage.jsx";
+import Mealsloginpage from "../MealsloginPage/MealsloginPage.jsx";
 
 
 
@@ -31,6 +33,12 @@ const router = createBrowserRouter([
   }, {
     path: "workoutlogin",
     element: <Workoutloginpage/>
+  }, {
+    path: "meals",
+    element: <Mealspage />
+  }, {
+    path: "mealslogin",
+    element: <Mealsloginpage/>
   }
 ]);
 

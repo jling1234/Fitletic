@@ -1,0 +1,145 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+
+.toppage-container-mp {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.mealspage-image-container {
+  background-image: url("./Assets/mealspagebg.jpg");
+  min-height: 85vh;
+  min-width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.accessories-container-mp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.meals-label p {
+  font-size: 70px;
+  font-family: "Anton";
+  color: black;
+}
+
+.KcalGained-tracker-and-mealslog {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.KcalGained-tracker {
+  display: grid;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  min-width: 15rem;
+  min-height: 7rem;
+  background-color: #ff5f35;
+  opacity: 0.8;
+  border-radius: 10px;
+}
+
+.KcalGained-tracker h1, h6 {
+  color: white;
+  font-family: "Anton";
+  opacity: 1;
+}
+
+.KcalGained-tracker h1 {
+  margin-bottom: -30px;
+  margin-top: 10px;
+ 
+}
+
+.KcalGained-tracker h6 {
+  font-family: "Josefin Sans";
+  margin-bottom: -7px;
+  margin-right: -80px;
+}
+
+
+.Mealslog button {
+  background-color: #ff5f35;
+  border: none;
+  border-radius: 5px;
+  min-width: 15rem;
+  min-height: 2rem;
+  cursor: pointer;
+  margin-top: 2rem;
+}
+
+.Mealslog p {
+  color: white;
+  font-size: 18px;
+  font-family: "Josefin Sans";
+}
+
+.bottompage-container-mp {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.my-meals-heading {
+  margin-bottom: 1rem;
+}
+
+.my-meals-heading p {
+  font-family: "Anton";
+  font-size: 35px;
+  font-weight: bold;
+  text-align: center;
+  margin-left: 15px;
+}
+
+.saved-meals-flex-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  grid-template-rows: repeat(3, auto);
+  grid-gap: 1rem;
+  justify-items: center; 
+  align-items: center; 
+  margin: 0 auto; 
+  width: 60%;
+}
+
+.saved-meals {
+  min-width: 25rem; 
+  min-height: 3rem; 
+  background-color: #fda172;
+  border: 0.08rem solid;
+  border-color: black;
+  border-radius: 10px;
+  margin: 0.5rem;
+}
+
+.make-a-new-recipe-container {
+  margin: 2rem;
+}
+
+.make-a-new-recipe-button{
+  background-color: #ff5f35;
+  border-radius: 9px;
+  cursor: pointer;
+  border: none;
+  min-height: 37px;
+  min-width: 20rem;
+}
+
+.make-a-new-recipe-button p {
+  color: white;
+  font-size: 18px;
+}
+
