@@ -125,12 +125,6 @@ function Workoutloginpage() {
               )}
             </div>
           )}
-          {/*  <div className="text-in-the-picture">
-            <p>"Exercise</p>
-            <p>should be regarded</p>
-            <p>as a tribute to the heart"</p>
-          </div>
-          */}
         </div>
       </div>
     </>

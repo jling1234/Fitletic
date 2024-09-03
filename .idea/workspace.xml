@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4fb8b499-0438-420b-b2ea-b68f44234f86" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Controller/ExerciseController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Entity/Exercise.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Controller/WorkoutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Controller/WorkoutController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Entity/Workout.java" beforeDir="false" afterPath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Entity/Workout.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Repository/WorkoutRepository.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +88,7 @@
       <workItem from="1724836158588" duration="3373000" />
       <workItem from="1724847505880" duration="793000" />
       <workItem from="1724848365764" duration="2268000" />
-      <workItem from="1725363309324" duration="4856000" />
+      <workItem from="1725363309324" duration="7297000" />
     </task>
     <servers />
   </component>
