@@ -98,10 +98,10 @@ function Workoutloginpage() {
   };
   // eslint-disable-next-line no-unused-vars
   const fetchDataExercise = (value) => {
-    fetch("http://localhost:8080/workout")
+    fetch("http://localhost:8080/exercise")
       .then((response) => response.json())
       .then((json) => {
-        if (Array.isArray(json)) {
+
           const results = json.filter((inputtedExercises) => {
             return (
               value &&
@@ -114,7 +114,7 @@ function Workoutloginpage() {
           });
           console.log(results);
           setResults(results);
-        }
+
       })
       .catch((error) => console.error("Error:", error));
   };
@@ -224,7 +224,8 @@ function Workoutloginpage() {
                 {results.length > 0 && (
                   <ul className="dropdown-list">
                     {results.map((exercise) => (
-                      <li key={exercise.id}>{exercise.title}</li>
+                      <li key={exercise.id} >
+                        {exercise.title}</li>
                     ))}
                   </ul>
                 )}
