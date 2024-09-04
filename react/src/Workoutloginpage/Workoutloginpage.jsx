@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 
+// eslint-disable-next-line react/prop-types
 export function Exercise({ index, onDelete }) {
   const [showContextMenu, setShowContextMenu] = useState(false);
   const menuRef = useRef(null);
@@ -53,24 +54,10 @@ export function Exercise({ index, onDelete }) {
   );
 }
 
-export function ExerciseList() {
-  return (
-    <>
-      <div className="add-an-exercise">
-        <button type="button" onClick={handleAddExercise}>
-          <p>Add an Exercise</p>
-        </button>
-      </div>
-    </>
-  );
-}
-
 // eslint-disable-next-line react/prop-types
-export function AddAnExerciseButton({
-  onClick,
-  handleAddExercise,
-  handleDeleteExercise,
-}) {
+export function AddAnExerciseButton({handleAddExercise})
+{
+  //to add a new exercise
   return (
     <>
       <div className="add-an-exercise-container">
@@ -105,14 +92,12 @@ function Workoutloginpage() {
     setShowSearchBar(true);
     handleAddExercise();
   };
-
   const handleChange = (value) => {
     setInputtedExercises(value);
-    fetchData(value);
+    fetchDataExercise(value);
   };
-
   // eslint-disable-next-line no-unused-vars
-  const fetchData = (value) => {
+  const fetchDataExercise = (value) => {
     fetch("http://localhost:8080/workout")
       .then((response) => response.json())
       .then((json) => {
@@ -121,7 +106,7 @@ function Workoutloginpage() {
             return (
               value &&
               inputtedExercises &&
-              inputtedExercises.title &&
+              inputtedExercises.title && 
               inputtedExercises.title
                 .toLowerCase()
                 .includes(value.toLowerCase())
@@ -146,13 +131,13 @@ function Workoutloginpage() {
     setIsEditing(true);
   };
 
- 
+
   const handleBlur = () => {
     setIsEditing(false);
   };
 
 
- 
+
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -177,7 +162,7 @@ function Workoutloginpage() {
                     type="text"
                     value={routineName}
                     onChange={handleNameChange}
-                    onBlur={() => setIsEditing(false)}
+                    onBlur={handleBlur}
                     onKeyDown={handleKeyDown}
                   />
                 ) : (
@@ -185,13 +170,12 @@ function Workoutloginpage() {
                 )}
               </div>
               <div className="save-delete-sign">
-                {/*The save button should connect with the backend to save it */}
                 <button
                   type="button"
                   className="save-button"
                   onClick={() => alert("You have just added a new workout!")}
                 ></button>
-               
+
               </div>
             </div>
             <div className="saved-exercises-add-exercise-container">
