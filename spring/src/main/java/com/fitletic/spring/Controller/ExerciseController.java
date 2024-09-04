@@ -1,7 +1,7 @@
 package com.fitletic.spring.Controller;
 
 import com.fitletic.spring.Repository.ExerciseRepository;
-import com.fitletic.spring.entity.ExerciseEntity;
+import com.fitletic.spring.Entity.ExerciseEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
