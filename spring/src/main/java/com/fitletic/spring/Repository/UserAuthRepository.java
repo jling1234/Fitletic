@@ -1,8 +1,9 @@
 package com.fitletic.spring.Repository;
 
-import com.fitletic.spring.entity.UserAuthentication;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
+
+import com.fitletic.spring.Entity.UserAuthentication;
 
 import java.util.Optional;
 

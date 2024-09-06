@@ -2,7 +2,8 @@ package com.fitletic.spring.Service;
 
 
 import ch.qos.logback.classic.encoder.JsonEncoder;
-import com.fitletic.spring.entity.UserAuthentication;
+
+import com.fitletic.spring.Entity.UserAuthentication;
 import com.fitletic.spring.Repository.UserAuthRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

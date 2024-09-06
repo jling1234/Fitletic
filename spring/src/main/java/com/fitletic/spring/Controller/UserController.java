@@ -1,9 +1,10 @@
 package com.fitletic.spring.Controller;
 
+import com.fitletic.spring.Entity.UserAuthentication;
 import com.fitletic.spring.Repository.UserAuthRepository;
 
 import com.fitletic.spring.Service.UserDetailsAuthService;
-import com.fitletic.spring.entity.UserAuthentication;
+
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
