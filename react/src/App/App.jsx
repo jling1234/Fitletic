@@ -6,6 +6,7 @@ import { LoginPage, SignUpPage } from "../LoginSignupPage/LoginSignupPage.jsx";
 import Profilepage from "../Profilepage/Profilepage.jsx";
 import Workoutspage from "../Workoutspage/Workoutspage.jsx";
 import Workoutloginpage from "../Workoutloginpage/Workoutloginpage.jsx";
+import Savedworkoutspage from "../Savedworkoutspage/Savedworkoutspage.jsx";
 
 
 
