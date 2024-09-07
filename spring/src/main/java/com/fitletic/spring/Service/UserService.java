@@ -7,6 +7,8 @@ import com.fitletic.spring.Entity.User;
 import com.fitletic.spring.Repository.RoleRepository;
 import com.fitletic.spring.Repository.UserRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -33,8 +35,7 @@ public class UserService {
 
     public User createAdministrator(RegisterUserDTO input) {
         Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.ADMIN);
-        if (optionalRole.isEmpty())
-        {
+        if (optionalRole.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Role USER not found");
         }
 
@@ -44,5 +45,10 @@ public class UserService {
                 .role(optionalRole.get())
                 .build();
         return userRepository.insert(user);
+    }
+
+    public User getAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (User) authentication.getPrincipal();
     }
 }

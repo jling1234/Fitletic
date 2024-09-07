@@ -24,10 +24,7 @@ public class UserController {
     @GetMapping("/me")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<User> authenticatedUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        User currentUser = (User) authentication.getPrincipal();
-
+        User currentUser = userService.getAuthenticatedUser();
         return ResponseEntity.ok(currentUser);
     }
 
