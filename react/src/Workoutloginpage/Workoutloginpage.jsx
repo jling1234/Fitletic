@@ -4,6 +4,8 @@ import {Link} from "react-router-dom";
 //eslint-disable-next-line no-unused-vars
 import React, {useState, useEffect, useRef} from "react";
 import {FaSearch} from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+//import axios from "axios";
 
 // eslint-disable-next-line react/prop-types
 export function Exercise({index, exerciseName, onDelete, onTimeChange, time}) {
@@ -57,7 +59,7 @@ export function Exercise({index, exerciseName, onDelete, onTimeChange, time}) {
                         placeholder="Enter time in min"
                         value={time}
                         onChange={handleTimeChange}
-                        style={{ width: '50px', textAlign: 'right' }}
+                        style={{width: '50px', textAlign: 'right'}}
 
                     />
                     <span className="time-suffix">:min</span>
@@ -94,9 +96,9 @@ function Workoutloginpage() {
     const [showSearchBar, setShowSearchBar] = useState(false);
     const [inputtedExercises, setInputtedExercises] = useState("");
     const [results, setResults] = useState([]);
-
-    const [exercises, setExercises] = useState([{id: generateUniqueId(), exerciseName: "Name:def", time: " min"}]);
-
+    const [exercises, setExercises] = useState([]);
+    const [saveTriggered, setSaveTriggered] = useState(false); // Flag to control saving
+    const navigate = useNavigate();
     /* const [query, setQuery] = useState("");*/
 
     function generateUniqueId() {
@@ -104,7 +106,7 @@ function Workoutloginpage() {
     }
 
     const handleAddExercise = () => {
-        setExercises([...exercises, {id: generateUniqueId(), exerciseName: "Name:def", time: " min"}]);
+        setExercises([...exercises, {id: generateUniqueId(), exerciseName: "Name:def", time: " min", exerciseType: "",calorieCount: ""}]);
     };
 
     //delete individual exercises
@@ -160,14 +162,69 @@ function Workoutloginpage() {
         setIsEditing(false);
     };
 
-    const handleSelectedExercise = (selectedExercise) => {
+    const handleSelectedExercise = (selectedExercise,type) => {
         setExercises((prevExercises) => {
             return prevExercises.map((exercise, index) => {
-                return index === prevExercises.length - 1 ? {...exercise, exerciseName: selectedExercise} : exercise;
+                return index === prevExercises.length - 1 ? {...exercise, exerciseName: selectedExercise,exerciseType: type} : exercise;
             });
 
         });
+        console.log(exercises);
     };
+
+    const handleCalorieCount = () => {
+        let totalCalories = 0;
+        //update for all types
+        exercises.forEach((exercise) =>{
+             if(exercise.exerciseType==="Strength")
+                totalCalories+=exercise.time*4;
+             else  if(exercise.exerciseType==="Stretching")
+                 totalCalories+=exercise.time*3;
+             else if(exercise.exerciseType==="Plyometrics")
+                 totalCalories+=exercise.time*8.5;
+             else if(exercise.exerciseType==="Powerlifting")
+                 totalCalories+=exercise.time*6.67
+             else
+                totalCalories+=exercise.time*3;
+
+         });
+
+        setExercises((prevExercises) =>
+            prevExercises.map((exercise) => ({
+                ...exercise,
+                calorieCount: totalCalories.toString() // Update calorieCount for every exercise
+            }))
+        );
+
+        navigate("/workout");
+        console.log(exercises);
+        return totalCalories.toString();
+    };
+
+
+    //when save button is clicked
+    const handleSaveExercise=() =>{
+
+        const totalcalories=handleCalorieCount();
+        exercises.forEach((exercise) => {
+            // Add the workoutTitle to each exercise before sending
+
+            const exerciseWithRoutineName = { ...exercise, routineName: routineName,calorieCount:totalcalories };
+            console.log(exerciseWithRoutineName);
+
+            // Send each exercise individually
+            fetch("http://localhost:8080/workout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(exerciseWithRoutineName), // Send the exercise with the routineName
+            })
+                .catch((error) => console.error("Error saving exercise:", error));
+        });
+        navigate("/workout");
+    };
+
 
     const handleTimeChange = (id, newTime) => {
         setExercises((prevExercises) =>
@@ -175,7 +232,7 @@ function Workoutloginpage() {
                 exercise.id === id ? {...exercise, time: newTime} : exercise
             )
         );
-        console.log(exercises);
+
     };
 
 
@@ -214,7 +271,8 @@ function Workoutloginpage() {
                                 <button
                                     type="button"
                                     className="save-button"
-                                    onClick={() => alert("You have just added a new workout!")}
+                                    //add handleSaveExercise
+                                    onClick={() => {handleSaveExercise()}}
                                 ></button>
 
                             </div>
@@ -268,7 +326,8 @@ function Workoutloginpage() {
                                 {results.length > 0 && (
                                     <ul className="dropdown-list">
                                         {results.map((exercise) => (
-                                            <li key={exercise.id} onClick={() => handleSelectedExercise(exercise.title,exercise.id)}
+                                            <li key={exercise.id}
+                                                onClick={() => { handleSelectedExercise(exercise.title,exercise.type);}}
                                             >
                                                 {exercise.title}</li>
                                         ))}

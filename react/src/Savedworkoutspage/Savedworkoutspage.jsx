@@ -2,8 +2,7 @@ import Header from "../Shared/Header/Header";
 import { Link } from "react-router-dom";
 import "./Savedworkoutspage.css";
 import {
-  BuildANewRoutineButton,
-  WorkoutCalorieTracker,
+  BuildANewRoutineButton
 } from "../Workoutspage/Workoutspage";
 
 export function BackArrow() {
@@ -87,7 +86,6 @@ function DumbbellsImg() {
       <div className="dumbbells-img">
         {/**trackers go here; take from prev page*/}
         <div className="workoutcaltracker-container">
-          <WorkoutCalorieTracker />
         </div>
       </div>
     </>
