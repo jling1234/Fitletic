@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import "./Savedworkoutspage.css";
 import {
   BuildANewRoutineButton,
-  WorkoutCalorieTracker,
+  // WorkoutCalorieTracker,
 } from "../Workoutspage/Workoutspage";
+import { FaArrowLeft } from "react-icons/fa";
 
 export function BackArrow() {
   return (
     <Link to={"/workout"} className="back-arrow">
-      🡨
+      <FaArrowLeft />
     </Link>
   );
 }
@@ -87,7 +88,7 @@ function DumbbellsImg() {
       <div className="dumbbells-img">
         {/**trackers go here; take from prev page*/}
         <div className="workoutcaltracker-container">
-          <WorkoutCalorieTracker />
+          {/* <WorkoutCalorieTracker /> */}
         </div>
       </div>
     </>
