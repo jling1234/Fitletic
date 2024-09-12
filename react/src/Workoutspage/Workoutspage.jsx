@@ -27,7 +27,24 @@ export function BuildANewRoutineButton() {
   );
 }
 
+function LogAWorkoutButton() {
+  return (
+    <Link to={"/savedworkoutspage"}>
+      <button type="button">
+        <p>Log a Workout</p>
+      </button>
+    </Link>
+  );
+}
 
+export function WorkoutCalorieTracker  () {
+  return (
+    <div className="burntcal-tracker">
+      <h1>2000 KCAL </h1>
+      <h6> burnt from workout</h6>
+    </div>
+  );
+}
 
 function Workoutspage() {
   return (
@@ -40,18 +57,9 @@ function Workoutspage() {
               <p>WORKOUTS</p>
             </div>
             <div className="burntcal-tracker-and-workoutlog">
-              <div className="burntcal-tracker">
-                <h1>2000  KCAL </h1>
-                <h6> burnt from workout</h6>
-                
-              </div>
+              <WorkoutCalorieTracker />
               <div className="workoutlog">
-                <button
-                  type="button"
-                  onClick={() => alert("You have logged a workout!")}
-                >
-                  <p>Log a Workout</p>
-                </button>
+                <LogAWorkoutButton />
               </div>
             </div>
           </div>
