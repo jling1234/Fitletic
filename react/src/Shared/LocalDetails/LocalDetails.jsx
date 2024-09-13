@@ -37,3 +37,16 @@ export function setUserRecord(username, record) {
 
   setLocalDetails(localDetails);
 }
+
+export function setToken(token) {
+  localStorage.setItem("token", token);
+}
+
+export function getToken() {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return "";
+  }
+
+  return token;
+}

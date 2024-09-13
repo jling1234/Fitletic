@@ -4,6 +4,9 @@ import Header from "../Shared/Header/Header.jsx";
 import FooterWithWaves from "../Shared/Footer/Footer.jsx";
 
 import "./Homepage.css";
+import {getUserInfo} from "../Shared/API/Auth.js";
+import {useMutation, useQuery, useQueryClient} from "react-query";
+import {setToken} from "../Shared/LocalDetails/LocalDetails.jsx";
 
 function BannerText() {
   const text = "FITLETIC";
@@ -79,18 +82,40 @@ function HomepageContent() {
   );
 }
 
+function LoginSignupButtonWrapper() {
+  const queryClient = useQueryClient();
+
+  const {
+    data: userInfo,
+  } = useQuery("userInfo", getUserInfo);
+
+  const handleLogout = () => {
+    setToken("");
+    queryClient.invalidateQueries();
+  }
+
+  if (userInfo) {
+    return <div className="homepage-button-wrapper">
+      <Link to={"/"}>Profile</Link>
+      <button type={"button"} onClick={handleLogout}>Logout</button>
+    </div>
+  }
+  
+  return (
+    <div className="homepage-button-wrapper">
+      <Link to={"/login"}>Login</Link>
+      <Link to={"/signup"}>Join Now</Link>
+    </div>
+  );
+}
+
 function Homepage() {
   return (
     <div className="homepage">
       <Header></Header>
       <main>
         <Banner></Banner>
-
-        <div className="homepage-button-wrapper">
-          <Link to={"/login"}>Login</Link>
-          <Link to={"/signup"}>Join Now</Link>
-        </div>
-
+        <LoginSignupButtonWrapper></LoginSignupButtonWrapper>
         <HomepageContent></HomepageContent>
         <FooterWithWaves></FooterWithWaves>
       </main>

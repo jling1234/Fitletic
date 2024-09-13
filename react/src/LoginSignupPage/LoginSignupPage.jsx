@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./LoginSignupPage.css";
 import { HomepageLinkLogo } from "../Shared/Logo/Logo.jsx";
 import axios from "axios";
-import { setUserRecord } from "../Shared/LocalDetails/LocalDetails.jsx";
+import {setToken, setUserRecord} from "../Shared/LocalDetails/LocalDetails.jsx";
 import PropTypes from "prop-types";
 
 function LoginForm() {
@@ -14,12 +14,12 @@ function LoginForm() {
     const onLoginSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post("http://localhost:8080/signin", {
-                username: username,
-                password: password,
-                active: true,
+            const loginResponse = await axios.post("http://localhost:8080/auth/login", {
+              username: username,
+              password: password,
             });
-            console.log(response.status);
+
+            setToken(loginResponse.data["token"]);
 
             navigate("/");
         } catch (e) {
@@ -76,11 +76,18 @@ function SignUpForm() {
     const onSignUpSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post("http://localhost:8080/register", {
+            const registerResponse = await axios.post("http://localhost:8080/auth/signup", {
                 username: username,
                 password: password,
-                active: true,
             });
+
+            const loginResponse = await axios.post("http://localhost:8080/auth/login", {
+                username: username,
+                password: password,
+            });
+
+            setToken(loginResponse.data["token"]);
+
             setUserRecord(username, { age, height, weight, activityLevel });
             navigate("/");
         } catch (e) {
