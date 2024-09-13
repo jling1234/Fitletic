@@ -42,11 +42,11 @@ public class UserExerciseController {
     }
 
     @CrossOrigin(origins = "*", methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE}, allowedHeaders = "*")
-    @PostMapping("/getCalories")
-    public ResponseEntity<Integer> getCalories(@RequestBody Workout workout)
+    @GetMapping("/getCalories")
+    public ResponseEntity<Integer> getCalories(@RequestBody String workoutId)
     {
 
-        List<UserExercise> userExercises=userExerciseService.getUserExercises(workout.getId());
+        List<UserExercise> userExercises=userExerciseService.getUserExercises(workoutId);
         List<String> exercise_id=new ArrayList<>();
         List<Integer> time=new ArrayList<>();
         for(UserExercise exercise: userExercises){
@@ -59,5 +59,7 @@ public class UserExerciseController {
         int calories=exerciseService.getTotalCalories(type,time);
         return ResponseEntity.ok(calories);
     }
+
+
 
 }
