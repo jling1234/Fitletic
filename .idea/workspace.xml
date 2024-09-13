@@ -6,6 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="4fb8b499-0438-420b-b2ea-b68f44234f86" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Controller/ExerciseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Controller/ExerciseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Controller/WorkoutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Controller/WorkoutController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Entity/Exercise.java" beforeDir="false" afterPath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Entity/Workouts/Exercise.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Entity/Workout.java" beforeDir="false" afterPath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Entity/Workouts/Workout.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Repository/ExerciseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Repository/Workouts/ExerciseRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Repository/WorkoutRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/Repository/Workouts/WorkoutRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring/src/main/java/com/fitletic/spring/entity/ExerciseEntity.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,31 +38,40 @@
   &quot;associatedIndex&quot;: 1
 }</component>
   <component name="ProjectId" id="2lBn4hG0tMOwrL85cIf8UOEzM6n" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.Application.executor&quot;: &quot;Run&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Fitletic/spring/src/main/java/com/fitletic/spring&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.Application.executor": "Run",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Fitletic/spring/.env",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Fitletic\spring\src\main\java" />
+      <recent name="D:\Fitletic\spring\src\main\resources" />
       <recent name="D:\Fitletic\react\src\Workoutloginpage\Assets" />
     </key>
   </component>
@@ -62,6 +79,17 @@
     <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="spring" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.fitletic.spring.Application" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="true" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+          <ENTRY IS_ENABLED="true" PARSER="env" IS_EXECUTABLE="false" PATH="spring/.env" />
+        </ENTRIES>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -89,6 +117,8 @@
       <workItem from="1724847505880" duration="793000" />
       <workItem from="1724848365764" duration="2268000" />
       <workItem from="1725363309324" duration="7297000" />
+      <workItem from="1726129131539" duration="9419000" />
+      <workItem from="1726225533729" duration="12501000" />
     </task>
     <servers />
   </component>
