@@ -12,7 +12,9 @@ import {getUserInfo} from "../Shared/API/Auth.js";
 function LoginForm() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [invalidAttempt, setInvalidAttempt] = useState(false);
     const navigate = useNavigate();
+
     const onLoginSubmit = async (event) => {
         event.preventDefault();
         try {
@@ -25,39 +27,45 @@ function LoginForm() {
 
             navigate("/");
         } catch (e) {
-            console.log(e);
+            if (e.status === 401) {
+                setInvalidAttempt(true);
+                return;
+            }
+
+            throw e;
         }
     };
 
     return (
-        <form className="login-data-container" onSubmit={onLoginSubmit}>
-            <div>
-                <p className="username-container">Username</p>
-                <input
-                    className="text-field-info"
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-            </div>
-            <div className="password-container">
-                <p className="username">Password</p>
-                <input
-                    className="text-field-info"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-            </div>
-            <button className="login-button" type="submit">
-                <p>Login</p>
-            </button>
-            <div className="no-account">
-                <p>
-                    Don&apos;t have an account? <Link to={"/signup"}>Sign Up</Link>
-                </p>
-            </div>
-        </form>
+      <form className="login-data-container" onSubmit={onLoginSubmit}>
+        <div>
+          <p className="username-container">Username</p>
+          <input
+            className="text-field-info"
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div className="password-container">
+          <p className="username">Password</p>
+          <input
+            className="text-field-info"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        {invalidAttempt && <p className={"invalid-attempt-text"}>Invalid username or password!</p>}
+        <button className="login-button" type="submit">
+          <p>Login</p>
+        </button>
+        <div className="no-account">
+          <p>
+            Don&apos;t have an account? <Link to={"/signup"}>Sign Up</Link>
+          </p>
+        </div>
+      </form>
     );
 }
 
