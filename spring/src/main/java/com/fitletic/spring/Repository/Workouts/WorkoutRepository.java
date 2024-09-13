@@ -1,11 +1,13 @@
-package com.fitletic.spring.Repository;
+package com.fitletic.spring.Repository.Workouts;
 
-import com.fitletic.spring.Entity.Workout;
+import com.fitletic.spring.Entity.Workouts.Workout;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
-import java.util.Optional;
+
 
 public interface WorkoutRepository extends MongoRepository<Workout, String> {
-     Optional<List<Workout>> findByUsername(String username);
+  public List<Workout> findAllByUserId(String id);
+
+
 }

@@ -26,8 +26,6 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private Role role;
-    private String routine;
-    private List<String> exercises;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

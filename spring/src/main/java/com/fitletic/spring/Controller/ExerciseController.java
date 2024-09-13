@@ -1,8 +1,8 @@
 package com.fitletic.spring.Controller;
 
 
-import com.fitletic.spring.Entity.Exercise;
-import com.fitletic.spring.Repository.ExerciseRepository;
+import com.fitletic.spring.Entity.Workouts.Exercise;
+import com.fitletic.spring.Repository.Workouts.ExerciseRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
