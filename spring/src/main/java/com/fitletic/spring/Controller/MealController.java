@@ -37,14 +37,14 @@ public class MealController {
         return ResponseEntity.ok(mealService.oneIngredient(id).orElseThrow());
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Meal> createMeal(@RequestBody Meal meal) {
         User user = userService.getAuthenticatedUser();
         return ResponseEntity.ok(mealService.newMeal(user, meal));
     }
 
-    @GetMapping("/")
+    @GetMapping
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<Meal>> getAllMeals() {
         User user = userService.getAuthenticatedUser();

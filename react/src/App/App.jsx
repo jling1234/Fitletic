@@ -10,6 +10,7 @@ import Savedworkoutspage from "../Savedworkoutspage/Savedworkoutspage.jsx";
 
 
 
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const router = createBrowserRouter([
   {
@@ -38,10 +39,14 @@ const router = createBrowserRouter([
   }
 ]);
 
+const queryClient = new QueryClient();
+
 function App() {
   return (
   
-      <RouterProvider router={router}></RouterProvider> 
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router}></RouterProvider> 
+      </QueryClientProvider>
     
    
   );

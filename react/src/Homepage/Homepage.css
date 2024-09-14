@@ -81,6 +81,15 @@
   }
 }
 
+.homepage-user-greeter {
+  margin-left: auto;
+
+  max-width: max(25dvw, 300px);
+
+  text-align: end;
+  padding-inline: 2rem;
+}
+
 .homepage-button-wrapper {
   margin-left: auto;
 
@@ -94,7 +103,8 @@
   padding-inline: 2rem;
 }
 
-.homepage-button-wrapper a {
+.homepage-button-wrapper a,
+.homepage-button-wrapper button {
   flex: 1;
 
   font-size: var(--font-size-small);
@@ -114,7 +124,8 @@
   transition: transform 0.1s ease-in-out;
 }
 
-.homepage-button-wrapper a:hover {
+.homepage-button-wrapper a:hover,
+.homepage-button-wrapper button:hover {
   transform: scale(1.05);
   color: var(--color-background);
 }

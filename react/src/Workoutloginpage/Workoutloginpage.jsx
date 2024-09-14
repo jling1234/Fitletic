@@ -6,6 +6,7 @@ import { FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 import { BackArrow } from "../Savedworkoutspage/Savedworkoutspage";
+import axios from "axios";
 
 // eslint-disable-next-line react/prop-types
 export function Exercise({ exerciseName }) {
@@ -159,6 +160,7 @@ function Workoutloginpage() {
         time: 0,
         exerciseType: "",
         calorieCount: "",
+        exerciseId: "",
       },
     ]);
   };
@@ -211,47 +213,25 @@ function Workoutloginpage() {
     setIsEditing(false);
   };
 
-  const handleSelectedExercise = (selectedExercise, type) => {
+  const handleSelectedExercise = (selectedExercise, type, id) => {
     setExercises((prevExercises) => {
       return prevExercises.map((exercise, index) => {
         return index === prevExercises.length - 1
-          ? { ...exercise, exerciseName: selectedExercise, exerciseType: type }
+          ? {
+              ...exercise,
+              exerciseName: selectedExercise,
+              exerciseType: type,
+              exerciseId: id,
+            }
           : exercise;
       });
     });
     console.log(exercises);
   };
 
-  const handleCalorieCount = () => {
-    let totalCalories = 0;
-    //update for all types
-    exercises.forEach((exercise) => {
-      if (exercise.exerciseType === "Strength")
-        totalCalories += exercise.time * 4;
-      else if (exercise.exerciseType === "Stretching")
-        totalCalories += exercise.time * 3;
-      else if (exercise.exerciseType === "Plyometrics")
-        totalCalories += exercise.time * 8.5;
-      else if (exercise.exerciseType === "Powerlifting")
-        totalCalories += exercise.time * 6.67;
-      else totalCalories += exercise.time * 3;
-    });
-
-    setExercises((prevExercises) =>
-      prevExercises.map((exercise) => ({
-        ...exercise,
-        calorieCount: totalCalories.toString(), // Update calorieCount for every exercise
-      }))
-    );
-
-    navigate("/workout");
-    console.log(exercises);
-    return totalCalories.toString();
-  };
-
   //when save button is clicked
   const handleSaveExercise = () => {
-    const totalcalories = handleCalorieCount();
+
     exercises.forEach((exercise) => {
       // Add the workoutTitle to each exercise before sending
 
@@ -261,6 +241,10 @@ function Workoutloginpage() {
         calorieCount: totalcalories,
       };
       console.log(exerciseWithRoutineName);
+
+      const response = await axios.post("http://localhost:8080/workout/save", {
+        userId : 
+      })
 
       // Send each exercise individually
       fetch("http://localhost:8080/workout", {
@@ -357,7 +341,11 @@ function Workoutloginpage() {
                     <li
                       key={exercise.id}
                       onClick={() =>
-                        handleSelectedExercise(exercise.title, exercise.type)
+                        handleSelectedExercise(
+                          exercise.title,
+                          exercise.type,
+                          exercise.id
+                        )
                       }
                     >
                       {exercise.title}
