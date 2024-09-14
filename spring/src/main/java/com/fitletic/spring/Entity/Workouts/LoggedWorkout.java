@@ -19,5 +19,5 @@ public class LoggedWorkout {
     private String id;
     @Indexed
     private LocalDateTime date;
-    private String workout_id;
+    private String workoutId;
 }

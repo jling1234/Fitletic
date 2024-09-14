@@ -2,11 +2,11 @@ package com.fitletic.spring.Controller;
 
 import com.fitletic.spring.Entity.Workouts.LoggedWorkout;
 import com.fitletic.spring.Repository.Workouts.LoggedWorkoutRepository;
-import com.fitletic.spring.Service.UserService;
-import com.fitletic.spring.Service.WorkoutService;
+
+
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequestMapping("/logged")
@@ -27,7 +27,12 @@ public class LoggedWorkoutsController {
 
     @CrossOrigin(origins = "*", methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE}, allowedHeaders = "*")
     @GetMapping("/get")
-    public List<LoggedWorkout> getLoggedWorkout(@RequestParam LocalDate date) {
+    public List<LoggedWorkout> getLoggedWorkout(@RequestParam LocalDateTime date) {
         return loggedWorkoutRepository.findByDate(date);
+    }
+    @CrossOrigin(origins = "*", methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE}, allowedHeaders = "*")
+    @PostMapping("/delete")
+    public void delete(@RequestParam String workoutId) {
+        loggedWorkoutRepository.deleteByWorkoutId(workoutId);
     }
 }

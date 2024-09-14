@@ -14,22 +14,16 @@ import java.util.List;
 @RequestMapping("/workout")
 @RestController
 public class WorkoutController {
-// private final WorkoutRepository workoutRepository;
+
  private final WorkoutService workoutService;
  private final UserService userService;
 
- public WorkoutController(UserService userService, WorkoutService workoutService) {
+
+    public WorkoutController(UserService userService, WorkoutService workoutService) {
      this.userService = userService;
      this.workoutService=workoutService;
- }
-   /* @CrossOrigin(origins = "*", methods ={RequestMethod.POST,RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE}, allowedHeaders = "*")
-    @GetMapping("/workout")
-    public Optional<List<Workout>> findUserWorkouts() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = (User) authentication.getPrincipal();
-        String username= currentUser.getUsername();
-        return workoutRepository.findByUsername(username);
-    }*/
+
+    }
 
     @CrossOrigin(origins = "*", methods ={RequestMethod.POST,RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE}, allowedHeaders = "*")
     @PreAuthorize("isAuthenticated()")
@@ -43,6 +37,13 @@ public class WorkoutController {
     public ResponseEntity<List<Workout>> getWorkouts() {
         User user = userService.getAuthenticatedUser();
         return ResponseEntity.ok(workoutService.getAllWorkouts(user));
+    }
+    @CrossOrigin(origins = "*", methods ={RequestMethod.POST,RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE}, allowedHeaders = "*")
+    @PostMapping("/delete")
+    public ResponseEntity<?> deleteWorkout(@RequestParam String workoutId) {
+        //User user = userService.getAuthenticatedUser();
+        workoutService.deleteWorkout(workoutId);
+        return ResponseEntity.ok().build();
     }
 
 }

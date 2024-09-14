@@ -3,12 +3,11 @@ package com.fitletic.spring.Controller;
 import com.fitletic.spring.Entity.User;
 import com.fitletic.spring.Entity.Workouts.Exercise;
 import com.fitletic.spring.Entity.Workouts.UserExercise;
-import com.fitletic.spring.Entity.Workouts.Workout;
-import com.fitletic.spring.Repository.Workouts.WorkoutRepository;
+
 import com.fitletic.spring.Service.ExerciseService;
 import com.fitletic.spring.Service.UserExerciseService;
 import com.fitletic.spring.Service.UserService;
-import com.fitletic.spring.Service.WorkoutService;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -21,16 +20,15 @@ import java.util.List;
 public class UserExerciseController {
     private final UserService userService;
     private final UserExerciseService userExerciseService;
-    private final WorkoutService workoutService;
-    private final ExerciseService exerciseService;
-    private final WorkoutRepository workoutRepository;
 
-    public UserExerciseController(UserExerciseService userExerciseService, WorkoutService workoutService, ExerciseService exerciseService, UserService userService, WorkoutRepository workoutRepository) {
+    private final ExerciseService exerciseService;
+
+
+    public UserExerciseController(UserExerciseService userExerciseService, ExerciseService exerciseService, UserService userService) {
         this.userExerciseService = userExerciseService;
-        this.workoutService = workoutService;
         this.exerciseService = exerciseService;
         this.userService = userService;
-        this.workoutRepository = workoutRepository;
+
     }
 
     @CrossOrigin(origins = "*", methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE}, allowedHeaders = "*")
@@ -60,6 +58,11 @@ public class UserExerciseController {
         return ResponseEntity.ok(calories);
     }
 
-
+    @CrossOrigin(origins = "*", methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE}, allowedHeaders = "*")
+    @PostMapping("/delete")
+    public ResponseEntity<?> deleteAllUserExercises(@RequestParam String workoutId) {
+        userExerciseService.deleteAllUserExercises(workoutId);
+        return ResponseEntity.ok().build();
+    }
 
 }

@@ -29,16 +29,13 @@ public class ExerciseService {
     public int getTotalCalories(List<String> types, List<Integer> time) {
         int calories =0;
        for(int i=0;i< types.size();i++){
-            if(types.get(i).equals("Strength"))
-               calories+=time.get(i)*4;
-           else  if(types.get(i).equals("Stretching"))
-               calories+=time.get(i)*3;
-           else if(types.get(i).equals("Plyometrics"))
-               calories+= (int) (time.get(i)*8.5);
-           else if(types.get(i).equals("Powerlifting"))
-               calories+= (int) (time.get(i)*6.67);
-           else
-               calories+=time.get(i)*3;
+           switch (types.get(i)) {
+               case "Strength" -> calories += time.get(i) * 4;
+               case "Stretching" -> calories += time.get(i) * 3;
+               case "Plyometrics" -> calories += (int) (time.get(i) * 8.5);
+               case "Powerlifting" -> calories += (int) (time.get(i) * 6.67);
+               default -> calories += time.get(i) * 3;
+           }
        }
     return calories;
     }
