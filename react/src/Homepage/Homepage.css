@@ -16,84 +16,12 @@
   padding: 4rem 2rem;
 }
 
-.homepage .logo-wrapper {
-  display: flex;
-  align-items: end;
-  gap: 0.3rem;
-
-  font-family: var(--heading-font), serif;
-  font-size: 1.6rem;
-  line-height: 1.9rem;
-}
-
-.homepage .logo-wrapper img {
-  max-width: 40px;
-}
-
-.header {
-  font-size: var(--font-size-small);
-  line-height: var(--line-height-small);
-
-  padding: 2rem 2rem;
-
-  position: sticky;
-  top: 0;
-  z-index: 1;
-
-  width: 100%;
-}
-
-.header .header-background {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-
-  background-color: var(--color-background);
-  border-bottom: 1px solid hsl(0, 0%, 80%);
-
-  opacity: 0;
-
-  z-index: -1;
-}
-
-.header-content {
-  display: flex;
-  gap: 2rem;
-  align-items: end;
-}
-
-.header nav ul {
-  list-style: none;
-  display: flex;
-  gap: 1rem;
-
-  padding-left: 0;
-}
-
-.header nav ul > * {
-  flex-shrink: 0;
-}
-
-.header nav a {
-  text-decoration: none;
-  color: unset;
-}
-
-.header nav li {
-  transition: transform 0.1s ease-in-out;
-}
-
-.header nav li:hover {
-  transform: scale(1.1);
-}
-
 .homepage-banner {
   font-family: var(--banner-font), sans-serif;
   font-weight: 100;
 
-  min-height: clamp(25rem, 25vw + 15rem, 35rem);
+  min-height: clamp(20rem, 25vw + 15rem, 35rem);
+  padding-bottom: clamp(0rem, 10rem - 10vw, 5rem);
 
   overflow-x: clip;
 
@@ -153,6 +81,15 @@
   }
 }
 
+.homepage-user-greeter {
+  margin-left: auto;
+
+  max-width: max(25dvw, 300px);
+
+  text-align: end;
+  padding-inline: 2rem;
+}
+
 .homepage-button-wrapper {
   margin-left: auto;
 
@@ -166,6 +103,7 @@
   padding-inline: 2rem;
 }
 
+.homepage-button-wrapper a,
 .homepage-button-wrapper button {
   flex: 1;
 
@@ -173,6 +111,9 @@
 
   color: var(--color-background);
   font-weight: 500;
+
+  text-decoration: none;
+  text-align: center;
 
   border: none;
   background-color: var(--color-accent);
@@ -183,8 +124,10 @@
   transition: transform 0.1s ease-in-out;
 }
 
+.homepage-button-wrapper a:hover,
 .homepage-button-wrapper button:hover {
   transform: scale(1.05);
+  color: var(--color-background);
 }
 
 .homepage-content {
@@ -308,64 +251,4 @@
   background-image: url("Assets/brenda-godinez-_Zn_7FzoL1w-unsplash.png");
   justify-content: end;
   text-align: end;
-}
-
-.custom-shape-divider-footer {
-  width: 100%;
-  overflow: hidden;
-  transform: rotate(180deg);
-}
-
-.custom-shape-divider-footer svg {
-  width: 100%;
-  height: 150px;
-}
-
-.custom-shape-divider-footer .shape-fill {
-  fill: var(--color-accent);
-}
-
-.footer {
-  font-size: var(--font-size-small);
-  line-height: var(--line-height-small);
-
-  padding: 4rem 2rem;
-
-  background-color: var(--color-accent);
-
-  display: flex;
-  flex-direction: column;
-
-  gap: 3rem;
-
-  align-items: center;
-  justify-content: center;
-}
-
-.footer .footer-links {
-  list-style: none;
-  padding: 0;
-
-  display: flex;
-  flex-wrap: wrap;
-  gap: max(3svw, 1rem);
-
-  text-align: center;
-}
-
-.footer .footer-links a {
-  text-decoration: none;
-  color: var(--color-text);
-}
-
-.footer .footer-links a:hover {
-  color: var(--color-background);
-}
-
-.footer .footer-links li {
-  transition: transform 0.1s ease-in-out;
-}
-
-.footer .footer-links li:hover {
-  transform: scale(1.1);
 }

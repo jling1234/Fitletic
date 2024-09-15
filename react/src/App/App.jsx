@@ -1,10 +1,33 @@
 import "./App.css";
-import LoginSignupPage from "../LoginSignupPage/LoginSignupPage.jsx";
+import Homepage from "../Homepage/Homepage.jsx";
+
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { LoginPage, SignUpPage } from "../LoginSignupPage/LoginSignupPage.jsx";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Homepage />,
+  },
+  {
+    path: "login",
+    element: <LoginPage />,
+  },
+  {
+    path: "signup",
+    element: <SignUpPage />,
+  },
+]);
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
     <>
-      <LoginSignupPage />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router}></RouterProvider>
+      </QueryClientProvider>
     </>
   );
 }
