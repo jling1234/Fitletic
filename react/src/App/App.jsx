@@ -3,7 +3,7 @@ import Homepage from "../Homepage/Homepage.jsx";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LoginPage, SignUpPage } from "../LoginSignupPage/LoginSignupPage.jsx";
-import Profilepage from "../Profilepage/Profilepage.jsx";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const router = createBrowserRouter([
   {
@@ -23,10 +23,14 @@ const router = createBrowserRouter([
   }
 ]);
 
+const queryClient = new QueryClient();
+
 function App() {
   return (
     <>
-      <RouterProvider router={router}></RouterProvider>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router}></RouterProvider>
+      </QueryClientProvider>
     </>
   );
 }

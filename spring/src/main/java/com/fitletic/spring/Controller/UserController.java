@@ -1,35 +1,38 @@
 package com.fitletic.spring.Controller;
 
-import com.fitletic.spring.Repository.UserAuthRepository;
-import com.fitletic.spring.Service.UserDetailsAuthService;
-import com.fitletic.spring.entity.UserAuthentication;
-import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
+import com.fitletic.spring.Entity.User;
+import com.fitletic.spring.Service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
+import java.util.List;
 
+@RequestMapping("/users")
 @RestController
-@AllArgsConstructor
-
 public class UserController {
-    private final UserAuthRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final UserService userService;
 
-    @PostMapping("/register")
-    public ResponseEntity registerUser(@RequestBody UserAuthentication user) {
-        try {
-            if (userRepository.findByUsername(user.getUsername()).isPresent())
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already taken. Please try again");
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            userRepository.save(user);
-            return ResponseEntity.ok(HttpStatus.CREATED);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        }
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping("/me")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<User> authenticatedUser() {
+        User currentUser = userService.getAuthenticatedUser();
+        return ResponseEntity.ok(currentUser);
+    }
+
+    @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public ResponseEntity<List<User>> allUsers() {
+        List<User> users = userService.allUsers();
+
+        return ResponseEntity.ok(users);
     }
 }
