@@ -88,3 +88,10 @@
   background-position: center;
   border-radius: 0px;
 }
+
+.invalid-attempt-text {
+  font-size: var(--font-size-small);
+  color: red;
+  text-align: end;
+  margin-top: 0.5rem;
+}
