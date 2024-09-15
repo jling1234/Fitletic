@@ -1,10 +1,19 @@
 import "../MealsloginPage/MealsloginPage.css";
 import Header from "../Shared/Header/Header";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import {useQuery} from "react-query";
+import {getUserInfo} from "../Shared/API/Auth.js";
 
 function Mealsloginpage() {
+    const navigate = useNavigate();
+
+    const { data: userInfo } = useQuery("userInfo", getUserInfo);
+
+    if (!userInfo) {
+        navigate("/login", { replace: true });
+    }
 
     return (
 

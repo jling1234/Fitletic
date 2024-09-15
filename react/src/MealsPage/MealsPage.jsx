@@ -1,7 +1,9 @@
 import FooterWithWaves  from "../Shared/Footer/Footer";
 import Header from "../Shared/Header/Header";
 import "../MealsPage/MealsPage.css";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {useQuery} from "react-query";
+import {getUserInfo} from "../Shared/API/Auth.js";
 
 export function MakeNewRecipeButton() {
   return (
@@ -16,6 +18,14 @@ export function MakeNewRecipeButton() {
 }
 
 function Mealspage() {
+  const navigate = useNavigate();
+
+  const { data: userInfo } = useQuery("userInfo", getUserInfo);
+
+  if (!userInfo) {
+    navigate("/login", { replace: true });
+  }
+
   return (
     <>
       <Header />
