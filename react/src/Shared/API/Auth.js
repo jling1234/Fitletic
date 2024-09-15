@@ -1,6 +1,5 @@
 import axios from "axios";
 import {getToken, setToken} from "../LocalDetails/LocalDetails.jsx";
-import {useQueryClient} from "react-query";
 
 export async function getUserInfo() {
   try {

@@ -4,6 +4,7 @@ import "../MealsPage/MealsPage.css";
 import {Link, useNavigate} from "react-router-dom";
 import {useQuery} from "react-query";
 import {getUserInfo} from "../Shared/API/Auth.js";
+import {useEffect} from "react";
 
 export function MakeNewRecipeButton() {
   return (
@@ -20,11 +21,13 @@ export function MakeNewRecipeButton() {
 function Mealspage() {
   const navigate = useNavigate();
 
-  const { data: userInfo } = useQuery("userInfo", getUserInfo);
+  const { data: userInfo, isLoading: userInfoIsLoading } = useQuery("userInfo", getUserInfo);
 
-  if (!userInfo) {
-    navigate("/login", { replace: true });
-  }
+  useEffect(() => {
+    if (!userInfoIsLoading && !userInfo) {
+      navigate("/login", { replace: true });
+    }
+  }, [navigate, userInfo, userInfoIsLoading]);
 
   return (
     <>

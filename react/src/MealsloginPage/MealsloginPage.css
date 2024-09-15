@@ -32,18 +32,18 @@
   flex-direction: column;
   gap: 1.5rem;
 }
-  
+
 .input-group label {
-    margin-bottom: 0.5rem;
-    display: block;
+  margin-bottom: 0.5rem;
+  display: block;
 }
-  
+
 .input-group input,
 .input-group textarea {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .ingredients {
@@ -59,42 +59,41 @@
 .ingredients > button {
   padding-inline: 0.5rem;
 }
-  
+
 .macros {
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    
-    color: black;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .macros-display {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f5f5f5;
-    margin-top: 1rem;
-    text-align: center;
+  margin-top: 2rem;
+
+  color: black;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.macros-display {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  margin-top: 1rem;
+  text-align: center;
 }
 
 .macros-display .macro-type {
-    flex: 1;
-    font-family: "Josefin Sans", sans-serif;
+  flex: 1;
+  font-family: "Josefin Sans", sans-serif;
 }
 
 .macro-value {
-    font-size: 24px;
-    font-weight: bold;
-    margin: 4px;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 4px;
 }
 
 .macro-label {
-    font-size: 15px;
-    color: #666;
+  font-size: 15px;
+  color: #666;
 }
 
 .recipes-header {
@@ -141,13 +140,24 @@
   gap: 1rem;
 }
 
-.ingredient-list li > div {
+.recipe-ingredient {
+  display: grid;
+  grid-template: 1fr / max-content 1fr max-content;
+  gap: 1rem;
+  align-items: center;
+}
+
+.ingredient-amount-wrapper {
   display: flex;
+  gap: 0.25rem;
+  align-items: center;
 }
 
 .ingredient-list li > div > button {
-  margin-left: auto;
   background: none;
   border: none;
   cursor: pointer;
+}
+
+.ingredient-list .ingredient-amount {
 }
