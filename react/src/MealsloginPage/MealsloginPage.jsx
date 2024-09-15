@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import {useQuery} from "react-query";
 import {getUserInfo} from "../Shared/API/Auth.js";
+import ScrollToTop from "../Shared/Misc/ScrollToTop.jsx";
 
 function Mealsloginpage() {
     const navigate = useNavigate();
@@ -16,8 +17,8 @@ function Mealsloginpage() {
     }
 
     return (
-
         <>
+            <ScrollToTop />
             <Header />
             <div className="meals-loginpage-container">
                 <div className="left-container-mlp">
