@@ -6,55 +6,37 @@
   grid-template: 1fr / 1fr 1fr;
   min-height: 100dvh;
   font-family: "Josefin Sans", sans-serif;
-  margin-top: 10px;
+  margin-top: 2rem;
   grid-template-columns: repeat(2, 1fr);
 }
 
 .left-container-mlp {
-    margin-inline: 4rem;
+  margin-inline: 2rem;
+  display: grid;
+  grid-template: min-content 1fr / min-content 1fr;
+  gap: 2rem;
 }
 
 .left-side-content {
-  margin-top: 2rem;
+  grid-row: 2;
+  grid-column: 2;
 }
-
-.right-container-mlp {
-  background-image: url("./Assets/mlpbg.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  border-radius: 20px;
-  margin-inline: 4rem;
-  min-height: 80vh; 
-  max-height: 80vh;
-  max-width: 90%; 
-  box-sizing: border-box; }
 
 .back-arrow {
   text-decoration: none;
   color: black;
 }
 
-.Meal-label p {
-  font-family: "Anton";
-  font-size: 30px;
-  font-weight: 1rem;
-  text-align: left;
-  margin-left: 2.7rem;
+.recipe-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
-
-.meal-info-container {
-    margin-top: 2rem;
-  }
-  
-.input-group {
-    margin-bottom: 1rem;
-  }
   
 .input-group label {
     margin-bottom: 0.5rem;
     display: block;
-  }
+}
   
 .input-group input,
 .input-group textarea {
@@ -62,7 +44,21 @@
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 4px;
-  }
+}
+
+.ingredients {
+  display: grid;
+  grid-template: 1fr 1fr / 1fr min-content;
+  column-gap: 1rem;
+}
+
+.ingredients > label {
+  grid-column: 1 / -1;
+}
+
+.ingredients > button {
+  padding-inline: 0.5rem;
+}
   
 .macros {
     margin-top: 1rem;
@@ -99,4 +95,59 @@
 .macro-label {
     font-size: 15px;
     color: #666;
+}
+
+.recipes-header {
+  display: flex;
+  gap: 1rem;
+}
+
+.save-button {
+  background: none;
+  border: none;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.right-container-mlp {
+  background-image: url("./Assets/mlpbg.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 20px;
+  margin-inline: 4rem;
+  min-height: 80vh;
+  max-height: 80vh;
+  max-width: 90%;
+  box-sizing: border-box;
+}
+
+.right-container-ingredients {
+  border: 2px solid black;
+  border-radius: 20px;
+  margin-inline: 4rem;
+  padding: 2rem;
+  min-height: 80vh;
+  max-height: 80vh;
+  max-width: 90%;
+}
+
+.ingredient-list {
+  margin-top: 2rem;
+  margin-left: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ingredient-list li > div {
+  display: flex;
+}
+
+.ingredient-list li > div > button {
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
