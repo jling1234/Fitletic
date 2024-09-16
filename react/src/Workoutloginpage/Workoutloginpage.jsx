@@ -8,6 +8,7 @@ import {getToken} from "../Shared/LocalDetails/LocalDetails.jsx"
 
 import { BackArrow } from "../Savedworkoutspage/Savedworkoutspage";
 import axios from "axios";
+import { getUserInfo } from "../Shared/API/Auth";
 
 // eslint-disable-next-line react/prop-types
 export function Exercise({ exerciseName }) {
@@ -267,8 +268,8 @@ function Workoutloginpage() {
   };
 
   //when save button is clicked
-  const handleSaveExercise = () => {
-
+  const handleSaveExercise = async (event) => {
+    event.preventDefault();
     exercises.forEach((exercise) => {
       // Add the workoutTitle to each exercise before sending
 
@@ -291,8 +292,8 @@ function Workoutloginpage() {
         },
         body: JSON.stringify(exerciseWithRoutineName), // Send the exercise with the routineName
       }).catch((error) => console.error("Error saving exercise:", error));
+
     });
-    navigate("/workout");
   };
 
   const handleTimeChange = (id, newTime) => {
