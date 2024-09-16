@@ -66,18 +66,13 @@ function Mealsloginpage() {
 
   const [recipeName, setRecipeName] = useState("");
   const [currentIngredient, setCurrentIngredient] = useState("");
-  const [ingredients, setIngredients] = useState([]);
   const [recipeIngredients, setRecipeIngredients] = useState([]);
   const [serves, setServes] = useState(1);
 
-  useQuery("ingredients", getIngredients, {
-    onSuccess: (data) => {
-      const sortedIngredients = data.sort((a, b) =>
-        a.description.localeCompare(b.description),
-      );
-      setIngredients(sortedIngredients);
-    },
-  });
+  const { data: ingredients } = useQuery("ingredients", getIngredients);
+  if (ingredients) {
+    ingredients.sort((a, b) => a.description.localeCompare(b.description));
+  }
 
   useEffect(() => {
     if (!userInfoIsLoading && !userInfo) {

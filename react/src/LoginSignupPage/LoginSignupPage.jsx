@@ -6,14 +6,16 @@ import { HomepageLinkLogo } from "../Shared/Logo/Logo.jsx";
 import axios from "axios";
 import {setToken, setUserRecord} from "../Shared/LocalDetails/LocalDetails.jsx";
 import PropTypes from "prop-types";
-import {useQuery} from "react-query";
+import {useQuery, useQueryClient} from "react-query";
 import {getUserInfo} from "../Shared/API/Auth.js";
 
 function LoginForm() {
+    const queryClient = useQueryClient();
+    const navigate = useNavigate();
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [invalidAttempt, setInvalidAttempt] = useState(false);
-    const navigate = useNavigate();
 
     const onLoginSubmit = async (event) => {
         event.preventDefault();
@@ -24,6 +26,7 @@ function LoginForm() {
             });
 
             setToken(loginResponse.data["token"]);
+            await queryClient.invalidateQueries();
 
             navigate("/");
         } catch (e) {
