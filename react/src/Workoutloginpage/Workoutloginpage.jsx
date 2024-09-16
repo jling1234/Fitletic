@@ -161,7 +161,6 @@ function Workoutloginpage() {
         exerciseName: "Name:def",
         time: 0,
         exerciseType: "",
-        calorieCount: "",
         exerciseId: "",
       },
     ]);
@@ -181,7 +180,7 @@ function Workoutloginpage() {
     fetchDataExercise(value);
   };
   // eslint-disable-next-line no-unused-vars
-  const fetchDataExercise =async (value) => {
+  const fetchDataExercise = async (value) => {
     try {
       const response = await axios.get("http://localhost:8080/exercise", {
         headers: {Authorization:"Bearer " + getToken()}});
@@ -200,39 +199,6 @@ function Workoutloginpage() {
       console.error("Error:", error);
     }
   };
-    /*axios.get("http://localhost:8080/exercise", {
-      headers: {Authorization:"Bearer " + getToken()}})
-        .then((response) => {
-          const results = response.data.filter((inputtedExercises) => {
-            return (
-                value &&
-                inputtedExercises &&
-                inputtedExercises.title &&
-                inputtedExercises.title.toLowerCase().includes(value.toLowerCase())
-            );
-          });
-          console.log(results);
-          setResults(results);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });*/
-
-    /* fetch("http://localhost:8080/exercise")
-      .then((response) => response.json())
-      .then((json) => {
-        const results = json.filter((inputtedExercises) => {
-          return (
-            value &&
-            inputtedExercises &&
-            inputtedExercises.title &&
-            inputtedExercises.title.toLowerCase().includes(value.toLowerCase())
-          );
-        });
-        console.log(results);
-        setResults(results);
-      })
-      .catch((error) => console.error("Error:",error));*/
 
 
   //to make the routine name editable
@@ -267,33 +233,45 @@ function Workoutloginpage() {
     console.log(exercises);
   };
 
+  const [workoutId,setWorkoutId]=useState("");
+
   //when save button is clicked
-  const handleSaveExercise = async (event) => {
+  const handleSaveWorkout = async (event) => {
     event.preventDefault();
-    exercises.forEach((exercise) => {
-      // Add the workoutTitle to each exercise before sending
-
-      const exerciseWithRoutineName = {
-        ...exercise,
-        routineName: routineName,
-        calorieCount: totalcalories,
-      };
-      console.log(exerciseWithRoutineName);
-
-    /*  const response = await axios.post("http://localhost:8080/workout/save", {
-        userId :
-      })*/
-
-      // Send each exercise individually
-      fetch("http://localhost:8080/workout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(exerciseWithRoutineName), // Send the exercise with the routineName
-      }).catch((error) => console.error("Error saving exercise:", error));
-
-    });
+    try {
+     const response = await axios.post("http://localhost:8080/workout/save",
+         {
+            userId: getUserInfo().id,
+            workoutName:routineName,
+          },
+         {
+           headers: {Authorization: "Bearer " + getToken()},
+         });
+     setWorkoutId(response.data.id);
+     console.log(response);
+     console.log(workoutId);
+   }catch (error){
+     console.log("Error: ",error);
+   }
+   try {
+     for(const item of exercises)
+      {
+        const response = await axios.post("http://localhost:8080/userExercise/save",
+            {
+              userId: getUserInfo.id,
+              workoutId: workoutId,
+              exerciseId:item.exerciseId,
+              time:item.time,
+            },
+            {
+              headers: {Authorization: "Bearer " + getToken()},
+            });
+        console.log(response.data);
+      }
+    }catch (error) {
+      console.log("Error: ",error);
+    }
+    navigate("/workout");
   };
 
   const handleTimeChange = (id, newTime) => {
@@ -334,7 +312,7 @@ function Workoutloginpage() {
                 <div onClick={handleNameClick}>{routineName}</div>
               )}
             </div>
-            <SaveButton onSave={handleSaveExercise} />
+            <SaveButton onSave={handleSaveWorkout} />
             <ul>
               {exercises.map((exercise) => (
                 <li key={exercise.id} className="savedexercise-form">

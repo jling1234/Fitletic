@@ -1,5 +1,6 @@
 import Header from "../Shared/Header/Header";
 import { Link } from "react-router-dom";
+import React, { useState } from 'react';
 import "./Savedworkoutspage.css";
 import { BuildANewRoutineButton, WorkoutCalorieTracker } from "../Workoutspage/Workoutspage";
 import { FaArrowLeft } from "react-icons/fa";
@@ -92,6 +93,21 @@ function DumbbellsImg() {
 }
 
 export default function Savedworkoutspage() {
+  const [workout,setWorkout] = useState([]);
+
+  const handleFetchWorkouts=async(event)=>
+  {
+    try {
+      const response = await axios.get("http://localhost:8080/workout/getWorkouts", {
+        headers: {Authorization:"Bearer " + getToken()}
+      });
+
+      setWorkout(response.data);
+      console.log(workout);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
   return (
     <>
       <Header />
