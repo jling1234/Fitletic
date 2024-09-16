@@ -200,7 +200,7 @@ function Mealsloginpage() {
             🡨
           </Link>
           <div className="recipes-header">
-            <h2>Recipe</h2>
+            <h2>{recipeName ? recipeName : "Recipe"}</h2>
             <button type="button" className="save-button" onClick={onMealSave}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
