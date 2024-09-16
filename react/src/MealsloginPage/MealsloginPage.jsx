@@ -1,12 +1,13 @@
 import "../MealsloginPage/MealsloginPage.css";
 import Header from "../Shared/Header/Header";
-import { Link, useNavigate } from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
-import { useQuery } from "react-query";
+import {useMutation, useQuery} from "react-query";
 import { getUserInfo } from "../Shared/API/Auth.js";
 import ScrollToTop from "../Shared/Misc/ScrollToTop.jsx";
-import { getIngredients } from "../Shared/API/Meals.js";
+import {getIngredients, getMeal, saveMeal} from "../Shared/API/Meals.js";
 import * as PropTypes from "prop-types";
+import axios from "axios";
 
 function RecipeIngredient({ recipeIngredient, onChange, onDelete }) {
   const inputRef = useRef(null);
@@ -59,15 +60,16 @@ RecipeIngredient.propTypes = {
 function Mealsloginpage() {
   const navigate = useNavigate();
 
+  let { mealId } = useParams();
+  if (!mealId) {
+    mealId = "0";
+  }
+  const { data: meal } = useQuery(["meal", mealId], async () => await getMeal(mealId));
+
   const { data: userInfo, isLoading: userInfoIsLoading } = useQuery(
     "userInfo",
     getUserInfo,
   );
-
-  const [recipeName, setRecipeName] = useState("");
-  const [currentIngredient, setCurrentIngredient] = useState("");
-  const [recipeIngredients, setRecipeIngredients] = useState([]);
-  const [serves, setServes] = useState(1);
 
   const { data: ingredients } = useQuery("ingredients", getIngredients);
   if (ingredients) {
@@ -79,6 +81,46 @@ function Mealsloginpage() {
       navigate("/login", { replace: true });
     }
   }, [navigate, userInfo, userInfoIsLoading]);
+
+  useEffect(() => {
+    if (mealId !== "0" && meal === null) {
+      navigate("/mealslogin", { replace: true })
+    }
+  }, [navigate, meal, mealId]);
+
+  const saveMealMutation = useMutation({
+    mutationFn: async ({ meal, id }) => {
+      return await saveMeal(meal, id);
+    },
+    onSuccess: (data) => {
+      navigate("/mealslogin/" + data.id);
+    }
+  });
+
+  const [recipeName, setRecipeName] = useState("");
+  const [currentIngredient, setCurrentIngredient] = useState("");
+  const [recipeIngredients, setRecipeIngredients] = useState([]);
+  const [serves, setServes] = useState(1);
+
+  useEffect(() => {
+    if (!meal || !ingredients) return;
+
+    setRecipeName(meal.name);
+    setServes(meal.servings);
+
+    const computedIngredients = [];
+    for (const ingredient of ingredients) {
+      for (const mealIngredient of meal.ingredients) {
+        if (ingredient.id === mealIngredient.ingredientId) {
+          computedIngredients.push({
+            ...ingredient,
+            count: mealIngredient.count,
+          });
+        }
+      }
+    }
+    setRecipeIngredients(computedIngredients);
+  }, [meal, ingredients]);
 
   const onIngredientAdd = () => {
     for (const ingredient of ingredients) {
@@ -97,6 +139,34 @@ function Mealsloginpage() {
     const newIngredients = recipeIngredients.filter((_, i) => i !== index);
     setRecipeIngredients(newIngredients);
   };
+
+  const onMealSave = async () => {
+    if (!recipeName) {
+      return;
+    }
+
+    let servesValue = 1;
+    if (serves) {
+      servesValue = serves;
+    }
+
+    const ingredientsValue = [];
+    for (const recipeIngredient of recipeIngredients) {
+      ingredientsValue.push({
+        ingredientId: recipeIngredient.id,
+        count: recipeIngredient.count
+      })
+    }
+
+    const meal = {
+      name: recipeName,
+      servings: servesValue,
+      ingredients: ingredientsValue
+    }
+
+    const id = (mealId === "0") ? null : mealId;
+    await saveMealMutation.mutate({ meal, id });
+  }
 
   const getNutrientAmount = (ingredient, name, unit) => {
     const get = (name) => {
@@ -147,7 +217,8 @@ function Mealsloginpage() {
   }
 
   for (const [key, value] of Object.entries(macros)) {
-    macros[key] = value / serves;
+    const servesSafe = serves > 0 ? serves : 1;
+    macros[key] = value / servesSafe;
   }
 
   return (
@@ -161,11 +232,7 @@ function Mealsloginpage() {
           </Link>
           <div className="recipes-header">
             <h2>Recipe</h2>
-            <button
-              type="button"
-              className="save-button"
-              onClick={() => alert("Recipe Saved!")}
-            >
+            <button type="button" className="save-button" onClick={onMealSave}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="30px"
@@ -227,7 +294,23 @@ function Mealsloginpage() {
                       name="serves"
                       min="1"
                       value={serves}
-                      onChange={(e) => setServes(e.target.value)}
+                      onChange={(e) => {
+                        let value = parseFloat(e.target.value);
+                        if (e.target.value === "") {
+                          setServes("");
+                        } else if (isNaN(value)) {
+                          value = serves;
+                        } else {
+                          setServes(Math.max(1, value));
+                        }
+                      }}
+                      onBlur={(e) => {
+                        let value = parseFloat(e.target.value);
+                        if (!e.target.value || isNaN(value)) {
+                          value = 1;
+                        }
+                        setServes(Math.max(1, value));
+                      }}
                     />
                   </div>
                 </div>
@@ -236,19 +319,27 @@ function Mealsloginpage() {
                 <div className="macros">Macros (per serving)</div>
                 <div className="macros-display">
                   <div className="macro-type">
-                    <div className="macro-value">{+macros.calories.toFixed(2)} kcal</div>
+                    <div className="macro-value">
+                      {+macros.calories.toFixed(2)} kcal
+                    </div>
                     <div className="macro-label">Calories</div>
                   </div>
                   <div className="macro-type">
-                    <div className="macro-value">{+macros.protein.toFixed(2)} g</div>
+                    <div className="macro-value">
+                      {+macros.protein.toFixed(2)} g
+                    </div>
                     <div className="macro-label">Protein</div>
                   </div>
                   <div className="macro-type">
-                    <div className="macro-value">{+macros.carbs.toFixed(2)} g</div>
+                    <div className="macro-value">
+                      {+macros.carbs.toFixed(2)} g
+                    </div>
                     <div className="macro-label">Carbs</div>
                   </div>
                   <div className="macro-type">
-                    <div className="macro-value">{+macros.fat.toFixed(2)} g</div>
+                    <div className="macro-value">
+                      {+macros.fat.toFixed(2)} g
+                    </div>
                     <div className="macro-label">Fat</div>
                   </div>
                 </div>

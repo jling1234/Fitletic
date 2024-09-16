@@ -5,6 +5,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {useQuery} from "react-query";
 import {getUserInfo} from "../Shared/API/Auth.js";
 import {useEffect} from "react";
+import {getIngredients, getMeals} from "../Shared/API/Meals.js";
 
 export function MakeNewRecipeButton() {
   return (
@@ -18,10 +19,36 @@ export function MakeNewRecipeButton() {
   );
 }
 
+function MyMeals() {
+  const { data: meals, isLoading } = useQuery("meals", getMeals);
+
+  return (
+    <div className="bottompage-container-mp">
+      <div className="my-meals-heading">
+        <p>MY MEALS</p>
+      </div>
+      <div className="saved-meals-flex-container">
+        <button type="button" className="saved-meals"></button>
+        <button type="button" className="saved-meals"></button>
+        <button type="button" className="saved-meals"></button>
+        <button type="button" className="saved-meals"></button>
+        <button type="button" className="saved-meals"></button>
+        <button type="button" className="saved-meals"></button>
+      </div>
+      <div className="make-a-new-recipe-container">
+        <MakeNewRecipeButton />
+      </div>
+    </div>
+  );
+}
+
 function Mealspage() {
   const navigate = useNavigate();
 
-  const { data: userInfo, isLoading: userInfoIsLoading } = useQuery("userInfo", getUserInfo);
+  const { data: userInfo, isLoading: userInfoIsLoading } = useQuery(
+    "userInfo",
+    getUserInfo,
+  );
 
   useEffect(() => {
     if (!userInfoIsLoading && !userInfo) {
@@ -38,11 +65,10 @@ function Mealspage() {
             <div className="meals-label">
               <p>MEALS</p>
             </div>
-          <div className="KcalGained-tracker-and-mealslog">
+            <div className="KcalGained-tracker-and-mealslog">
               <div className="KcalGained-tracker">
-                <h1>2000  KCAL </h1>
+                <h1>2000 KCAL </h1>
                 <h6> Gained from Meals</h6>
-                
               </div>
               <div className="Mealslog">
                 <button
@@ -54,25 +80,10 @@ function Mealspage() {
               </div>
             </div>
           </div>
-      </div>
+        </div>
       </div>
 
-      <div className="bottompage-container-mp">
-        <div className="my-meals-heading">
-          <p>MY MEALS</p>
-        </div>
-        <div className="saved-meals-flex-container">
-          <button type="button" className="saved-meals"></button>
-          <button type="button" className="saved-meals"></button>
-          <button type="button" className="saved-meals"></button>
-          <button type="button" className="saved-meals"></button>
-          <button type="button" className="saved-meals"></button>
-          <button type="button" className="saved-meals"></button>
-        </div>
-        <div className="make-a-new-recipe-container">
-          <MakeNewRecipeButton />
-      </div>
-      </div>
+      <MyMeals />
 
       <FooterWithWaves />
     </>

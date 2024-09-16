@@ -35,7 +35,7 @@ const router = createBrowserRouter([
     path: "meals",
     element: <Mealspage />
   }, {
-    path: "mealslogin",
+    path: "mealslogin/:mealId?",
     element: <Mealsloginpage/>
   }
 ]);

@@ -58,6 +58,13 @@ public class MealController {
         return ResponseEntity.ok(mealService.oneMeal(user, id).orElseThrow());
     }
 
+    @PutMapping("")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Meal> replaceMeal(@RequestBody Meal newMeal) {
+        User user = userService.getAuthenticatedUser();
+        return ResponseEntity.ok(mealService.newMeal(user, newMeal));
+    }
+
     @PutMapping("/{id}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Meal> replaceMeal(@PathVariable String id, @RequestBody Meal newMeal) {
