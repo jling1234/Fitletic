@@ -96,6 +96,7 @@ function Mealsloginpage() {
     onSuccess: async (data) => {
       await queryClient.invalidateQueries(["meal", data.id]);
       await queryClient.invalidateQueries("meals");
+      await queryClient.invalidateQueries("loggedMeals");
       navigate("/mealslogin/" + data.id, { replace: true });
     }
   });

@@ -54,6 +54,36 @@ export async function deleteMeal(id) {
   return response.data;
 }
 
+export async function logMeal(id) {
+  const response = await axios.post("http://localhost:8080/meals/log/" + id, null,{
+    headers: { Authorization: "Bearer " + getToken() },
+  });
+
+  return response.data;
+}
+
+export async function getLoggedMealsToday() {
+  // Get the current date
+  const now = new Date();
+
+  // Set the time to 00:00:00
+  const startOfDay = new Date(now.setHours(0, 0, 0, 0));
+  const startOfDayEpoch = Math.floor(startOfDay.getTime() / 1000);
+
+  // Set the time to 23:59:59
+  const endOfDay = new Date(now.setHours(23, 59, 59, 999));
+  const endOfDayEpoch = Math.floor(endOfDay.getTime() / 1000);
+
+  const response = await axios.get(
+    `http://localhost:8080/meals/log?from=${startOfDayEpoch}&to=${endOfDayEpoch}`,
+    {
+      headers: { Authorization: "Bearer " + getToken() },
+    },
+  );
+
+  return response.data;
+}
+
 export function getNutrientAmount(ingredient, name, unit) {
   const get = (name) => {
     for (const nutrient of ingredient.nutrients) {

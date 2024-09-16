@@ -1,14 +1,17 @@
 package com.fitletic.spring.Controller;
 
 import com.fitletic.spring.Entity.Meals.Ingredient;
+import com.fitletic.spring.Entity.Meals.LoggedMeal;
 import com.fitletic.spring.Entity.Meals.Meal;
 import com.fitletic.spring.Entity.User;
+import com.fitletic.spring.Response.Meals.LoggedMealResponse;
 import com.fitletic.spring.Service.MealService;
 import com.fitletic.spring.Service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.List;
 
 @RequestMapping("/meals")
@@ -77,6 +80,35 @@ public class MealController {
     public ResponseEntity<?> deleteMeal(@PathVariable String id) {
         User user = userService.getAuthenticatedUser();
         mealService.deleteMeal(user, id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/log/{mealId}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<LoggedMealResponse> logMeal(@PathVariable String mealId) {
+        User user = userService.getAuthenticatedUser();
+        return ResponseEntity.ok(mealService.logMeal(user, mealId));
+    }
+
+    @GetMapping("/log/all")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<List<LoggedMealResponse>> getLoggedMeals() {
+        User user = userService.getAuthenticatedUser();
+        return ResponseEntity.ok(mealService.allLoggedMeals(user));
+    }
+
+    @GetMapping(value = "/log")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<List<LoggedMealResponse>> getLoggedMeals(@RequestParam long from, @RequestParam long to) {
+        User user = userService.getAuthenticatedUser();
+        return ResponseEntity.ok(mealService.allLoggedMeals(user, from, to));
+    }
+
+    @DeleteMapping("/log/{logId}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> deleteLoggedMeal(@PathVariable String logId) {
+        User user = userService.getAuthenticatedUser();
+        mealService.deleteLoggedMeal(user, logId);
         return ResponseEntity.ok().build();
     }
 }
