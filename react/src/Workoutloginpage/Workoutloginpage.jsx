@@ -4,6 +4,7 @@ import Header from "../Shared/Header/Header";
 import React, { useState, useEffect, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import {getToken} from "../Shared/LocalDetails/LocalDetails.jsx"
 
 import { BackArrow } from "../Savedworkoutspage/Savedworkoutspage";
 import axios from "axios";
@@ -179,8 +180,44 @@ function Workoutloginpage() {
     fetchDataExercise(value);
   };
   // eslint-disable-next-line no-unused-vars
-  const fetchDataExercise = (value) => {
-    fetch("http://localhost:8080/exercise")
+  const fetchDataExercise =async (value) => {
+    try {
+      const response = await axios.get("http://localhost:8080/exercise", {
+        headers: {Authorization:"Bearer " + getToken()}});
+      const results = response.data.filter((inputtedExercises) => {
+        return (
+            value &&
+            inputtedExercises &&
+            inputtedExercises.title &&
+            inputtedExercises.title.toLowerCase().includes(value.toLowerCase())
+        );
+        console.log(response);
+      });
+      console.log(results);
+      setResults(results);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+    /*axios.get("http://localhost:8080/exercise", {
+      headers: {Authorization:"Bearer " + getToken()}})
+        .then((response) => {
+          const results = response.data.filter((inputtedExercises) => {
+            return (
+                value &&
+                inputtedExercises &&
+                inputtedExercises.title &&
+                inputtedExercises.title.toLowerCase().includes(value.toLowerCase())
+            );
+          });
+          console.log(results);
+          setResults(results);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });*/
+
+    /* fetch("http://localhost:8080/exercise")
       .then((response) => response.json())
       .then((json) => {
         const results = json.filter((inputtedExercises) => {
@@ -194,8 +231,8 @@ function Workoutloginpage() {
         console.log(results);
         setResults(results);
       })
-      .catch((error) => console.error("Error:", error));
-  };
+      .catch((error) => console.error("Error:",error));*/
+
 
   //to make the routine name editable
   const [routineName, setRoutineName] = useState("Routine 1");
@@ -242,9 +279,9 @@ function Workoutloginpage() {
       };
       console.log(exerciseWithRoutineName);
 
-      const response = await axios.post("http://localhost:8080/workout/save", {
-        userId : 
-      })
+    /*  const response = await axios.post("http://localhost:8080/workout/save", {
+        userId :
+      })*/
 
       // Send each exercise individually
       fetch("http://localhost:8080/workout", {

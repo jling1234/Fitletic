@@ -15,6 +15,6 @@ public class Exercise {
     @Id
     private String id;
     @Indexed
-    private String title;
-    private String type;
+    private String Title;
+    private String Type;
 }

@@ -20,7 +20,6 @@ import java.util.List;
 public class UserExerciseController {
     private final UserService userService;
     private final UserExerciseService userExerciseService;
-
     private final ExerciseService exerciseService;
 
 
@@ -28,7 +27,6 @@ public class UserExerciseController {
         this.userExerciseService = userExerciseService;
         this.exerciseService = exerciseService;
         this.userService = userService;
-
     }
 
     @CrossOrigin(origins = "*", methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE}, allowedHeaders = "*")
