@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 import { BackArrow } from "../Savedworkoutspage/Savedworkoutspage";
 import axios from "axios";
+import { getUserInfo } from "../Shared/API/Auth";
 
 // eslint-disable-next-line react/prop-types
 export function Exercise({ exerciseName }) {
@@ -230,32 +231,23 @@ function Workoutloginpage() {
   };
 
   //when save button is clicked
-  const handleSaveExercise = () => {
+  const handleSaveExercise = async (event) => {
+    event.preventDefault();
 
-    exercises.forEach((exercise) => {
-      // Add the workoutTitle to each exercise before sending
-
-      const exerciseWithRoutineName = {
-        ...exercise,
-        routineName: routineName,
-        calorieCount: totalcalories,
-      };
-      console.log(exerciseWithRoutineName);
-
-      const response = await axios.post("http://localhost:8080/workout/save", {
-        userId : 
-      })
-
-      // Send each exercise individually
-      fetch("http://localhost:8080/workout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(exerciseWithRoutineName), // Send the exercise with the routineName
-      }).catch((error) => console.error("Error saving exercise:", error));
+    const response = await axios.post("http://localhost:8080/workout/save", {
+      userId: getUserInfo().id,
+      workoutName: routineName,
     });
-    navigate("/workout");
+    console.log(response);
+    exercises.forEach((exercise) => {
+      const response1 = axios.post("http://localhost:8080/userExercise/save", {
+        userId: getUserInfo().id,
+        workoutId: response.data.workoutId,
+        exerciseId: exercise.exerciseId,
+        time: exercise.time,
+      });
+      console.log(response1);
+    });
   };
 
   const handleTimeChange = (id, newTime) => {
