@@ -2,10 +2,10 @@ import "../MealsloginPage/MealsloginPage.css";
 import Header from "../Shared/Header/Header";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
-import {useMutation, useQuery} from "react-query";
+import {useMutation, useQuery, useQueryClient} from "react-query";
 import { getUserInfo } from "../Shared/API/Auth.js";
 import ScrollToTop from "../Shared/Misc/ScrollToTop.jsx";
-import {getIngredients, getMeal, saveMeal} from "../Shared/API/Meals.js";
+import {getIngredients, getMeal, getNutrientAmount, saveMeal} from "../Shared/API/Meals.js";
 import * as PropTypes from "prop-types";
 import axios from "axios";
 
@@ -58,6 +58,7 @@ RecipeIngredient.propTypes = {
 };
 
 function Mealsloginpage() {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   let { mealId } = useParams();
@@ -92,8 +93,10 @@ function Mealsloginpage() {
     mutationFn: async ({ meal, id }) => {
       return await saveMeal(meal, id);
     },
-    onSuccess: (data) => {
-      navigate("/mealslogin/" + data.id);
+    onSuccess: async (data) => {
+      await queryClient.invalidateQueries(["meal", data.id]);
+      await queryClient.invalidateQueries("meals");
+      navigate("/mealslogin/" + data.id, { replace: true });
     }
   });
 
@@ -166,40 +169,6 @@ function Mealsloginpage() {
 
     const id = (mealId === "0") ? null : mealId;
     await saveMealMutation.mutate({ meal, id });
-  }
-
-  const getNutrientAmount = (ingredient, name, unit) => {
-    const get = (name) => {
-      for (const nutrient of ingredient.nutrients) {
-        if (nutrient.name === name && nutrient.unit === unit) {
-          return nutrient.amount;
-        }
-      }
-
-      return null;
-    }
-
-    let names = [];
-    if (name === "Energy") {
-      names = ["Energy (Atwater Specific Factors)", "Energy (Atwater General Factors)", "Energy"];
-    } else if (name === "Carbohydrate") {
-      names = ["Carbohydrate, by summation", "Carbohydrate, by difference"];
-    } else if (name === "Fat") {
-      names = ["Total fat (NLEA)", "Total lipid (fat)"];
-    } else {
-      names = [name];
-    }
-
-    const multiplier = Number(ingredient.count) / 100;
-
-    for (const name of names) {
-      const value = get(name);
-      if (value) {
-        return value * multiplier;
-      }
-    }
-
-    return 0;
   }
 
   const macros = {
