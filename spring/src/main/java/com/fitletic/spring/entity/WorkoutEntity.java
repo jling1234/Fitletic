@@ -1,4 +1,4 @@
-package com.fitletic.spring.entity;
+package com.fitletic.spring.Entity;
 import lombok.Data;
 import lombok.Builder;
 import org.springframework.data.annotation.Id;

@@ -1,7 +1,7 @@
 package com.fitletic.spring.Controller;
 
 import com.fitletic.spring.Repository.WorkoutRepository;
-import com.fitletic.spring.entity.WorkoutEntity;
+import com.fitletic.spring.Entity.WorkoutEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

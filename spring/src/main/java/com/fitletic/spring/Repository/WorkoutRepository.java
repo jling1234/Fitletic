@@ -1,6 +1,6 @@
 package com.fitletic.spring.Repository;
 
-import com.fitletic.spring.entity.WorkoutEntity;
+import com.fitletic.spring.Entity.WorkoutEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
