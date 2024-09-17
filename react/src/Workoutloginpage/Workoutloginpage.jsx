@@ -233,7 +233,7 @@ function Workoutloginpage() {
     console.log(exercises);
   };
 
-  const [workoutId,setWorkoutId]=useState("");
+let newWorkoutId;
 
   //when save button is clicked
   const handleSaveWorkout = async (event) => {
@@ -247,26 +247,29 @@ function Workoutloginpage() {
          {
            headers: {Authorization: "Bearer " + getToken()},
          });
-     setWorkoutId(response.data.id);
+
      console.log(response);
-     console.log(workoutId);
+     newWorkoutId=response.data.id;
+
    }catch (error){
      console.log("Error: ",error);
    }
+   console.log(newWorkoutId);
    try {
+       console.log("Entered 2nd block")
      for(const item of exercises)
       {
-        const response = await axios.post("http://localhost:8080/userExercise/save",
+        const response1 = await axios.post("http://localhost:8080/userExercise/save",
             {
               userId: getUserInfo.id,
-              workoutId: workoutId,
+              workoutId: newWorkoutId,
               exerciseId:item.exerciseId,
               time:item.time,
             },
             {
               headers: {Authorization: "Bearer " + getToken()},
             });
-        console.log(response.data);
+        console.log(response1.data);
       }
     }catch (error) {
       console.log("Error: ",error);

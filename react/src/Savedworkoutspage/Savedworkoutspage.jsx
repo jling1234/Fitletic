@@ -44,20 +44,26 @@ function Rectanglebox() {
   useEffect(() => {
     handleFetchWorkouts();
   }, []);
-    const [calories,setCalories] = useState(0);
+
+   const [calories,setCalories] = useState(0);
     const handleAddLoggedWorkout = async (routineId) => {
       try{
           const response= await axios.get(
               "http://localhost:8080/userExercise/getCalories",
               {
-                  headers: { Authorization: "Bearer " + getToken() },
-              }
-              );
+                 params:{ workoutId: routineId,
+                 },
+
+                  headers: { Authorization: "Bearer " + getToken()},
+              });
           setCalories(response.data);
+          console.log(response);
+          console.log(calories);
       }catch (error){
           console.log("Error: ",error);
       }
     };
+
 
   return (
     <>
@@ -79,9 +85,6 @@ function Rectanglebox() {
 }
 
 function Plusbutton({routineId,onAdd}) {
-
-
-
     return (
     <>
       <button type="button" className="plus-button"  onClick={() => onAdd(routineId)}>

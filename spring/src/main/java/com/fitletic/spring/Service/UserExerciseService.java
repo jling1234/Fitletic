@@ -15,8 +15,7 @@ public class UserExerciseService {
      this.userExerciseRepository = userExerciseRepository;
 
  }
- public UserExercise createUserExercise(UserExercise userExercise, User user) {
-     userExercise.setUserId(user.getId());
+ public UserExercise createUserExercise(UserExercise userExercise) {
      return userExerciseRepository.save(userExercise);
  }
 

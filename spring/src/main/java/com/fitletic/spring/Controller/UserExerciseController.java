@@ -33,13 +33,12 @@ public class UserExerciseController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/save")
     public ResponseEntity<UserExercise> saveUserExercise(@RequestBody UserExercise userExercise) {
-        User user = userService.getAuthenticatedUser();
-        return ResponseEntity.ok(userExerciseService.createUserExercise(userExercise, user));
+        return ResponseEntity.ok(userExerciseService.createUserExercise(userExercise));
     }
 
     @CrossOrigin(origins = "*", methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE}, allowedHeaders = "*")
     @GetMapping("/getCalories")
-    public ResponseEntity<Integer> getCalories(@RequestBody String workoutId)
+    public ResponseEntity<Integer> getCalories(@RequestParam String workoutId)
     {
 
         List<UserExercise> userExercises=userExerciseService.getUserExercises(workoutId);
