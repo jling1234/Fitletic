@@ -33,7 +33,7 @@ public class WorkoutController {
         return ResponseEntity.ok(workoutService.createWorkout(workout,user));
     }
     @CrossOrigin(origins = "*", methods ={RequestMethod.POST,RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE}, allowedHeaders = "*")
-    @PostMapping("/getWorkouts")
+    @GetMapping("/getWorkouts")
     public ResponseEntity<List<Workout>> getWorkouts() {
         User user = userService.getAuthenticatedUser();
         return ResponseEntity.ok(workoutService.getAllWorkouts(user));

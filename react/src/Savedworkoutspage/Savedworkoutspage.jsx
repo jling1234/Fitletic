@@ -2,6 +2,7 @@ import Header from "../Shared/Header/Header";
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import "./Savedworkoutspage.css";
+import {getToken} from "../Shared/LocalDetails/LocalDetails.jsx"
 import {
   BuildANewRoutineButton,
   WorkoutCalorieTracker,
@@ -29,7 +30,7 @@ function Rectanglebox() {
       const response = await axios.get(
         "http://localhost:8080/workout/getWorkouts",
         {
-          headers: { Authorization: "Bearer " + getToken() },
+          headers: { Authorization: "Bearer " + getToken()},
         }
       );
 
@@ -43,6 +44,21 @@ function Rectanglebox() {
   useEffect(() => {
     handleFetchWorkouts();
   }, []);
+    const [calories,setCalories] = useState(0);
+    const handleAddLoggedWorkout = async (routineId) => {
+      try{
+          const response= await axios.get(
+              "http://localhost:8080/userExercise/getCalories",
+              {
+                  headers: { Authorization: "Bearer " + getToken() },
+              }
+              );
+          setCalories(response.data);
+      }catch (error){
+          console.log("Error: ",error);
+      }
+    };
+
   return (
     <>
       {/* Make this dynamic ie the same number of containers for the same number of saved routines */}
@@ -50,11 +66,10 @@ function Rectanglebox() {
         {workout.map((exercise, index) => (
           <div key={index}>
             <div className="saved-routines-inputfield-container">
-              {/* dunno yet how to generate the stored exercise name */}
               <Savedroutines routineName={exercise.workoutName} />
             </div>
             <div className="plus-button-container">
-              <Plusbutton />
+              <Plusbutton routineId={exercise.id} onAdd={handleAddLoggedWorkout} />
             </div>
           </div>
         ))}
@@ -63,10 +78,13 @@ function Rectanglebox() {
   );
 }
 
-function Plusbutton() {
-  return (
+function Plusbutton({routineId,onAdd}) {
+
+
+
+    return (
     <>
-      <button type="button" className="plus-button">
+      <button type="button" className="plus-button"  onClick={() => onAdd(routineId)}>
         <p>+</p>
       </button>
     </>
@@ -100,23 +118,7 @@ function DumbbellsImg() {
 }
 
 export default function Savedworkoutspage() {
-  const [workout, setWorkout] = useState([]);
 
-  const handleFetchWorkouts = async (event) => {
-    try {
-      const response = await axios.get(
-        "http://localhost:8080/workout/getWorkouts",
-        {
-          headers: { Authorization: "Bearer " + getToken() },
-        }
-      );
-
-      setWorkout(response.data);
-      console.log(workout);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
   return (
     <>
       <Header />
