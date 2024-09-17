@@ -64,7 +64,7 @@ function Rectanglebox() {
       {/* Make this dynamic ie the same number of containers for the same number of saved routines */}
       <div className="rectangle-box">
         {workout.map((exercise, index) => (
-          <div key={index}>
+          <div key={index} className="savedroutines">
             <div className="saved-routines-inputfield-container">
               <Savedroutines routineName={exercise.workoutName} />
             </div>
