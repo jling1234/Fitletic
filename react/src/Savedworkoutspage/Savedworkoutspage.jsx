@@ -1,9 +1,14 @@
 import Header from "../Shared/Header/Header";
 import { Link } from "react-router-dom";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
 import "./Savedworkoutspage.css";
-import { BuildANewRoutineButton, WorkoutCalorieTracker } from "../Workoutspage/Workoutspage";
+import {
+  BuildANewRoutineButton,
+  WorkoutCalorieTracker,
+} from "../Workoutspage/Workoutspage";
 import { FaArrowLeft } from "react-icons/fa";
+import axios from "axios";
+
 export function BackArrow() {
   return (
     <Link to={"/workout"} className="back-arrow">
@@ -17,45 +22,42 @@ function Savedroutineslabel() {
 }
 
 function Rectanglebox() {
+  const [workout, setWorkout] = useState([]);
+
+  const handleFetchWorkouts = async (event) => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/workout/getWorkouts",
+        {
+          headers: { Authorization: "Bearer " + getToken() },
+        }
+      );
+
+      setWorkout(response.data);
+      console.log(workout);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    handleFetchWorkouts();
+  }, []);
   return (
     <>
+      {/* Make this dynamic ie the same number of containers for the same number of saved routines */}
       <div className="rectangle-box">
-        <div className="saved-routines-inputfield-container">
-          <Savedroutines />
-        </div>
-        <div className="plus-button-container">
-          <Plusbutton />
-        </div>
-        <div className="saved-routines-inputfield-container">
-          <Savedroutines />
-        </div>
-        <div className="plus-button-container">
-          <Plusbutton />
-        </div>
-        <div className="saved-routines-inputfield-container">
-          <Savedroutines />
-        </div>
-        <div className="plus-button-container">
-          <Plusbutton />
-        </div>
-        <div className="saved-routines-inputfield-container">
-          <Savedroutines />
-        </div>
-        <div className="plus-button-container">
-          <Plusbutton />
-        </div>
-        <div className="saved-routines-inputfield-container">
-          <Savedroutines />
-        </div>
-        <div className="plus-button-container">
-          <Plusbutton />
-        </div>
-        <div className="saved-routines-inputfield-container">
-          <Savedroutines />
-        </div>
-        <div className="plus-button-container">
-          <Plusbutton />
-        </div>
+        {workout.map((exercise, index) => (
+          <div key={index}>
+            <div className="saved-routines-inputfield-container">
+              {/* dunno yet how to generate the stored exercise name */}
+              <Savedroutines routineName={exercise.workoutName} />
+            </div>
+            <div className="plus-button-container">
+              <Plusbutton />
+            </div>
+          </div>
+        ))}
       </div>
     </>
   );
@@ -71,10 +73,15 @@ function Plusbutton() {
   );
 }
 
-function Savedroutines() {
+function Savedroutines({ routineName }) {
   return (
     <>
-      <input type="text" className="saved-routines-inputfield" readOnly></input>
+      <input
+        type="text"
+        value={routineName}
+        className="saved-routines-inputfield"
+        readOnly
+      ></input>
     </>
   );
 }
@@ -93,14 +100,16 @@ function DumbbellsImg() {
 }
 
 export default function Savedworkoutspage() {
-  const [workout,setWorkout] = useState([]);
+  const [workout, setWorkout] = useState([]);
 
-  const handleFetchWorkouts=async(event)=>
-  {
+  const handleFetchWorkouts = async (event) => {
     try {
-      const response = await axios.get("http://localhost:8080/workout/getWorkouts", {
-        headers: {Authorization:"Bearer " + getToken()}
-      });
+      const response = await axios.get(
+        "http://localhost:8080/workout/getWorkouts",
+        {
+          headers: { Authorization: "Bearer " + getToken() },
+        }
+      );
 
       setWorkout(response.data);
       console.log(workout);
