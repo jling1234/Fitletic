@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 import { HomepageLinkLogo } from "../Logo/Logo.jsx";
 
 import "./Header.css";
+import PropTypes from "prop-types";
 
-export default function Header() {
+export default function Header({ headerRef }) {
   const opacityFillStart = 0;
   const opacityFillStop = 400;
 
@@ -34,7 +35,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="header">
+    <header ref={headerRef} className="header">
       <div ref={backgroundRef} className="header-background"></div>
       <div className="header-content">
         <HomepageLinkLogo></HomepageLinkLogo>
@@ -59,3 +60,10 @@ export default function Header() {
     </header>
   );
 }
+
+Header.propTypes = {
+  headerRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  ]),
+};

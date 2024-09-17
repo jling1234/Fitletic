@@ -207,6 +207,7 @@ MyMeals.propTypes = {
 function Mealspage() {
   const navigate = useNavigate();
   const myMealsRef = useRef(null);
+  const headerRef = useRef(null);
 
   const { data: userInfo, isLoading: userInfoIsLoading } = useQuery(
     "userInfo",
@@ -237,7 +238,7 @@ function Mealspage() {
 
   return (
     <>
-      <Header />
+      <Header headerRef={headerRef} />
       <div className="toppage-container-mp">
         <div className="mealspage-image-container">
           <div className="accessories-container-mp">
@@ -252,7 +253,17 @@ function Mealspage() {
               <div className="Mealslog">
                 <button
                   type="button"
-                  onClick={() => myMealsRef.current.scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() => {
+                    const customOffset = 10;
+                    const headerOffset = headerRef.current.offsetHeight;
+                    const elementPosition = myMealsRef.current.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.scrollY - headerOffset - customOffset;
+
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: "smooth"
+                    })
+                  }}
                 >
                   <p>Log a Meal</p>
                   <svg
