@@ -205,7 +205,7 @@
   flex: 1;
 }
 
-.saved-meals > div:nth-child(2) {
+.saved-meals > div:nth-child(3) {
   border-top: 2px solid black;
   padding-top: 1rem;
   margin-top: auto;
@@ -235,4 +235,57 @@
   padding: 0;
   position: absolute;
   width: 1px;
+}
+
+.delete-meal-dialog {
+  margin: auto;
+  border: 1px solid black;
+  border-radius: 15px;
+
+  padding: 1rem;
+}
+
+.delete-meal-dialog::backdrop {
+  background-color: black;
+  opacity: 0.3;
+}
+
+
+.dialog-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--font-size-small);
+  gap: 1rem;
+}
+
+.dialog-header {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+
+.dialog-button-wrapper {
+  margin-left: auto;
+  display: flex;
+  gap: 1rem;
+}
+
+.dialog-button-wrapper button {
+  border: 1px solid black;
+  border-radius: 7px;
+  padding: 0.10rem 0.75rem;
+}
+
+.dialog-button-wrapper .dialog-confirm-button {
+  border-color: var(--color-accent);
+  color: white;
+  background: var(--color-accent);
 }

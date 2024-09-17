@@ -15,6 +15,65 @@ import {
 } from "../Shared/API/Meals.js";
 import PropTypes from "prop-types";
 
+function DeleteMealDialog({ meal, deleteMealDialogRef, deleteMealCallback }) {
+  const closeDialog = () => {
+    deleteMealDialogRef.current.close();
+  };
+
+  return (
+    <dialog className="delete-meal-dialog" ref={deleteMealDialogRef}>
+      <div className="dialog-content-wrapper">
+        <div className="dialog-header">
+          <h2>Delete Meal</h2>
+          <button className="dialog-close-button" onClick={closeDialog}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#000000"
+            >
+              <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+            </svg>
+          </button>
+        </div>
+        <div className="dialog-content">
+          <p>
+            Are you sure you want to delete the meal &apos;{meal.name}&apos;?
+          </p>
+          <p>
+            This action cannot be undone, and any calories logged will be
+            removed.
+          </p>
+        </div>
+        <div className="dialog-button-wrapper">
+          <button onClick={deleteMealCallback} className="dialog-confirm-button">Confirm</button>
+          <button onClick={closeDialog}>Cancel</button>
+        </div>
+      </div>
+    </dialog>
+  );
+}
+
+DeleteMealDialog.propTypes = {
+  meal: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    servings: PropTypes.number.isRequired,
+    ingredients: PropTypes.arrayOf(
+      PropTypes.shape({
+        ingredientId: PropTypes.string.isRequired,
+        count: PropTypes.number.isRequired,
+      }),
+    ).isRequired,
+  }).isRequired,
+  deleteMealDialogRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  ]),
+  deleteMealCallback: PropTypes.func.isRequired
+};
+
 export function MakeNewRecipeButton() {
   return (
     <>
@@ -31,6 +90,8 @@ function MealCard({ meal, ingredients }) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
+  const deleteMealDialogRef = useRef(null);
+
   const deleteMealMutation = useMutation({
     mutationFn: async (id) => {
       return await deleteMeal(id);
@@ -39,8 +100,12 @@ function MealCard({ meal, ingredients }) {
       await queryClient.invalidateQueries(["meal", id]);
       await queryClient.invalidateQueries("meals");
       await queryClient.invalidateQueries("loggedMeals");
-    }
+    },
   });
+
+  const onDeleteMeal = async () => {
+    deleteMealDialogRef.current.showModal();
+  };
 
   const logMealMutation = useMutation({
     mutationFn: async (id) => {
@@ -48,20 +113,24 @@ function MealCard({ meal, ingredients }) {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries("loggedMeals");
-    }
-  })
+    },
+  });
 
-  const onLogMeal = async (id) => {
-    await logMealMutation.mutate(id);
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
+  const onLogMeal = async () => {
+    await logMealMutation.mutate(meal.id);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const getCalories = (meal) => {
     let calories = 0;
     for (const ingredient of ingredients) {
       for (const mealIngredient of meal.ingredients) {
         if (mealIngredient.ingredientId === ingredient.id) {
-          calories += getNutrientAmount({ ...ingredient, count: mealIngredient.count }, "Energy", "kcal");
+          calories += getNutrientAmount(
+            { ...ingredient, count: mealIngredient.count },
+            "Energy",
+            "kcal",
+          );
         }
       }
     }
@@ -72,6 +141,14 @@ function MealCard({ meal, ingredients }) {
 
   return (
     <div className="saved-meals">
+      <DeleteMealDialog
+        meal={meal}
+        deleteMealDialogRef={deleteMealDialogRef}
+        deleteMealCallback={async () =>
+          await deleteMealMutation.mutate(meal.id)
+        }
+      />
+
       <div>
         <p>{meal.name}</p>
         <button
@@ -88,10 +165,7 @@ function MealCard({ meal, ingredients }) {
             <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
           </svg>
         </button>
-        <button
-          type="button"
-          onClick={async () => await deleteMealMutation.mutate(meal.id)}
-        >
+        <button type="button" onClick={onDeleteMeal}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="24px"
@@ -105,7 +179,7 @@ function MealCard({ meal, ingredients }) {
       </div>
       <div>
         <p className="meal-calorie-count">{getCalories(meal)} kcal</p>
-        <button type="button" onClick={async () => await onLogMeal(meal.id)}>
+        <button type="button" onClick={onLogMeal}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="24px"
