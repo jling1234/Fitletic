@@ -28,9 +28,9 @@
   align-items: center;
 }
 
-.meals-label p {
-  font-size: 70px;
-  font-family: "Anton";
+.meals-label h1 {
+  font-size: 4rem;
+  font-family: "Anton", sans-serif;
   color: black;
 }
 
@@ -97,15 +97,62 @@
 }
 
 .my-meals-heading {
-  margin-bottom: 1rem;
+  margin-inline: auto;
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 2rem;
+  max-width: 50dvw;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.my-meals-heading p {
-  font-family: "Anton";
-  font-size: 35px;
+.my-meals-heading h2 {
+  font-family: "Anton", sans-serif;
+  font-size: 2.5rem;
   font-weight: bold;
-  text-align: center;
-  margin-left: 15px;
+}
+
+.make-a-new-recipe-button {
+  background-color: #ff5f35;
+  border-radius: 9px;
+  cursor: pointer;
+  border: none;
+  min-height: 37px;
+  color: white;
+  font-size: 18px;
+  padding-inline: 1rem;
+}
+
+
+.meal-search-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  max-width: 50dvw;
+  margin-inline: auto;
+  margin-block: 2rem;
+
+  position: relative;
+}
+
+.meal-search-wrapper input {
+  flex: 1;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 0.5rem 1rem 0.25rem;
+}
+
+.meal-search-wrapper input:focus {
+  border-color: var(--color-accent);
+  outline: 1px solid var(--color-accent);
+}
+
+.meal-search-wrapper svg {
+  position: absolute;
+  right: 0.5rem;
+  pointer-events: none;
 }
 
 .saved-meals-flex-container {
@@ -118,11 +165,19 @@
 }
 
 @media (max-width: 1000px) {
+  .my-meals-heading {
+    max-width: 80dvw;
+    flex-wrap: wrap;
+  }
+
+  .meal-search-wrapper {
+    max-width: 80dvw;
+  }
+
   .saved-meals-flex-container {
     grid-template-columns: 1fr;
     max-width: 80dvw;
   }
-  
 }
 
 .saved-meals {
@@ -171,21 +226,13 @@
   font-size: var(--font-size-small);
 }
 
-.make-a-new-recipe-container {
-  margin: 2rem;
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
 }
-
-.make-a-new-recipe-button{
-  background-color: #ff5f35;
-  border-radius: 9px;
-  cursor: pointer;
-  border: none;
-  min-height: 37px;
-  min-width: 20rem;
-}
-
-.make-a-new-recipe-button p {
-  color: white;
-  font-size: 18px;
-}
-

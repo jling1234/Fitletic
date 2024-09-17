@@ -4,7 +4,7 @@ import "../MealsPage/MealsPage.css";
 import {Link, useNavigate} from "react-router-dom";
 import {useMutation, useQuery, useQueryClient} from "react-query";
 import {getUserInfo} from "../Shared/API/Auth.js";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import {
   deleteMeal,
   getIngredients,
@@ -20,7 +20,7 @@ export function MakeNewRecipeButton() {
     <>
       <Link to={"/mealslogin"}>
         <button type="button" className="make-a-new-recipe-button">
-          <p>Make A New Recipe</p>
+         Make A New Recipe
         </button>
       </Link>
     </>
@@ -146,18 +146,52 @@ function MyMeals({ divRef }) {
   const { data: meals } = useQuery("meals", getMeals);
   const { data: ingredients } = useQuery("ingredients", getIngredients);
 
+  const [searchTerm, setSearchTerm] = useState("");
+
+  let filteredMeals = [];
+  if (meals) {
+    filteredMeals = meals.filter((meal) => meal.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  }
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
   return (
     <div ref={divRef} className="bottompage-container-mp">
       <div className="my-meals-heading">
-        <p>MY MEALS</p>
-      </div>
-      <div className="make-a-new-recipe-container">
+        <h2>MY MEALS</h2>
         <MakeNewRecipeButton />
+      </div>
+      <div className="meal-search-wrapper">
+        <label className="visuallyhidden" htmlFor="meal-search">
+          Search Meals:
+        </label>
+        <input
+          type="text"
+          id="meal-search"
+          placeholder="Search for a meal"
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24px"
+          viewBox="0 -960 960 960"
+          width="24px"
+          fill="#000000"
+        >
+          <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
+        </svg>
       </div>
       <ul className="saved-meals-flex-container">
         {ingredients &&
-          meals &&
-          meals.map((meal) => <MealCard key={meal.id} meal={meal} ingredients={ingredients} ></MealCard>)}
+          filteredMeals.map((meal) => (
+            <MealCard
+              key={meal.id}
+              meal={meal}
+              ingredients={ingredients}
+            ></MealCard>
+          ))}
       </ul>
     </div>
   );
@@ -166,9 +200,9 @@ function MyMeals({ divRef }) {
 MyMeals.propTypes = {
   divRef: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-  ])
-}
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  ]),
+};
 
 function Mealspage() {
   const navigate = useNavigate();
@@ -208,7 +242,7 @@ function Mealspage() {
         <div className="mealspage-image-container">
           <div className="accessories-container-mp">
             <div className="meals-label">
-              <p>MEALS</p>
+              <h1>MEALS</h1>
             </div>
             <div className="KcalGained-tracker-and-mealslog">
               <div className="KcalGained-tracker">
