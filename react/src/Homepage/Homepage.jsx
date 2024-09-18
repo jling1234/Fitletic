@@ -1,12 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import Header from "../Shared/Header/Header.jsx";
 import FooterWithWaves from "../Shared/Footer/Footer.jsx";
 
 import "./Homepage.css";
-import {getUserInfo} from "../Shared/API/Auth.js";
-import {useMutation, useQuery, useQueryClient} from "react-query";
-import {setToken} from "../Shared/LocalDetails/LocalDetails.jsx";
+import { getUserInfo } from "../Shared/API/Auth.js";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { setToken } from "../Shared/LocalDetails/LocalDetails.jsx";
 
 function BannerText() {
   const text = "FITLETIC";
@@ -24,13 +24,13 @@ function BannerText() {
       textItems.push(
         <span key={j} className={isColored ? "accent-text" : ""}>
           {text + " "}
-        </span>,
+        </span>
       );
     }
     rowDivs.push(
       <div key={i} className="homepage-banner-text">
         {textItems}
-      </div>,
+      </div>
     );
   }
 
@@ -46,6 +46,31 @@ function Banner() {
 }
 
 function HomepageContent() {
+  let navigate = useNavigate();
+
+  const { data: userInfo } = useQuery("userInfo", getUserInfo);
+
+  const routeChangeMeals = () => {
+    if (userInfo) {
+      navigate("/meals");
+    } else navigate("/login");
+  };
+
+  const routeChangeWorkouts = () => {
+    if (userInfo) navigate("/workout");
+    else navigate("/login");
+  };
+
+  const routeChangeSavedWorkouts = () => {
+    if (userInfo) navigate("/savedworkoutspage");
+    else navigate("/login");
+  };
+
+  const routeChangeMealslogin = () => {
+    if (userInfo) navigate("/mealslogin");
+    else navigate("/login");
+  };
+
   return (
     <section className="homepage-content">
       <div className="homepage-content-intro">
@@ -61,19 +86,35 @@ function HomepageContent() {
       </div>
 
       <div className="homepage-gallery">
-        <button type="button" className="workouts-button">
+        <button
+          type="button"
+          className="workouts-button"
+          onClick={routeChangeWorkouts}
+        >
           <div className="button-text">WORKOUTS</div>
           <div className="button-background"></div>
         </button>
-        <button type="button" className="routines-button">
+        <button
+          type="button"
+          className="routines-button"
+          onClick={routeChangeSavedWorkouts}
+        >
           <div className="button-text">SAVED ROUTINES</div>
           <div className="button-background"></div>
         </button>
-        <button type="button" className="recipes-button">
+        <button
+          type="button"
+          className="recipes-button"
+          onClick={routeChangeMealslogin}
+        >
           <div className="button-text">SAVED RECIPES</div>
           <div className="button-background"></div>
         </button>
-        <button type="button" className="meals-button">
+        <button
+          type="button"
+          className="meals-button"
+          onClick={routeChangeMeals}
+        >
           <div className="button-text">MEALS</div>
           <div className="button-background"></div>
         </button>
@@ -85,22 +126,24 @@ function HomepageContent() {
 function LoginSignupButtonWrapper() {
   const queryClient = useQueryClient();
 
-  const {
-    data: userInfo,
-  } = useQuery("userInfo", getUserInfo);
+  const { data: userInfo } = useQuery("userInfo", getUserInfo);
 
   const handleLogout = async () => {
     setToken("");
     await queryClient.invalidateQueries();
-  }
+  };
 
   if (userInfo) {
-    return <div className="homepage-button-wrapper">
-      <Link to={"/"}>Profile</Link>
-      <button type={"button"} onClick={handleLogout}>Logout</button>
-    </div>
+    return (
+      <div className="homepage-button-wrapper">
+        <Link to={"/"}>Profile</Link>
+        <button type={"button"} onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
+    );
   }
-  
+
   return (
     <div className="homepage-button-wrapper">
       <Link to={"/login"}>Login</Link>
