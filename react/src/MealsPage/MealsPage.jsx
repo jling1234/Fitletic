@@ -466,6 +466,7 @@ function Mealspage({ showLogs }) {
       calories += getLoggedCalories(loggedMeal);
     }
   }
+  calories = Number(calories.toFixed(2));
 
   return (
     <>
