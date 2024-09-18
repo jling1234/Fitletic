@@ -9,6 +9,7 @@ import {
 } from "../Workoutspage/Workoutspage";
 import { FaArrowLeft } from "react-icons/fa";
 import axios from "axios";
+import {getAPIBaseUrl} from "../Shared/API/Env.js";
 
 export function BackArrow() {
   return (
@@ -28,7 +29,7 @@ function Rectanglebox() {
   const handleFetchWorkouts = async (event) => {
     try {
       const response = await axios.get(
-        "http://localhost:8080/workout/getWorkouts",
+        getAPIBaseUrl() + "/workout/getWorkouts",
         {
           headers: { Authorization: "Bearer " + getToken()},
         }
@@ -49,7 +50,7 @@ function Rectanglebox() {
     const handleAddLoggedWorkout = async (routineId) => {
       try{
           const response= await axios.get(
-              "http://localhost:8080/userExercise/getCalories",
+              getAPIBaseUrl() + "/userExercise/getCalories",
               {
                  params:{ workoutId: routineId,
                  },

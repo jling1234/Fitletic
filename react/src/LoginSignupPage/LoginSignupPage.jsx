@@ -8,6 +8,7 @@ import {setToken, setUserRecord} from "../Shared/LocalDetails/LocalDetails.jsx";
 import PropTypes from "prop-types";
 import {useQuery, useQueryClient} from "react-query";
 import {getUserInfo} from "../Shared/API/Auth.js";
+import {getAPIBaseUrl} from "../Shared/API/Env.js";
 
 function LoginForm() {
     const queryClient = useQueryClient();
@@ -20,7 +21,7 @@ function LoginForm() {
     const onLoginSubmit = async (event) => {
         event.preventDefault();
         try {
-            const loginResponse = await axios.post("http://localhost:8080/auth/login", {
+            const loginResponse = await axios.post(getAPIBaseUrl() + "/auth/login", {
               username: username,
               password: password,
             });
@@ -89,12 +90,12 @@ function SignUpForm() {
     const onSignUpSubmit = async (event) => {
         event.preventDefault();
         try {
-            const registerResponse = await axios.post("http://localhost:8080/auth/signup", {
+            const registerResponse = await axios.post(getAPIBaseUrl() + "/auth/signup", {
                 username: username,
                 password: password,
             });
 
-            const loginResponse = await axios.post("http://localhost:8080/auth/login", {
+            const loginResponse = await axios.post(getAPIBaseUrl() + "/auth/login", {
                 username: username,
                 password: password,
             });

@@ -7,6 +7,7 @@ import "./Homepage.css";
 import { getUserInfo } from "../Shared/API/Auth.js";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { setToken } from "../Shared/LocalDetails/LocalDetails.jsx";
+import {getAPIBaseUrl} from "../Shared/API/Env.js";
 
 function BannerText() {
   const text = "FITLETIC";
