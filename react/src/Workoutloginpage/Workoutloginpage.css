@@ -8,15 +8,8 @@
   font-family: "Josefin Sans", sans-serif;
 }
 
-.left-container-workout-loginpage {
-  margin-left: 2rem;
-}
-
 .back-arrow {
-}
-
-.routine-label-saved-exercises-add-exercise {
-  margin-top: 2rem;
+  margin-left: 10px;
 }
 
 .right-container-workout-loginpage {
@@ -27,43 +20,85 @@
   background-size: cover;
   border-radius: 20px;
   margin-inline: 4rem;
+  transition: transform 1s ease-in-out, opacity 1s ease-in-out;
 }
-/*
-.right-container-workout-loginpage .text-in-the-picture {
-  position: absolute;
-  top: 50%;
-  right: 15px;
-  color: #fff;
-  text-align: right;
-  font-family: "Anton";
-  font-size: 40px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  margin-right: 15px;
-  
+
+.right-container-workout-loginpage.hide {
+  transform: scale(0);
+  opacity: 0;
 }
-  */
+
+.searchbar-container {
+  margin-top: 45px; /* Adjust depending on your layout */
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.searchbar-container.show {
+  opacity: 1;
+  background-color: white;
+  width: 99.9%;
+  border-radius: 7px;
+  height: 2.4rem;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  background-color: transparent;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.5rem;
+  height: 100%;
+  width: 100%;
+  margin-left: 5px;
+}
+
+.dropdown-list {
+  position: relative;
+  min-width: fit-content;
+  height: fit-content;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  max-height: 200px; /* Set a max height for scrollability */
+  overflow-y: auto; /* Enable scrolling if there are too many items */
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+/* Styling for each list item */
+ul.dropdown-list li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+/* Hover effect for list items */
+ul.dropdown-list li:hover {
+  background-color: #f0f0f0;
+}
+
+/* Highlight the input field when focused */
+input[type="text"]:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
 
 .workout-loginpage-container {
   margin-top: 10px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
+
 .back-arrow {
   text-decoration: none;
   color: black;
 }
 
-.routine-label p {
-  font-family: "Anton";
-  font-size: 30px;
-  font-weight: bold;
-  text-align: left;
-  margin-left: 2.7rem;
-}
-
-.routine-save-delete-sign {
+.routine--delete-sign {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
@@ -72,7 +107,23 @@
   text-align: right;
 }
 
-.save-delete-sign .save-button {
+.left-hand-side {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: baseline;
+  justify-items: center;
+  row-gap: 50px;
+}
+
+.routine-label {
+  font-family: "Anton";
+  font-size: 35px;
+  font-weight: bold;
+  margin-left: 5vw;
+  justify-self: left;
+}
+
+.save-button {
   border: none;
   background-color: white;
   background-image: url("./Assets/diskette.png");
@@ -84,13 +135,15 @@
   font-size: 2.4rem;
   min-height: 1.2rem;
   min-width: 1.2rem;
+  grid-column: 4/5;
+  justify-self: end;
 }
 
-.save-delete-sign .delete-button {
+.delete-button {
   border: none;
   cursor: pointer;
   background-color: white;
-  margin-left: 5px;
+  margin: 4px 0px 0px 10px;
   background-image: url("./Assets/bin.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -98,57 +151,78 @@
   filter: brightness(0.9) contrast(1.9);
   min-height: 1.2rem;
   min-width: 1.2rem;
+  margin-bottom: 1.5rem;
 }
 
-.saved-exercises {
-  display: grid;
-  margin-top: 5rem;
-  margin-left: 2.7rem;
-}
-
-.saved-exercises .added-exercise {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  padding: 1rem;
+.addexercise-container {
   text-align: center;
-  justify-content: center;
-}
-.saved-exercises .added-exercise input {
-  border-radius: 5px;
-  background-color: #fda172;
-  font-size: large;
 }
 
-.saved-exercises .added-exercise input::placeholder {
-  color: black;
-  font-size: medium;
-  text-align: left;
-  padding-left: 0.8rem;
-}
-
-.add-an-exercise {
-  text-align: center;
-  margin-top: 10rem;
-}
-
-.add-an-exercise button {
+.addexercise-button {
   background-color: #fb5d35;
   border: none;
   border-radius: 5px;
   min-width: 19rem;
   cursor: pointer;
+  grid-column: 1 / 3;
+  justify-self: center;
 }
 
-.add-an-exercise p {
+.addexercise-button .button-text {
   color: white;
   font-size: 20px;
+  text-align: center;
 }
 
-.saved-exercises-add-exercise-container {
-  margin-top: 10rem;
-  justify-content: center;
+.savedexercises-form {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
 }
 
-.saved-exercises ul {
-  list-style: none;
+.left-hand-side ul {
+  list-style-type: none;
+}
+
+.menu-button {
+  background-color: white;
+  border: none;
+  flex-grow: 0;
+  width: 20px;
+  justify-self: center;
+  padding: 0;
+  position: relative;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+}
+
+.added-exercise-input-field {
+  background-color: #fda172;
+  border-radius: 5px;
+  flex-grow: 2;
+  max-width: 100%;
+  width: 20vw;
+  margin-bottom: 1.5rem;
+}
+
+.time-field {
+  flex-grow: 0;
+  width: 3rem;
+  background-color: #fda172;
+  border-radius: 5px;
+  margin-inline-start: 1.5vw;
+  margin-inline-end: 1vw;
+  margin-bottom: 1.5rem;
+}
+
+.time-field::placeholder {
+  color: black;
+  text-align: right;
+}
+
+.min {
+  position: absolute;
+  display: block;
+  top: 256px;
+  left: 440px;
 }
