@@ -4,7 +4,7 @@ import "../MealsPage/MealsPage.css";
 import {Link, useNavigate} from "react-router-dom";
 import {useMutation, useQuery, useQueryClient} from "react-query";
 import {getUserInfo} from "../Shared/API/Auth.js";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import {
   deleteMeal,
   getIngredients,
@@ -15,12 +15,71 @@ import {
 } from "../Shared/API/Meals.js";
 import PropTypes from "prop-types";
 
+function DeleteMealDialog({ meal, deleteMealDialogRef, deleteMealCallback }) {
+  const closeDialog = () => {
+    deleteMealDialogRef.current.close();
+  };
+
+  return (
+    <dialog className="delete-meal-dialog" ref={deleteMealDialogRef}>
+      <div className="dialog-content-wrapper">
+        <div className="dialog-header">
+          <h2>Delete Meal</h2>
+          <button className="dialog-close-button" onClick={closeDialog}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#000000"
+            >
+              <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+            </svg>
+          </button>
+        </div>
+        <div className="dialog-content">
+          <p>
+            Are you sure you want to delete the meal &apos;{meal.name}&apos;?
+          </p>
+          <p>
+            This action cannot be undone, and any calories logged will be
+            removed.
+          </p>
+        </div>
+        <div className="dialog-button-wrapper">
+          <button onClick={deleteMealCallback} className="dialog-confirm-button">Confirm</button>
+          <button onClick={closeDialog}>Cancel</button>
+        </div>
+      </div>
+    </dialog>
+  );
+}
+
+DeleteMealDialog.propTypes = {
+  meal: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    servings: PropTypes.number.isRequired,
+    ingredients: PropTypes.arrayOf(
+      PropTypes.shape({
+        ingredientId: PropTypes.string.isRequired,
+        count: PropTypes.number.isRequired,
+      }),
+    ).isRequired,
+  }).isRequired,
+  deleteMealDialogRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  ]),
+  deleteMealCallback: PropTypes.func.isRequired
+};
+
 export function MakeNewRecipeButton() {
   return (
     <>
       <Link to={"/mealslogin"}>
         <button type="button" className="make-a-new-recipe-button">
-          <p>Make A New Recipe</p>
+         Make A New Recipe
         </button>
       </Link>
     </>
@@ -31,6 +90,8 @@ function MealCard({ meal, ingredients }) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
+  const deleteMealDialogRef = useRef(null);
+
   const deleteMealMutation = useMutation({
     mutationFn: async (id) => {
       return await deleteMeal(id);
@@ -39,8 +100,12 @@ function MealCard({ meal, ingredients }) {
       await queryClient.invalidateQueries(["meal", id]);
       await queryClient.invalidateQueries("meals");
       await queryClient.invalidateQueries("loggedMeals");
-    }
+    },
   });
+
+  const onDeleteMeal = async () => {
+    deleteMealDialogRef.current.showModal();
+  };
 
   const logMealMutation = useMutation({
     mutationFn: async (id) => {
@@ -48,20 +113,24 @@ function MealCard({ meal, ingredients }) {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries("loggedMeals");
-    }
-  })
+    },
+  });
 
-  const onLogMeal = async (id) => {
-    await logMealMutation.mutate(id);
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
+  const onLogMeal = async () => {
+    await logMealMutation.mutate(meal.id);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const getCalories = (meal) => {
     let calories = 0;
     for (const ingredient of ingredients) {
       for (const mealIngredient of meal.ingredients) {
         if (mealIngredient.ingredientId === ingredient.id) {
-          calories += getNutrientAmount({ ...ingredient, count: mealIngredient.count }, "Energy", "kcal");
+          calories += getNutrientAmount(
+            { ...ingredient, count: mealIngredient.count },
+            "Energy",
+            "kcal",
+          );
         }
       }
     }
@@ -72,6 +141,14 @@ function MealCard({ meal, ingredients }) {
 
   return (
     <div className="saved-meals">
+      <DeleteMealDialog
+        meal={meal}
+        deleteMealDialogRef={deleteMealDialogRef}
+        deleteMealCallback={async () =>
+          await deleteMealMutation.mutate(meal.id)
+        }
+      />
+
       <div>
         <p>{meal.name}</p>
         <button
@@ -88,10 +165,7 @@ function MealCard({ meal, ingredients }) {
             <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
           </svg>
         </button>
-        <button
-          type="button"
-          onClick={async () => await deleteMealMutation.mutate(meal.id)}
-        >
+        <button type="button" onClick={onDeleteMeal}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="24px"
@@ -105,7 +179,7 @@ function MealCard({ meal, ingredients }) {
       </div>
       <div>
         <p className="meal-calorie-count">{getCalories(meal)} kcal</p>
-        <button type="button" onClick={async () => await onLogMeal(meal.id)}>
+        <button type="button" onClick={onLogMeal}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="24px"
@@ -146,18 +220,52 @@ function MyMeals({ divRef }) {
   const { data: meals } = useQuery("meals", getMeals);
   const { data: ingredients } = useQuery("ingredients", getIngredients);
 
+  const [searchTerm, setSearchTerm] = useState("");
+
+  let filteredMeals = [];
+  if (meals) {
+    filteredMeals = meals.filter((meal) => meal.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  }
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
   return (
     <div ref={divRef} className="bottompage-container-mp">
       <div className="my-meals-heading">
-        <p>MY MEALS</p>
-      </div>
-      <div className="make-a-new-recipe-container">
+        <h2>MY MEALS</h2>
         <MakeNewRecipeButton />
+      </div>
+      <div className="meal-search-wrapper">
+        <label className="visuallyhidden" htmlFor="meal-search">
+          Search Meals:
+        </label>
+        <input
+          type="text"
+          id="meal-search"
+          placeholder="Search for a meal"
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24px"
+          viewBox="0 -960 960 960"
+          width="24px"
+          fill="#000000"
+        >
+          <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
+        </svg>
       </div>
       <ul className="saved-meals-flex-container">
         {ingredients &&
-          meals &&
-          meals.map((meal) => <MealCard key={meal.id} meal={meal} ingredients={ingredients} ></MealCard>)}
+          filteredMeals.map((meal) => (
+            <MealCard
+              key={meal.id}
+              meal={meal}
+              ingredients={ingredients}
+            ></MealCard>
+          ))}
       </ul>
     </div>
   );
@@ -166,13 +274,14 @@ function MyMeals({ divRef }) {
 MyMeals.propTypes = {
   divRef: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-  ])
-}
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  ]),
+};
 
 function Mealspage() {
   const navigate = useNavigate();
   const myMealsRef = useRef(null);
+  const headerRef = useRef(null);
 
   const { data: userInfo, isLoading: userInfoIsLoading } = useQuery(
     "userInfo",
@@ -203,12 +312,12 @@ function Mealspage() {
 
   return (
     <>
-      <Header />
+      <Header headerRef={headerRef} />
       <div className="toppage-container-mp">
         <div className="mealspage-image-container">
           <div className="accessories-container-mp">
             <div className="meals-label">
-              <p>MEALS</p>
+              <h1>MEALS</h1>
             </div>
             <div className="KcalGained-tracker-and-mealslog">
               <div className="KcalGained-tracker">
@@ -218,7 +327,17 @@ function Mealspage() {
               <div className="Mealslog">
                 <button
                   type="button"
-                  onClick={() => myMealsRef.current.scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() => {
+                    const customOffset = 10;
+                    const headerOffset = headerRef.current.offsetHeight;
+                    const elementPosition = myMealsRef.current.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.scrollY - headerOffset - customOffset;
+
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: "smooth"
+                    })
+                  }}
                 >
                   <p>Log a Meal</p>
                   <svg

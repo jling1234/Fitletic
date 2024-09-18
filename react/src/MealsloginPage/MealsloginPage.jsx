@@ -7,7 +7,6 @@ import { getUserInfo } from "../Shared/API/Auth.js";
 import ScrollToTop from "../Shared/Misc/ScrollToTop.jsx";
 import {getIngredients, getMeal, getNutrientAmount, saveMeal} from "../Shared/API/Meals.js";
 import * as PropTypes from "prop-types";
-import axios from "axios";
 
 function RecipeIngredient({ recipeIngredient, onChange, onDelete }) {
   const inputRef = useRef(null);
@@ -106,6 +105,8 @@ function Mealsloginpage() {
   const [recipeIngredients, setRecipeIngredients] = useState([]);
   const [serves, setServes] = useState(1);
 
+  const emptyMealWarningRef = useRef(null);
+
   useEffect(() => {
     if (!meal || !ingredients) return;
 
@@ -146,6 +147,7 @@ function Mealsloginpage() {
 
   const onMealSave = async () => {
     if (!recipeName) {
+      emptyMealWarningRef.current.classList.remove("display-none");
       return;
     }
 
@@ -227,6 +229,14 @@ function Mealsloginpage() {
                       value={recipeName}
                       onChange={(e) => setRecipeName(e.target.value)}
                     />
+                    {!recipeName && (
+                      <p
+                        ref={emptyMealWarningRef}
+                        className="display-none empty-name-warning"
+                      >
+                        Name cannot be empty!
+                      </p>
+                    )}
                   </div>
                 </div>
                 <div className="input-group">
