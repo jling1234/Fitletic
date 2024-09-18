@@ -62,6 +62,25 @@ export async function logMeal(id) {
   return response.data;
 }
 
+export async function deleteLoggedMeal(id) {
+  const response = await axios.delete("http://localhost:8080/meals/log/" + id,{
+    headers: { Authorization: "Bearer " + getToken() },
+  });
+
+  return response.data;
+}
+
+export async function getAllLoggedMeals() {
+  const response = await axios.get(
+    `http://localhost:8080/meals/log/all`,
+    {
+      headers: { Authorization: "Bearer " + getToken() },
+    },
+  );
+
+  return response.data;
+}
+
 export async function getLoggedMealsToday() {
   // Get the current date
   const now = new Date();
@@ -82,6 +101,22 @@ export async function getLoggedMealsToday() {
   );
 
   return response.data;
+}
+
+export function getLoggedCalories(loggedMeal) {
+  let mealCalories = 0;
+  for (const ingredient of loggedMeal.meal.ingredients) {
+    const adjustedIngredient = {
+      ...ingredient.ingredient,
+      count: ingredient.count,
+    };
+    mealCalories += getNutrientAmount(adjustedIngredient, "Energy", "kcal");
+  }
+  const servesSafe =
+    loggedMeal.meal.servings > 0 ? loggedMeal.meal.servings : 1;
+
+  mealCalories = mealCalories / servesSafe;
+  return Number(mealCalories.toFixed(2));
 }
 
 export function getNutrientAmount(ingredient, name, unit) {
