@@ -130,8 +130,9 @@ function LoginSignupButtonWrapper() {
   const { data: userInfo } = useQuery("userInfo", getUserInfo);
 
   const handleLogout = async () => {
+    queryClient.clear();
     setToken("");
-    await queryClient.invalidateQueries();
+    window.location.reload();
   };
 
   if (userInfo) {
