@@ -25,10 +25,11 @@ function LoginForm() {
                 password: password,
             });
         },
-        onSuccess: async (loginResponse) => {
-            queryClient.clear();
+        onSuccess: (loginResponse) => {
             setToken(loginResponse.data["token"]);
+            queryClient.removeQueries({ queryKey: "userInfo" });
             navigate("/");
+            window.location.reload();
         },
         onError: (e) => {
             if (e.status === 401) {
@@ -39,9 +40,9 @@ function LoginForm() {
         }
     })
 
-    const onLoginSubmit = (event) => {
+    const onLoginSubmit = async (event) => {
         event.preventDefault();
-        loginMutation.mutate();
+        await loginMutation.mutate();
     };
 
     return (
@@ -104,10 +105,10 @@ function SignUpForm() {
                 password: password,
             });
         },
-        onSuccess: async (loginResponse) => {
-            queryClient.clear();
+        onSuccess: (loginResponse) => {
             setToken(loginResponse.data["token"]);
             setUserRecord(username, { age, height, weight, activityLevel });
+            queryClient.removeQueries( { queryKey: "userInfo" });
             navigate("/");
         },
         onError: (e) => {
@@ -117,7 +118,7 @@ function SignUpForm() {
 
     const onSignUpSubmit = async (event) => {
         event.preventDefault();
-        signupMutation.mutate();
+        await signupMutation.mutate();
     };
 
     const forms = [
