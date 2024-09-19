@@ -8,6 +8,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface LoggedWorkoutRepository extends MongoRepository<LoggedWorkout, String> {
-  List<LoggedWorkout> findByDate(LocalDateTime date);
+  List<LoggedWorkout> findAllByDateAndUserId(LocalDateTime date,String userId);
   void deleteByWorkoutId(String workout_id);
 }

@@ -20,4 +20,5 @@ public class LoggedWorkout {
     @Indexed
     private LocalDateTime date;
     private String workoutId;
+    private String userId;
 }

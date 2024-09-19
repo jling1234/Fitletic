@@ -18,15 +18,14 @@ import java.util.List;
 @RequestMapping("/userExercise")
 @RestController
 public class UserExerciseController {
-    private final UserService userService;
+
     private final UserExerciseService userExerciseService;
-    private final ExerciseService exerciseService;
 
 
-    public UserExerciseController(UserExerciseService userExerciseService, ExerciseService exerciseService, UserService userService) {
+
+    public UserExerciseController(UserExerciseService userExerciseService) {
         this.userExerciseService = userExerciseService;
-        this.exerciseService = exerciseService;
-        this.userService = userService;
+
     }
 
     @CrossOrigin(origins = "*", methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE}, allowedHeaders = "*")
@@ -34,25 +33,6 @@ public class UserExerciseController {
     @PostMapping("/save")
     public ResponseEntity<UserExercise> saveUserExercise(@RequestBody UserExercise userExercise) {
         return ResponseEntity.ok(userExerciseService.createUserExercise(userExercise));
-    }
-
-    @CrossOrigin(origins = "*", methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE}, allowedHeaders = "*")
-    @GetMapping("/getCalories")
-    public ResponseEntity<Integer> getCalories(@RequestParam String workoutId)
-    {
-
-        List<UserExercise> userExercises=userExerciseService.getUserExercises(workoutId);
-        List<String> exercise_id=new ArrayList<>();
-        List<Integer> time=new ArrayList<>();
-        for(UserExercise exercise: userExercises){
-            exercise_id.add(exercise.getExerciseId());
-            time.add(exercise.getTime());
-        }
-        List<Exercise> exercises=exerciseService.findAllById(exercise_id);
-        List<String> type=exerciseService.findAllTypes(exercises);
-
-        int calories=exerciseService.getTotalCalories(type,time);
-        return ResponseEntity.ok(calories);
     }
 
     @CrossOrigin(origins = "*", methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE}, allowedHeaders = "*")
