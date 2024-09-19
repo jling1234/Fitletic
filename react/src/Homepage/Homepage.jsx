@@ -67,7 +67,7 @@ function HomepageContent() {
   };
 
   const routeChangeMealslogin = () => {
-    if (userInfo) navigate("/mealslogin");
+    if (userInfo) navigate("/meals/logs");
     else navigate("/login");
   };
 
@@ -107,7 +107,7 @@ function HomepageContent() {
           className="recipes-button"
           onClick={routeChangeMealslogin}
         >
-          <div className="button-text">SAVED RECIPES</div>
+          <div className="button-text">LOGGED MEALS</div>
           <div className="button-background"></div>
         </button>
         <button

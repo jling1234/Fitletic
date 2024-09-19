@@ -1,17 +1,20 @@
-import FooterWithWaves  from "../Shared/Footer/Footer";
+import FooterWithWaves from "../Shared/Footer/Footer";
 import Header from "../Shared/Header/Header";
 import "../MealsPage/MealsPage.css";
-import {Link, useNavigate} from "react-router-dom";
-import {useMutation, useQuery, useQueryClient} from "react-query";
-import {getUserInfo} from "../Shared/API/Auth.js";
-import {useEffect, useRef, useState} from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { getUserInfo } from "../Shared/API/Auth.js";
+import { useEffect, useRef, useState } from "react";
 import {
-  deleteMeal, getAllLoggedMeals, getLoggedCalories,
+  deleteMeal,
+  getAllLoggedMeals,
+  getLoggedCalories,
   getIngredients,
   getLoggedMealsToday,
   getMeals,
   getNutrientAmount,
-  logMeal, deleteLoggedMeal
+  logMeal,
+  deleteLoggedMeal,
 } from "../Shared/API/Meals.js";
 import PropTypes from "prop-types";
 
@@ -47,7 +50,12 @@ function DeleteMealDialog({ meal, deleteMealDialogRef, deleteMealCallback }) {
           </p>
         </div>
         <div className="dialog-button-wrapper">
-          <button onClick={deleteMealCallback} className="dialog-confirm-button">Confirm</button>
+          <button
+            onClick={deleteMealCallback}
+            className="dialog-confirm-button"
+          >
+            Confirm
+          </button>
           <button onClick={closeDialog}>Cancel</button>
         </div>
       </div>
@@ -64,14 +72,14 @@ DeleteMealDialog.propTypes = {
       PropTypes.shape({
         ingredientId: PropTypes.string.isRequired,
         count: PropTypes.number.isRequired,
-      }),
+      })
     ).isRequired,
   }).isRequired,
   deleteMealDialogRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   ]),
-  deleteMealCallback: PropTypes.func.isRequired
+  deleteMealCallback: PropTypes.func.isRequired,
 };
 
 export function MakeNewRecipeButton() {
@@ -79,7 +87,7 @@ export function MakeNewRecipeButton() {
     <>
       <Link to={"/mealslogin"}>
         <button type="button" className="make-a-new-recipe-button">
-         Make A New Recipe
+          Make A New Recipe
         </button>
       </Link>
     </>
@@ -131,7 +139,7 @@ function MealCard({ meal, ingredients }) {
           calories += getNutrientAmount(
             { ...ingredient, count: mealIngredient.count },
             "Energy",
-            "kcal",
+            "kcal"
           );
         }
       }
@@ -205,18 +213,17 @@ MealCard.propTypes = {
     ingredients: PropTypes.arrayOf(
       PropTypes.shape({
         ingredientId: PropTypes.string.isRequired,
-        count: PropTypes.number.isRequired
+        count: PropTypes.number.isRequired,
       })
-    ).isRequired
+    ).isRequired,
   }).isRequired,
   ingredients: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired
+      description: PropTypes.string.isRequired,
     })
-  ).isRequired
+  ).isRequired,
 };
-
 
 function MyMeals({ divRef }) {
   const { data: meals } = useQuery("meals", getMeals);
@@ -226,7 +233,9 @@ function MyMeals({ divRef }) {
 
   let filteredMeals = [];
   if (meals) {
-    filteredMeals = meals.filter((meal) => meal.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    filteredMeals = meals.filter((meal) =>
+      meal.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
   }
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -315,7 +324,7 @@ function DateLogCard({ date, loggedMeals }) {
               <p className="my-logs-meal-name">{loggedMeal.meal.name}</p>
               <p className="my-logs-time">{timeFormat.format(date)}</p>
               <button
-                onClick={async () =>
+                onClick={async () => 
                   await deleteLoggedMealMutation.mutate(loggedMeal.id)
                 }
                 className="my-logs-delete-button"
@@ -342,7 +351,7 @@ function DateLogCard({ date, loggedMeals }) {
 function MyLogs({ divRef }) {
   const { data: allLoggedMeals } = useQuery(
     "allLoggedMeals",
-    getAllLoggedMeals,
+    getAllLoggedMeals
   );
 
   const transformedMeals = {};
@@ -350,7 +359,7 @@ function MyLogs({ divRef }) {
 
   if (allLoggedMeals) {
     allLoggedMeals.sort(
-      (a, b) => a.loggedAtEpochSecond < b.loggedAtEpochSecond,
+      (a, b) => a.loggedAtEpochSecond < b.loggedAtEpochSecond
     );
 
     const format = new Intl.DateTimeFormat("en-DE", {
@@ -449,7 +458,7 @@ function Mealspage({ showLogs }) {
 
   const { data: userInfo, isLoading: userInfoIsLoading } = useQuery(
     "userInfo",
-    getUserInfo,
+    getUserInfo
   );
 
   useEffect(() => {
@@ -482,13 +491,21 @@ function Mealspage({ showLogs }) {
                 <h6> gained today</h6>
               </div>
               <div className="Mealslog">
-                {!showLogs && <button type="button" onClick={() => navigate("/meals/logs")}><p>View Logs</p></button>}
-                {showLogs && <button type="button" onClick={() => navigate("/meals")}><p>View Meals</p></button>}
-                  <LogAMealButton
-                    text={showLogs ? "Manage my Logs" : "Log a Meal"}
-                    headerRef={headerRef}
-                    contentRef={contentRef}
-                  />
+                {!showLogs && (
+                  <button type="button" onClick={() => navigate("/meals/logs")}>
+                    <p>View Logs</p>
+                  </button>
+                )}
+                {showLogs && (
+                  <button type="button" onClick={() => navigate("/meals")}>
+                    <p>View Meals</p>
+                  </button>
+                )}
+                <LogAMealButton
+                  text={showLogs ? "Manage my Logs" : "Log a Meal"}
+                  headerRef={headerRef}
+                  contentRef={contentRef}
+                />
               </div>
             </div>
           </div>

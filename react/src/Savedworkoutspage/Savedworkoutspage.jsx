@@ -2,13 +2,18 @@ import Header from "../Shared/Header/Header";
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import "./Savedworkoutspage.css";
-import {getToken} from "../Shared/LocalDetails/LocalDetails.jsx"
+import { getToken } from "../Shared/LocalDetails/LocalDetails.jsx";
 import {
   BuildANewRoutineButton,
   WorkoutCalorieTracker,
 } from "../Workoutspage/Workoutspage";
 import { FaArrowLeft } from "react-icons/fa";
 import axios from "axios";
+import {
+  getWorkouts,
+  saveLoggedWorkoutResponse,
+} from "../Shared/API/Workout.js";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 export function BackArrow() {
   return (
@@ -23,71 +28,46 @@ function Savedroutineslabel() {
 }
 
 function Rectanglebox() {
-  const [workout, setWorkout] = useState([]);
-
-  const handleFetchWorkouts = async (event) => {
-    try {
-      const response = await axios.get(
-        "http://localhost:8080/workout/getWorkouts",
-        {
-          headers: { Authorization: "Bearer " + getToken()},
-        }
-      );
-
-      setWorkout(response.data);
-      console.log(workout);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  useEffect(() => {
-    handleFetchWorkouts();
-  }, []);
-
-   const [calories,setCalories] = useState(0);
-    const handleAddLoggedWorkout = async (routineId) => {
-      try{
-          const response= await axios.get(
-              "http://localhost:8080/userExercise/getCalories",
-              {
-                 params:{ workoutId: routineId,
-                 },
-
-                  headers: { Authorization: "Bearer " + getToken()},
-              });
-          setCalories(response.data);
-          console.log(response);
-          console.log(calories);
-      }catch (error){
-          console.log("Error: ",error);
-      }
-    };
-
+  const { data: workouts } = useQuery("workouts", getWorkouts);
 
   return (
     <>
       {/* Make this dynamic ie the same number of containers for the same number of saved routines */}
       <div className="rectangle-box">
-        {workout.map((exercise, index) => (
-          <div key={index} className="savedroutines">
-            <div className="saved-routines-inputfield-container">
-              <Savedroutines routineName={exercise.workoutName} />
+        {workouts &&
+          workouts.map((exercise, index) => (
+            <div key={index} className="savedroutines">
+              <div className="saved-routines-inputfield-container">
+                <Savedroutines routineName={exercise.workoutName} />
+              </div>
+              <div className="plus-button-container">
+                <Plusbutton workoutId={exercise.id} />
+              </div>
             </div>
-            <div className="plus-button-container">
-              <Plusbutton routineId={exercise.id} onAdd={handleAddLoggedWorkout} />
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
     </>
   );
 }
 
-function Plusbutton({routineId,onAdd}) {
-    return (
+function Plusbutton({ workoutId }) {
+  const queryClient = useQueryClient();
+  const saveLoggedMutate = useMutation({
+    mutationFn: async () => {
+      return await saveLoggedWorkoutResponse(workoutId);
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries("calories");
+    },
+  });
+
+  return (
     <>
-      <button type="button" className="plus-button"  onClick={() => onAdd(routineId)}>
+      <button
+        type="button"
+        className="plus-button"
+        onClick={() => saveLoggedMutate.mutate()}
+      >
         <p>+</p>
       </button>
     </>
@@ -121,7 +101,6 @@ function DumbbellsImg() {
 }
 
 export default function Savedworkoutspage() {
-
   return (
     <>
       <Header />

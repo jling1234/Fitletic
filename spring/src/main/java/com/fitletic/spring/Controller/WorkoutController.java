@@ -36,12 +36,14 @@ public class WorkoutController {
     }
     @CrossOrigin(origins = "*", methods ={RequestMethod.POST,RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE}, allowedHeaders = "*")
     @GetMapping("/getWorkouts")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<Workout>> getWorkouts() {
         User user = userService.getAuthenticatedUser();
         return ResponseEntity.ok(workoutService.getAllWorkouts(user));
     }
     @CrossOrigin(origins = "*", methods ={RequestMethod.POST,RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE}, allowedHeaders = "*")
     @PostMapping("/delete")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> deleteWorkout(@RequestParam String workoutId) {
         //User user = userService.getAuthenticatedUser();
         workoutService.deleteWorkout(workoutId);

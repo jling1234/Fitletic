@@ -9,6 +9,7 @@ import {getToken} from "../Shared/LocalDetails/LocalDetails.jsx"
 import { BackArrow } from "../Savedworkoutspage/Savedworkoutspage";
 import axios from "axios";
 import { getUserInfo } from "../Shared/API/Auth";
+import { useQueryClient } from "react-query";
 
 // eslint-disable-next-line react/prop-types
 export function Exercise({ exerciseName }) {
@@ -205,6 +206,8 @@ function Workoutloginpage() {
   const [routineName, setRoutineName] = useState("Routine 1");
   const [isEditing, setIsEditing] = useState(false);
 
+  const queryClient = useQueryClient();
+
   const handleNameChange = (event) => {
     setRoutineName(event.target.value);
   };
@@ -250,6 +253,7 @@ let newWorkoutId;
 
      console.log(response);
      newWorkoutId=response.data.id;
+     await queryClient.invalidateQueries("workout");
 
    }catch (error){
      console.log("Error: ",error);

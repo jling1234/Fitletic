@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface LoggedWorkoutRepository extends MongoRepository<LoggedWorkout, String> {
   List<LoggedWorkout> findAllByDateAndUserId(LocalDateTime date,String userId);
+  List<LoggedWorkout> findAllByUserId(String userId);
   void deleteByWorkoutId(String workout_id);
 }

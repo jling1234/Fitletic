@@ -6,6 +6,7 @@ import com.fitletic.spring.Entity.Workouts.LoggedWorkoutResponse;
 import com.fitletic.spring.Repository.Workouts.LoggedWorkoutRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +44,16 @@ public class LoggedWorkoutService {
 
     public List<LoggedWorkout> getLoggedWorkoutsList()
     {
+        LocalDate today = LocalDate.now();
         User user=userService.getAuthenticatedUser();
-        LocalDateTime date=LocalDateTime.now();
-        return loggedWorkoutRepository.findAllByDateAndUserId(date,user.getId());
+        List<LoggedWorkout> loggedWorkoutListunfiltered=loggedWorkoutRepository.findAllByUserId(user.getId());
+        List<LoggedWorkout> loggedWorkoutListfiltered=new ArrayList<>();
+        for(LoggedWorkout loggedWorkout: loggedWorkoutListunfiltered){
+                if(loggedWorkout.getDate().toLocalDate().equals(today))
+                   loggedWorkoutListfiltered.add(loggedWorkout);
+                    
+        }
+        return loggedWorkoutListfiltered;
     }
     public List<LoggedWorkoutResponse> getLoggedWorkoutsResponsesList(List<LoggedWorkout> loggedWorkouts)
     {
