@@ -39,4 +39,8 @@ public class ExerciseService {
        }
     return calories;
     }
+    public String getExerciseName(String exerciseId){
+        Exercise exercise=exerciseRepository.findExerciseById(exerciseId);
+        return exercise.getTitle();
+    }
 }

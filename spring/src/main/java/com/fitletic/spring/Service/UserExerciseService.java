@@ -3,6 +3,7 @@ package com.fitletic.spring.Service;
 import com.fitletic.spring.Entity.User;
 import com.fitletic.spring.Entity.Workouts.Exercise;
 import com.fitletic.spring.Entity.Workouts.UserExercise;
+import com.fitletic.spring.Entity.Workouts.UserExerciseResponse;
 import com.fitletic.spring.Repository.Workouts.UserExerciseRepository;
 import org.springframework.stereotype.Service;
 
@@ -47,5 +48,21 @@ public class UserExerciseService {
         List<String> type = exerciseService.findAllTypes(exercises);
 
         return exerciseService.getTotalCalories(type, time);
+    }
+
+    public List<UserExerciseResponse> getUserExerciseResponse(String workout_id) {
+        List<UserExercise> userExercises = getUserExercises(workout_id);
+        List<UserExerciseResponse> userExerciseResponses = new ArrayList<>();
+        for(UserExercise userExercise:userExercises){
+            UserExerciseResponse userExerciseResponse = new UserExerciseResponse();
+            userExerciseResponse.setExerciseId(userExercise.getExerciseId());
+            userExerciseResponse.setTime(userExercise.getTime());
+            userExerciseResponse.setUserId(userExercise.getUserId());
+            userExerciseResponse.setWorkoutId(workout_id);
+            userExerciseResponse.setExerciseName(exerciseService.getExerciseName(userExercise.getExerciseId()));
+
+        userExerciseResponses.add(userExerciseResponse);
+        }
+        return userExerciseResponses;
     }
 }

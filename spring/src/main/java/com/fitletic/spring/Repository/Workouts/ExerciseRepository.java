@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ExerciseRepository extends MongoRepository<Exercise, String> {
+    Exercise findExerciseById(String id);
 }
