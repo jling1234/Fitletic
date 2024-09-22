@@ -98,7 +98,7 @@ function LoginWorkoutProfilePageButton() {
       <button
         type="button"
         className="button-profilepage"
-        onClick={() => navigate("/workoutlogin")} // change here for redirection
+        onClick={() => navigate("/workoutlogin")} //change here for redirection
       >
         <p>Login a Workout</p>
       </button>
@@ -123,100 +123,102 @@ function LoginMealProfilePageButton() {
 }
 
 function UserProfileRectangleLeft({ userDetails }) {
-
   return (
-    <>
-      <div className="left-white-rectangle">
-
-        <div className="input-fields">
-          <label>
-            <div className="username-pp">
-              Username:
-              <input type="text" value={userDetails.username} />
-            </div>
-          </label>
-        </div>
-        <div className="input-fields">
-          <label>
-            <div className="age-pp">
-              Age:
-              <input type="number" value={userDetails.age} />
-            </div>
-          </label>
-        </div>
-        <div className="input-fields">
-          <label>
-            <div className="gender-pp">
-              Gender:
-              <input type="text" value={userDetails.gender} />
-            </div>
-          </label>
-        </div>
-        <div className="input-fields">
-          <label>
-            <div className="goal-pp">
-              Goal:
-              <input type="text" value={userDetails.goal} />
-            </div>
-          </label>
-        </div>
+    <div className="left-white-rectangle">
+      <div className="input-fields">
+        <label>
+          <div className="username-pp">
+            Username:
+            <input type="text" value={userDetails.username} readOnly />
+          </div>
+        </label>
       </div>
-    </>
+      <div className="input-fields">
+        <label>
+          <div className="age-pp">
+            Age:
+            <input type="number" value={userDetails.age} readOnly />
+          </div>
+        </label>
+      </div>
+      <div className="input-fields">
+        <label>
+          <div className="gender-pp">
+            Gender:
+            <input type="text" value={userDetails.gender} readOnly />
+          </div>
+        </label>
+      </div>
+      <div className="input-fields">
+        <label>
+          <div className="goal-pp">
+            Goal:
+            <input type="text" value={userDetails.goal} readOnly />
+          </div>
+        </label>
+      </div>
+    </div>
   );
 }
+
+
 
 function UserProfileRectangleRight({ userDetails }) {
   const [bmi, setBmi] = useState("");
 
   useEffect(() => {
-    if (userDetails.height > 0 && userDetails.weight > 0) {
-      const calculatedBmi = (userDetails.weight / (userDetails.height * userDetails.height)).toFixed(2);
-      setBmi(calculatedBmi);
+    const heightInMeters = parseFloat(userDetails?.height) / 100;
+    const weight = parseFloat(userDetails?.weight);
+
+    if (!isNaN(heightInMeters) && !isNaN(weight) && heightInMeters > 0) {
+      const calculatedBmi = (weight / (heightInMeters * heightInMeters)).toFixed(2);
+
+     
+      if (calculatedBmi < 18.5) {
+        setBmi(`${calculatedBmi} (Underweight)`);
+      } else if (calculatedBmi >= 18.5 && calculatedBmi < 24.99) {
+        setBmi(`${calculatedBmi} (Normal weight)`);
+      } else if (calculatedBmi >= 25 && calculatedBmi < 29.99) {
+        setBmi(`${calculatedBmi} (Overweight)`);
+      } else {
+        setBmi(`${calculatedBmi} (Obese)`);
+      }
     } else {
-      setBmi("");
+      setBmi(""); 
     }
   }, [userDetails.height, userDetails.weight]);
+  
 
   return (
     <div className="right-white-rectangle">
       <div className="activity-lvl">
         Activity Level:
         <div className="input-fields">
-          <input
-            type="text"
-            value={userDetails.activityLevel}
-
-          />
+          <input type="text" value={userDetails.activityLevel || ""} readOnly />
         </div>
       </div>
       <div className="height-pp">
-        Height(m):
+        Height (m):
         <div className="input-fields">
-          <input
-            type="number"
-            value={userDetails.height}
-          />
+          <input type="number" value={userDetails.height || ""} readOnly />
         </div>
       </div>
       <div className="weight-pp">
-        Weight(kg):
+        Weight (kg):
         <div className="input-fields">
-          <input
-            type="number"
-            value={userDetails.weight}
-          />
+          <input type="number" value={userDetails.weight || ""} readOnly />
         </div>
       </div>
       <div className="BMI-profile">
         BMI:
         <div className="input-fields">
-          <input type="number" value={bmi} readOnly />
+        <input type="text" value={bmi} readOnly />
         </div>
       </div>
-
     </div>
   );
 }
+
 
 
 function Profilepage() {
