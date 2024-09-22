@@ -4,10 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import "./LoginSignupPage.css";
 import { HomepageLinkLogo } from "../Shared/Logo/Logo.jsx";
 import axios from "axios";
-import {setToken, setUserRecord} from "../Shared/LocalDetails/LocalDetails.jsx";
+import { setToken, setUserRecord } from "../Shared/LocalDetails/LocalDetails.jsx";
 import PropTypes from "prop-types";
-import {useQuery, useQueryClient} from "react-query";
-import {getUserInfo} from "../Shared/API/Auth.js";
+import { useQuery, useQueryClient } from "react-query";
+import { getUserInfo } from "../Shared/API/Auth.js";
 
 function LoginForm() {
     const queryClient = useQueryClient();
@@ -21,8 +21,8 @@ function LoginForm() {
         event.preventDefault();
         try {
             const loginResponse = await axios.post("http://localhost:8080/auth/login", {
-              username: username,
-              password: password,
+                username: username,
+                password: password,
             });
 
             setToken(loginResponse.data["token"]);
@@ -40,35 +40,35 @@ function LoginForm() {
     };
 
     return (
-      <form className="login-data-container" onSubmit={onLoginSubmit}>
-        <div>
-          <p className="username-container">Username</p>
-          <input
-            className="text-field-info"
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div className="password-container">
-          <p className="username">Password</p>
-          <input
-            className="text-field-info"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        {invalidAttempt && <p className={"invalid-attempt-text"}>Invalid username or password!</p>}
-        <button className="login-button" type="submit">
-          <p>Login</p>
-        </button>
-        <div className="no-account">
-          <p>
-            Don&apos;t have an account? <Link to={"/signup"}>Sign Up</Link>
-          </p>
-        </div>
-      </form>
+        <form className="login-data-container" onSubmit={onLoginSubmit}>
+            <div>
+                <p className="username-container">Username</p>
+                <input
+                    className="text-field-info"
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                />
+            </div>
+            <div className="password-container">
+                <p className="username">Password</p>
+                <input
+                    className="text-field-info"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+            </div>
+            {invalidAttempt && <p className={"invalid-attempt-text"}>Invalid username or password!</p>}
+            <button className="login-button" type="submit">
+                <p>Login</p>
+            </button>
+            <div className="no-account">
+                <p>
+                    Don&apos;t have an account? <Link to={"/signup"}>Sign Up</Link>
+                </p>
+            </div>
+        </form>
     );
 }
 
@@ -80,6 +80,8 @@ function SignUpForm() {
     const [passwordConfirm, setPasswordConfirm] = useState("");
 
     const [age, setAge] = useState("");
+    const [gender, setGender] = useState("");
+    const [goal, setGoal] = useState("");
     const [height, setHeight] = useState("");
     const [weight, setWeight] = useState("");
     const [activityLevel, setActivityLevel] = useState("");
@@ -101,7 +103,7 @@ function SignUpForm() {
 
             setToken(loginResponse.data["token"]);
 
-            setUserRecord(username, { age, height, weight, activityLevel });
+            setUserRecord(username, { age, height, gender, goal, weight, activityLevel });
             navigate("/");
         } catch (e) {
             console.log(e);
@@ -163,6 +165,20 @@ function SignUpForm() {
                 </div>
             </div>
             <div>
+                <p className="gender">Gender</p>
+                <div className="gender-select-field">
+                    <select
+                        className="dropdown"
+                        value={gender}
+                        onChange={(e) => setGender(e.target.value)}
+                    >
+                        <option value="">Select</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+            </div>
+            <div>
                 <p className="height">Height</p>
                 <div className="height-number-field">
                     <input
@@ -206,7 +222,7 @@ function SignUpForm() {
             <div>
                 <p className="goal">Goal</p>
                 <div className="goal-select-field">
-                    <select className="dropdown">
+                    <select className="dropdown" value={goal} onChange={(e) => setGoal(e.target.value)}>
                         <option value="">Select</option>
                         <option value="weight-loss">Weight Loss</option>
                         <option value="maintain-weight">Maintain Weight</option>

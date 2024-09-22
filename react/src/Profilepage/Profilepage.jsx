@@ -4,8 +4,9 @@ import "../Homepage/Homepage.css";
 import { getUserRecord } from "../Shared/LocalDetails/LocalDetails.jsx";
 import { getUserInfo } from "../Shared/API/Auth.js";
 import { useState, useEffect } from "react";
-import { number } from "prop-types";
 import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
+
 
 function ImageProfilePage({ username }) {
   return (
@@ -56,21 +57,21 @@ function RingTracker({ consumed, target }) {
           fill="transparent"
           strokeWidth={strokeWidth}
           strokeDasharray={`${circumference} ${circumference}`}
-          style = {{ strokeDashoffset }}
-          r = {normalizedRadius}
-          cx = {radius}
-          cy = {radius}
+          style={{ strokeDashoffset }}
+          r={normalizedRadius}
+          cx={radius}
+          cy={radius}
         />
-        
+
         <circle
           stroke="white"
           fill="transparent"
           strokeWidth={strokeWidth}
           strokeDasharray={`${circumference} ${circumference}`}
           style={{ normalizedRadius }}
-          cx = {radius}
-          cy = {radius}
-          strokeLinecap = "round"
+          cx={radius}
+          cy={radius}
+          strokeLinecap="round"
           transform={`rotate(-90 ${radius} ${radius})`}
         />
       </svg>
@@ -90,12 +91,14 @@ function LoginButtonsProfilePage() {
 }
 
 function LoginWorkoutProfilePageButton() {
+  const navigate = useNavigate();
+
   return (
     <div>
       <button
         type="button"
         className="button-profilepage"
-        onClick={() => alert("login a workout was clicked ")}
+        onClick={() => navigate("/workoutlogin")} // change here for redirection
       >
         <p>Login a Workout</p>
       </button>
@@ -104,12 +107,14 @@ function LoginWorkoutProfilePageButton() {
 }
 
 function LoginMealProfilePageButton() {
+  const navigate = useNavigate();
+
   return (
     <div>
       <button
         type="button"
         className="button-profilepage"
-        onClick={() => alert("login a meal was clicked ")}
+        onClick={() => navigate("/meals")}
       >
         <p>Login a Meal</p>
       </button>
@@ -118,56 +123,60 @@ function LoginMealProfilePageButton() {
 }
 
 function UserProfileRectangleLeft({ userDetails }) {
-  
+
   return (
     <>
       <div className="left-white-rectangle">
-    
-      <div className="input-fields">
-        <label>
-          <div className="username-pp">
-            Username:
-            <input type="text" value={userDetails.username} readOnly/>
-          </div>
-        </label>
-      </div>
-      <div className="input-fields">
-        <label>
-          <div className="age-pp">
-            Age:
-            <input type="number" value={userDetails.age} />
-          </div>
-        </label>
-      </div>
-      <div className="input-fields">
-        <label>
-          <div className="gender-pp">
-            Gender:
-            <input type="text" value={userDetails.gender} />
-          </div>
-        </label>
-      </div>
-      <div className="input-fields">
-        <label>
-          <div className="goal-pp">
-            Goal:
-            <input type="text" value={userDetails.goal} />
-          </div>
-        </label>
-      </div>
-      <button
-        type="button"
-        className="button-small-profilepage"
-        onClick={() => alert("save changes was clicked")}
-      >
-        <p>Save Changes</p>
-      </button>
+
+        <div className="input-fields">
+          <label>
+            <div className="username-pp">
+              Username:
+              <input type="text" value={userDetails.username} />
+            </div>
+          </label>
+        </div>
+        <div className="input-fields">
+          <label>
+            <div className="age-pp">
+              Age:
+              <input type="number" value={userDetails.age} />
+            </div>
+          </label>
+        </div>
+        <div className="input-fields">
+          <label>
+            <div className="gender-pp">
+              Gender:
+              <input type="text" value={userDetails.gender} />
+            </div>
+          </label>
+        </div>
+        <div className="input-fields">
+          <label>
+            <div className="goal-pp">
+              Goal:
+              <input type="text" value={userDetails.goal} />
+            </div>
+          </label>
+        </div>
       </div>
     </>
   );
 }
 
 function UserProfileRectangleRight({ userDetails }) {
+  const [bmi, setBmi] = useState("");
+
+  useEffect(() => {
+    if (userDetails.height > 0 && userDetails.weight > 0) {
+      const calculatedBmi = (userDetails.weight / (userDetails.height * userDetails.height)).toFixed(2);
+      setBmi(calculatedBmi);
+    } else {
+      setBmi("");
+    }
+  }, [userDetails.height, userDetails.weight]);
+
   return (
     <div className="right-white-rectangle">
       <div className="activity-lvl">
@@ -176,7 +185,7 @@ function UserProfileRectangleRight({ userDetails }) {
           <input
             type="text"
             value={userDetails.activityLevel}
-            readOnly
+
           />
         </div>
       </div>
@@ -186,7 +195,6 @@ function UserProfileRectangleRight({ userDetails }) {
           <input
             type="number"
             value={userDetails.height}
-            readOnly
           />
         </div>
       </div>
@@ -196,68 +204,60 @@ function UserProfileRectangleRight({ userDetails }) {
           <input
             type="number"
             value={userDetails.weight}
-            readOnly
           />
         </div>
       </div>
       <div className="BMI-profile">
         BMI:
         <div className="input-fields">
-          <input type="number" value={userDetails.bmi} readOnly />
+          <input type="number" value={bmi} readOnly />
         </div>
       </div>
-      <button
-        type="button"
-        className="button-small-profilepage"
-        onClick={() => alert("log out was clicked")}
-      >
-        <p>Log Out</p>
-      </button>
+
     </div>
   );
 }
 
 
 function Profilepage() {
+
   const { data: userInfo, isLoading, isError } = useQuery("userInfo", getUserInfo);
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error loading user info</p>;
-  
+
   console.log('userInfo:', userInfo);
 
   const userDetails = getUserRecord(userInfo?.username);
-  
+
   console.log('userDetails:', userDetails);
 
-  const bmi = userDetails.weight && userDetails.height
-    ? (userDetails.weight / (userDetails.height * userDetails.height)).toFixed(2)
-    : "";
 
 
-    return (
-      <>
-        <Header />
-        <div className="biggest-container">
-          <div className="grid-container-profilepage">
-            <div className="left-grid-container-pp-12">
-              <ImageProfilePage username={userInfo.username} />
-            </div>
-            <div className="top-grid-container-pp-1">
-              {/* Add your ring tracker component here */}
-            </div>
-            <div className="top-grid-container-pp-2">
-              <OverviewProfilePage />
-            </div>
-            <div className="bottom-grid-container-pp-1">
-              <UserProfileRectangleLeft userDetails={userDetails} />
-            </div>
-            <div className="bottom-grid-container-pp-2">
-              <UserProfileRectangleRight userDetails={{ ...userDetails, bmi }} />
-            </div>
+  return (
+    <>
+      <Header />
+      <div className="biggest-container">
+        <div className="grid-container-profilepage">
+          <div className="left-grid-container-pp-12">
+            <ImageProfilePage username={userInfo.username} />
+          </div>
+          <div className="top-grid-container-pp-1">
+            <RingTracker />
+          </div>
+          <div className="top-grid-container-pp-2">
+            <OverviewProfilePage />
+            <LoginButtonsProfilePage />
+          </div>
+          <div className="bottom-grid-container-pp-1">
+            <UserProfileRectangleLeft userDetails={{ ...userDetails, username: userInfo.username }} />
+          </div>
+          <div className="bottom-grid-container-pp-2">
+            <UserProfileRectangleRight userDetails={userDetails} />
           </div>
         </div>
-      </>
-    );
-  }
+      </div>
+    </>
+  );
+}
 export default Profilepage;
