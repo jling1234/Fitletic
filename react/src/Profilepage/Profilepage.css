@@ -6,13 +6,15 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: auto;
+  padding: 2rem;
 }
+
 .grid-container-profilepage {
   display: grid;
-  grid-template: repeat(2, 1fr) / repeat(3, 1fr);
-  gap: 0rem;
-  align-self: center;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 1rem;
   width: 100%;
   max-width: 1200px;
 }
@@ -61,14 +63,15 @@
 }
 
 .img-profilepage {
-  background-image: url("./Assets/profpimage.png");
-  border-radius: 30px;
-  min-height: 100%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  min-width: 100%;
-  margin-inline-start: 0px;
-}
+    background-image: url("./Assets/profpimage.png");
+    border-radius: 30px;
+    min-height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-width: 100%;
+    margin-inline-start: 0px;
+  }
+
 
 .img-text {
   text-align: left;
@@ -150,7 +153,7 @@
   justify-content: space-between;
   align-items: start;
   border-radius: 10px;
-  min-width: 20rem;
+  min-width: 100%;
   line-height: 0.5rem;
   width: 95%; 
   border: 1px solid #ddd; 
@@ -158,20 +161,29 @@
 
 .input-fields {
   display: flex;
-  flex-direction: column; 
-  margin-top: 0.5rem;
-  
+  flex-direction: row;
+  align-items: center;
+  margin: 1rem;
 }
 
 .input-fields label {
   font-size: 18px; 
   line-height: 1.2; 
+  display: flex;
+  width: 100%; }
+
+.label-container {
+  flex: 0 0 100px; 
+  font-size: 18px;
+  line-height: 1.2;
 }
 
 .input-fields input {
-  height: 2rem;
-  max-width: 15rem;
+  flex: 1; 
+  height: 2rem; 
+  margin-left: 0.5rem; 
   padding: 0.5rem;
+  max-width: 15rem;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
@@ -184,29 +196,15 @@
 .activity-lvl,
 .height-pp,
 .weight-pp,
-.BMI-profile{
+.BMI-profile {
   font-size: 18px;
   margin-bottom: 1rem; 
   width: 100%;
   display: flex;
   align-items: center;
   box-sizing: border-box; 
-  margin-left: 1rem;
   margin-left: 0.5rem; 
   margin-top: 0.3rem;
-}
-.username-pp input,
-.goal-pp input,
-.gender-pp input,
-.age-pp input,
-.activity-lvl input,
-.height-pp input,
-.weight-pp input,
-.BMI-profile input {
-  height: 2rem;
-  max-width: 15rem;
-  margin-left: 10px; 
-  box-sizing: border-box; 
 }
 
 input[type="number"]::-webkit-outer-spin-button,
@@ -214,86 +212,26 @@ input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
-.input-fields label {
-  font-size: 18px; 
-  line-height: 1.2; 
-}
-
-.input-fields input {
-  height: 2rem;
-  max-width: 15rem;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-.username-pp,
-.goal-pp,
-.gender-pp,
-.age-pp,
-.activity-lvl,
-.height-pp,
-.weight-pp,
-.BMI-profile{
-  font-size: 18px;
-  margin-bottom: 1rem; 
-  width: 100%;
-  display: flex;
-  align-items: center;
-  box-sizing: border-box; 
-  margin-left: 1rem;
-  margin-left: 0.5rem; 
-  margin-top: 0.3rem;
-}
-.username-pp input,
-.goal-pp input,
-.gender-pp input,
-.age-pp input,
-.activity-lvl input,
-.height-pp input,
-.weight-pp input,
-.BMI-profile input {
-  height: 2rem;
-  max-width: 15rem;
-  margin-left: 10px; 
-  box-sizing: border-box; 
-}
-
-
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
 
 .ring-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 15px ;
-  border: 15px ;
   border-radius: 50%;
-  width: 270px;
-  height: 270px;
+  width: 30vw; 
+  height: 30vw; 
+  max-width: 270px;
+  max-height: 270px;
   position: relative;
-  
-  
+  overflow: visible;
 }
 
 .ring-container .ring-svg {
   position: absolute;
-   
 }
 
-.ring-container .ring-svg circle {
-  border: black;
-}
-
-.ring-container .ring-label {
+.ring-label {
   font-size: 40px;
   font-family: "Anton";
   color: black;
@@ -301,12 +239,11 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .ring-tracker-goal-calories {
-  font-family: "Josephin Sans";
+  font-family: "Josefin Sans";
   font-size: 16px;
   color: grey;
   text-align: center;
-  padding-top: .5rem;
-
+  padding-top: 0.5rem;
 }
 
 .button-small-profilepage {
@@ -328,4 +265,93 @@ input[type="number"]::-webkit-inner-spin-button {
 .button-small-profilepage:hover,
 .button-profilepage {
   cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+  .grid-container-profilepage {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, auto);
+    gap: 1.5rem;
+  }
+
+  .grid-container-profilepage .left-grid-container-pp-12,
+  .grid-container-profilepage .top-grid-container-pp-1,
+  .grid-container-profilepage .top-grid-container-pp-2,
+  .grid-container-profilepage .bottom-grid-container-pp-1,
+  .grid-container-profilepage .bottom-grid-container-pp-2 {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .img-profilepage {
+    min-height: 300px;
+    margin-bottom: 2rem;
+  }
+
+  .img-text {
+    font-size: 30px;
+    line-height: 2.5rem;
+    margin-top: 1rem;
+  }
+
+  .ring-container {
+    width: 200px;
+    height: 200px;
+    margin-top: 2rem;
+  }
+
+  .ring-label {
+    font-size: 30px;
+  }
+
+  .number-cal {
+    font-size: 30px;
+  }
+
+  .overview-text p {
+    font-size: 30px;
+    margin-top: 2rem;
+  }
+
+  .button-profilepage,
+  .button-small-profilepage {
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ring-container {
+    width: 150px;
+    height: 150px;
+    margin-top: 1.5rem; 
+  }
+
+  .ring-container .ring-svg {
+    transform: scale(0.6); 
+  }
+   
+  .ring-label {
+    font-size: 24px;
+  }
+
+  .number-cal {
+    font-size: 24px;
+  }
+
+  .overview-text p {
+    font-size: 24px;
+    margin-top: 1.5rem;
+  }
+
+  .img-text {
+    font-size: 24px;
+    line-height: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .button-profilepage,
+  .button-small-profilepage {
+    min-width: 180px;
+  }
 }
