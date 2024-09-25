@@ -47,6 +47,7 @@ public class WorkoutController {
     public ResponseEntity<?> deleteWorkout(@RequestParam String workoutId) {
         //User user = userService.getAuthenticatedUser();
         workoutService.deleteWorkout(workoutId);
+        workoutService.deleteLoggedWorkout(workoutId);
         return ResponseEntity.ok().build();
     }
 
