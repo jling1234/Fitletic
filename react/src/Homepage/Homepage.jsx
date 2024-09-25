@@ -96,7 +96,7 @@ function LoginSignupButtonWrapper() {
 
   if (userInfo) {
     return <div className="homepage-button-wrapper">
-      <Link to={"/"}>Profile</Link>
+      <Link to={"/profile"}>Profile</Link>
       <button type={"button"} onClick={handleLogout}>Logout</button>
     </div>
   }
