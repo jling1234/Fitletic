@@ -1,15 +1,17 @@
-import "../Workoutloginpage/Workoutloginpage.css";
+import "../WorkoutEditPage/Workouteditpage.css";
 import Header from "../Shared/Header/Header";
 //eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import {getToken} from "../Shared/LocalDetails/LocalDetails.jsx"
-
+import { getToken } from "../Shared/LocalDetails/LocalDetails.jsx";
 import { BackArrow } from "../Savedworkoutspage/Savedworkoutspage";
 import axios from "axios";
 import { getUserInfo } from "../Shared/API/Auth";
 import { useQueryClient } from "react-query";
+import { useParams } from "react-router-dom";
+import { useMutation } from "react-query";
+import { deleteWorkout } from "../Shared/API/Workout.js";
 
 // eslint-disable-next-line react/prop-types
 export function Exercise({ exerciseName }) {
@@ -141,7 +143,7 @@ function SaveButton({ onSave }) {
   );
 }
 
-function Workoutloginpage() {
+function Workouteditpage() {
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [inputtedExercises, setInputtedExercises] = useState("");
   const [results, setResults] = useState([]);
@@ -150,7 +152,26 @@ function Workoutloginpage() {
   const navigate = useNavigate();
   /* const [query, setQuery] = useState("");*/
 
-  
+  let { workoutId } = useParams();
+  const fetchUserExercises = async (workoutId) => {
+    const response = await axios.get(
+      "http://localhost:8080/userExercise/get/" + workoutId,
+      {
+        headers: { Authorization: "Bearer " + getToken() },
+      }
+    );
+
+    const exercises = response.data.map((exercise) => ({
+      id: generateUniqueId(),
+      exerciseName: exercise.exerciseName,
+      time: exercise.time,
+      exerciseId: exercise.exerciseId,
+    }));
+    setExercises(exercises);
+  };
+  useEffect(() => {
+    fetchUserExercises(workoutId);
+  });
 
   function generateUniqueId() {
     return Date.now() + Math.random().toString(36).substring(2, 9);
@@ -163,8 +184,7 @@ function Workoutloginpage() {
         id: generateUniqueId(),
         exerciseName: "Name:def",
         time: 0,
-  
-        
+
         exerciseId: "",
       },
     ]);
@@ -187,13 +207,14 @@ function Workoutloginpage() {
   const fetchDataExercise = async (value) => {
     try {
       const response = await axios.get("http://localhost:8080/exercise", {
-        headers: {Authorization:"Bearer " + getToken()}});
+        headers: { Authorization: "Bearer " + getToken() },
+      });
       const results = response.data.filter((inputtedExercises) => {
         return (
-            value &&
-            inputtedExercises &&
-            inputtedExercises.title &&
-            inputtedExercises.title.toLowerCase().includes(value.toLowerCase())
+          value &&
+          inputtedExercises &&
+          inputtedExercises.title &&
+          inputtedExercises.title.toLowerCase().includes(value.toLowerCase())
         );
         console.log(response);
       });
@@ -203,7 +224,6 @@ function Workoutloginpage() {
       console.error("Error:", error);
     }
   };
-
 
   //to make the routine name editable
   const [routineName, setRoutineName] = useState("Routine 1");
@@ -230,7 +250,6 @@ function Workoutloginpage() {
           ? {
               ...exercise,
               exerciseName: selectedExercise,
-             
               exerciseId: id,
             }
           : exercise;
@@ -239,50 +258,77 @@ function Workoutloginpage() {
     console.log(exercises);
   };
 
-let newWorkoutId;
+  let newWorkoutId;
 
   //when save button is clicked
   const handleSaveWorkout = async (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     try {
-     const response = await axios.post("http://localhost:8080/workout/save",
-         {
-            userId: getUserInfo().id,
-            workoutName:routineName,
+      const response = await axios.post(
+        "http://localhost:8080/workout/save",
+        {
+          userId: getUserInfo().id,
+          workoutName: routineName,
+        },
+        {
+          headers: { Authorization: "Bearer " + getToken() },
+        }
+      );
+
+      console.log(response);
+      newWorkoutId = response.data.id;
+      await queryClient.invalidateQueries("workout");
+    } catch (error) {
+      console.log("Error: ", error);
+    }
+    console.log(newWorkoutId);
+    try {
+      console.log("Entered 2nd block");
+      for (const item of exercises) {
+        const response1 = await axios.post(
+          "http://localhost:8080/userExercise/save",
+          {
+            userId: getUserInfo.id,
+            workoutId: newWorkoutId,
+            exerciseId: item.exerciseId,
+            time: item.time,
           },
-         {
-           headers: {Authorization: "Bearer " + getToken()},
-         });
-
-     console.log(response);
-     newWorkoutId=response.data.id;
-     await queryClient.invalidateQueries("workout");
-
-   }catch (error){
-     console.log("Error: ",error);
-   }
-   console.log(newWorkoutId);
-   try {
-       console.log("Entered 2nd block")
-     for(const item of exercises)
-      {
-        const response1 = await axios.post("http://localhost:8080/userExercise/save",
-            {
-              userId: getUserInfo.id,
-              workoutId: newWorkoutId,
-              exerciseId:item.exerciseId,
-              time:item.time,
-            },
-            {
-              headers: {Authorization: "Bearer " + getToken()},
-            });
+          {
+            headers: { Authorization: "Bearer " + getToken() },
+          }
+        );
         console.log(response1.data);
       }
-    }catch (error) {
-      console.log("Error: ",error);
+    } catch (error) {
+      console.log("Error: ", error);
     }
     navigate("/workout");
   };
+
+  const handleDeleteWorkout = useMutation({
+    
+    mutationFn: async () => {
+      return await deleteWorkout(workoutId);
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries("workout");
+      console.log("Entered deleted block");
+    },
+  });
+ 
+
+  // const handleDeleteWorkout = () => {
+  //   console.log("Entered deleted block")
+  //   const deleteWorkoutMutation = useMutation({
+  //     mutationFn: async (id) => {
+  //       return await deleteWorkout(id);
+  //     },
+  //     onSuccess: async (id) => {
+  //       await queryClient.invalidateQueries("workout");
+  //     },
+  //   });
+  //   return () => deleteWorkoutMutation.mutate(newWorkoutId);
+  // };
 
   const handleTimeChange = (id, newTime) => {
     setExercises((prevExercises) =>
@@ -322,7 +368,12 @@ let newWorkoutId;
                 <div onClick={handleNameClick}>{routineName}</div>
               )}
             </div>
-            <SaveButton onSave={handleSaveWorkout} />
+            <SaveButton
+              onSave={async () => {
+                await handleDeleteWorkout.mutate(workoutId);
+                handleSaveWorkout();
+              }}
+            />
             <ul>
               {exercises.map((exercise) => (
                 <li key={exercise.id} className="savedexercise-form">
@@ -369,7 +420,7 @@ let newWorkoutId;
                       onClick={() =>
                         handleSelectedExercise(
                           exercise.title,
-                          
+
                           exercise.id
                         )
                       }
@@ -387,4 +438,4 @@ let newWorkoutId;
   );
 }
 
-export default Workoutloginpage;
+export default Workouteditpage;

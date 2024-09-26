@@ -4,6 +4,7 @@ import com.fitletic.spring.DTO.RegisterUserDTO;
 import com.fitletic.spring.Entity.Role;
 import com.fitletic.spring.Entity.RoleEnum;
 import com.fitletic.spring.Entity.User;
+import com.fitletic.spring.Entity.Workouts.UserExercise;
 import com.fitletic.spring.Repository.RoleRepository;
 import com.fitletic.spring.Repository.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -51,4 +52,6 @@ public class UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (User) authentication.getPrincipal();
     }
+
+   
 }

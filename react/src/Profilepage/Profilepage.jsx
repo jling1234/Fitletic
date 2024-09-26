@@ -4,6 +4,10 @@ import "../Homepage/Homepage.css";
 
 import { useState, useEffect } from "react";
 import { number } from "prop-types";
+import { useQuery } from "react-query";
+import { getLoggedWorkoutResponses } from "../Shared/API/Workout";
+import { getLoggedMealsToday } from "../Shared/API/Meals";
+import { getLoggedCalories } from "../Shared/API/Meals";
 
 function ImageProfilePage() {
   const username = "Fitletic";
@@ -11,7 +15,8 @@ function ImageProfilePage() {
     <>
       <div className="img-profilepage">
         <div className="img-text">
-          Hello,<br />
+          Hello,
+          <br />
           {username}
         </div>
       </div>
@@ -20,6 +25,19 @@ function ImageProfilePage() {
 }
 
 function OverviewProfilePage() {
+  const { data: calories } = useQuery("calories", getLoggedWorkoutResponses);
+  const totalCalories = calories
+    ? calories.reduce((sum, workout) => sum + workout.calories, 0)
+    : 0;
+
+  const { data: loggedMeals } = useQuery("loggedMeals", getLoggedMealsToday);
+
+  let intakeCalories = 0;
+  if (loggedMeals) {
+    for (const loggedMeal of loggedMeals) {
+      intakeCalories += getLoggedCalories(loggedMeal);
+    }
+  }
   return (
     <>
       <div className="overview-text">
@@ -27,11 +45,11 @@ function OverviewProfilePage() {
       </div>
       <div className="cal-values-flex-container">
         <div className="cal-values">
-          <p className="number-cal">450 Kcal</p>
+          <p className="number-cal">{totalCalories} Kcal</p>
           <p className="text-cal">Burnt Calories</p>
         </div>
         <div className="cal-values">
-          <p className="number-cal">2800 Kcal</p>
+          <p className="number-cal">{intakeCalories} Kcal</p>
           <p className="text-cal">Intake Calories</p>
         </div>
       </div>
@@ -55,21 +73,21 @@ function RingTracker({ consumed, target }) {
           fill="transparent"
           strokeWidth={strokeWidth}
           strokeDasharray={`${circumference} ${circumference}`}
-          style = {{ strokeDashoffset }}
-          r = {normalizedRadius}
-          cx = {radius}
-          cy = {radius}
+          style={{ strokeDashoffset }}
+          r={normalizedRadius}
+          cx={radius}
+          cy={radius}
         />
-        
+
         <circle
           stroke="white"
           fill="transparent"
           strokeWidth={strokeWidth}
           strokeDasharray={`${circumference} ${circumference}`}
           style={{ normalizedRadius }}
-          cx = {radius}
-          cy = {radius}
-          strokeLinecap = "round"
+          cx={radius}
+          cy={radius}
+          strokeLinecap="round"
           transform={`rotate(-90 ${radius} ${radius})`}
         />
       </svg>
@@ -117,40 +135,38 @@ function LoginMealProfilePageButton() {
 }
 
 function UserProfileRectangleLeft() {
-  
   return (
     <>
       <div className="left-white-rectangle">
-    
-      <div className="input-fields">
+        <div className="input-fields">
           <label>
-          <div className="username-pp">
-            Username:
-            <input type="text" />
+            <div className="username-pp">
+              Username:
+              <input type="text" />
             </div>
           </label>
         </div>
         <div className="input-fields">
           <label>
-          <div className="age-pp">
-            Age:
-            <input type="number" />
+            <div className="age-pp">
+              Age:
+              <input type="number" />
             </div>
           </label>
         </div>
         <div className="input-fields">
           <label>
-          <div className="gender-pp">
-            Gender:
-            <input type="text" />
+            <div className="gender-pp">
+              Gender:
+              <input type="text" />
             </div>
           </label>
         </div>
         <div className="input-fields">
           <label>
-          <div className="goal-pp">
-            Goal:
-            <input type="text" />
+            <div className="goal-pp">
+              Goal:
+              <input type="text" />
             </div>
           </label>
         </div>
@@ -193,44 +209,40 @@ function UserProfileRectangleRight() {
         <div className="activity-lvl">
           Activity Level:
           <div className="input-fields">
-          <input
-            type="text"
-            value={activityLevel}
-            onChange={(e) => setActivityLevel(e.target.value)}
-          />
+            <input
+              type="text"
+              value={activityLevel}
+              onChange={(e) => setActivityLevel(e.target.value)}
+            />
           </div>
         </div>
         <div className="height-pp">
           Height(m):
           <div className="input-fields">
-          <input
-            type="number"
-            value={height}
-            onChange={(e) => setHeight(e.target.value)}
-            onClick={(e) => e.preventDefault()}
-            onWheel={disableScroll}
-          />
+            <input
+              type="number"
+              value={height}
+              onChange={(e) => setHeight(e.target.value)}
+              onClick={(e) => e.preventDefault()}
+              onWheel={disableScroll}
+            />
           </div>
         </div>
         <div className="weight-pp">
           Weight(kg):
           <div className="input-fields">
-          <input
-            type="number"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-            onWheel={disableScroll}
-          />
+            <input
+              type="number"
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
+              onWheel={disableScroll}
+            />
           </div>
         </div>
         <div className="BMI-profile">
           BMI:
           <div className="input-fields">
-          <input 
-            type="number"
-            value={bmi} 
-            readOnly 
-          />
+            <input type="number" value={bmi} readOnly />
           </div>
         </div>
       </div>
@@ -248,6 +260,19 @@ function UserProfileRectangleRight() {
 }
 
 function Profilepage() {
+  const { data: calories } = useQuery("calories", getLoggedWorkoutResponses);
+  const totalCalories = calories
+    ? calories.reduce((sum, workout) => sum + workout.calories, 0)
+    : 0;
+
+  const { data: loggedMeals } = useQuery("loggedMeals", getLoggedMealsToday);
+
+  let intakeCalories = 0;
+  if (loggedMeals) {
+    for (const loggedMeal of loggedMeals) {
+      intakeCalories += getLoggedCalories(loggedMeal);
+    }
+  }
   return (
     <>
       <Header />
@@ -257,7 +282,10 @@ function Profilepage() {
             <ImageProfilePage />
           </div>
           <div className="top-grid-container-pp-1">
-            <RingTracker consumed={100} target={2500} />
+            <RingTracker
+              consumed={(intakeCalories - totalCalories).toFixed(2)}
+              target={2500}
+            />
           </div>
           <div className="top-grid-container-pp-2">
             <OverviewProfilePage />

@@ -10,6 +10,7 @@ import Mealspage, {LogsPage} from "../MealsPage/MealsPage.jsx";
 import Mealsloginpage from "../MealsloginPage/MealsloginPage.jsx";
 import Savedworkoutspage from "../Savedworkoutspage/Savedworkoutspage.jsx";
 import { QueryClient, QueryClientProvider } from "react-query";
+import Workouteditpage from "../WorkoutEditPage/Workouteditpage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,9 @@ const router = createBrowserRouter([
   }, {
     path: "savedworkoutspage",
     element: <Savedworkoutspage />
+  }, {
+    path: "workouteditpage/:workoutId?", 
+    element: <Workouteditpage />
   }
 ]);
 

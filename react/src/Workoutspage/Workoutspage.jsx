@@ -14,19 +14,14 @@ import {
 import { useRef } from "react";
 
 export function RoutineInputFieldRow() {
-  const { data: savedRoutineField } = useQuery(
-    "workout",
-    getWorkouts
-  );
+  const { data: savedRoutineField } = useQuery("workout", getWorkouts);
 
   return (
     <>
       <ul className="saved-meals-flex-container">
         {savedRoutineField &&
           savedRoutineField.map((workout) => (
-            
-              <Workoutcard key={workout.id} workout={workout}></Workoutcard>
-           
+            <Workoutcard key={workout.id} workout={workout}></Workoutcard>
           ))}
       </ul>
     </>
@@ -36,7 +31,6 @@ function Workoutcard({ workout }) {
   const queryClient = useQueryClient();
   const deleteWorkoutDialogRef = useRef(null);
   const navigate = useNavigate();
-  
 
   const deleteWorkoutMutation = useMutation({
     mutationFn: async (id) => {
@@ -54,16 +48,21 @@ function Workoutcard({ workout }) {
   return (
     <div className="saved-meals">
       <DeleteWorkoutDialog
-      workout={workout}
-      deleteWorkoutDialogRef={deleteWorkoutDialogRef}
-      deleteWorkoutCallback={async () => {
-        console.log(workout);
-        await deleteWorkoutMutation.mutate(workout.id);
-      }
-      }/>
+        workout={workout}
+        deleteWorkoutDialogRef={deleteWorkoutDialogRef}
+        deleteWorkoutCallback={async () => {
+          console.log(workout);
+          await deleteWorkoutMutation.mutate(workout.id);
+        }}
+      />
       <div>
         <p>{workout.workoutName}</p>
-        <button type="button" onClick={() => navigate("/workoutlogin/")}>
+        <button
+          type="button"
+          onClick={() =>
+            navigate("/workouteditpage/" + workout.id)
+          }
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="24px"
@@ -86,12 +85,15 @@ function Workoutcard({ workout }) {
           </svg>
         </button>
       </div>
-    
     </div>
   );
 }
 
-function DeleteWorkoutDialog({ workout, deleteWorkoutDialogRef, deleteWorkoutCallback }) {
+function DeleteWorkoutDialog({
+  workout,
+  deleteWorkoutDialogRef,
+  deleteWorkoutCallback,
+}) {
   const closeDialog = () => {
     deleteWorkoutDialogRef.current.close();
   };
@@ -115,7 +117,8 @@ function DeleteWorkoutDialog({ workout, deleteWorkoutDialogRef, deleteWorkoutCal
         </div>
         <div className="dialog-content">
           <p>
-            Are you sure you want to delete the meal &apos;{workout.workoutName}&apos;?
+            Are you sure you want to delete the meal &apos;{workout.workoutName}
+            &apos;?
           </p>
           <p>
             This action cannot be undone, and any calories logged will be

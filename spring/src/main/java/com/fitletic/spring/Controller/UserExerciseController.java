@@ -24,19 +24,25 @@ public class UserExerciseController {
     private final UserService userService;
 
 
+
     public UserExerciseController(UserExerciseService userExerciseService,UserService userService) {
+
+   
+
         this.userExerciseService = userExerciseService;
         this.userService = userService;
     }
 
-    @CrossOrigin(origins = "*", methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE}, allowedHeaders = "*")
+    @CrossOrigin(origins = "*", methods = { RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT,
+            RequestMethod.DELETE }, allowedHeaders = "*")
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/save")
     public ResponseEntity<UserExercise> saveUserExercise(@RequestBody UserExercise userExercise) {
         return ResponseEntity.ok(userExerciseService.createUserExercise(userExercise));
     }
 
-    @CrossOrigin(origins = "*", methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE}, allowedHeaders = "*")
+    @CrossOrigin(origins = "*", methods = { RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT,
+            RequestMethod.DELETE }, allowedHeaders = "*")
     @PostMapping("/delete")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> deleteAllUserExercises(@RequestParam String workoutId) {
@@ -44,10 +50,12 @@ public class UserExerciseController {
         return ResponseEntity.ok().build();
     }
 
+
     @CrossOrigin(origins = "*", methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE}, allowedHeaders = "*")
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/get/{workoutId}")
     public ResponseEntity<List<UserExerciseResponse>> getUserExercises(@PathVariable String workoutId) {
         return ResponseEntity.ok(userExerciseService.getUserExerciseResponse(workoutId));
     }
+
 }
