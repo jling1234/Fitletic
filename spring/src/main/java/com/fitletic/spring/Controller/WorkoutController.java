@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RequestMapping("/workout")
@@ -49,6 +50,12 @@ public class WorkoutController {
         workoutService.deleteWorkout(workoutId);
         workoutService.deleteLoggedWorkout(workoutId);
         return ResponseEntity.ok().build();
+    }
+    @CrossOrigin(origins = "*", methods ={RequestMethod.POST,RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE}, allowedHeaders = "*")
+    @GetMapping("/get")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Optional<Workout>> getWorkout(@RequestParam String workoutId) {
+        return ResponseEntity.ok(workoutService.getWorkout(workoutId));
     }
 
 }

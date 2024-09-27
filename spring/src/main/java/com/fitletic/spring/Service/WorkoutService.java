@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class WorkoutService {
@@ -34,6 +35,11 @@ public class WorkoutService {
 
     public void deleteLoggedWorkout(String workoutId){
         loggedWorkoutRepository.deleteByWorkoutId(workoutId);
+    }
+
+    public Optional<Workout> getWorkout(String workoutId)
+    {
+        return workoutRepository.findById(workoutId);
     }
 
 }
