@@ -215,7 +215,6 @@ function SignUpForm() {
                         <option value="moderately-active">Moderately Active</option>
                         <option value="vigorously-active">Vigorously Active</option>
                         <option value="extremely-active">Extremely Active</option>
-                        <option value="none">None of these</option>
                     </select>
                 </div>
             </div>
@@ -227,7 +226,6 @@ function SignUpForm() {
                         <option value="weight-loss">Weight Loss</option>
                         <option value="maintain-weight">Maintain Weight</option>
                         <option value="weight-gain">Weight Gain</option>
-                        <option value="none">None of these</option>
                     </select>
                 </div>
             </div>

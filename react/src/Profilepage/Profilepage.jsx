@@ -3,7 +3,7 @@ import "./Profilepage.css";
 import "../Homepage/Homepage.css";
 import { getUserRecord } from "../Shared/LocalDetails/LocalDetails.jsx";
 import { getUserInfo } from "../Shared/API/Auth.js";
-import { useState, useEffect } from "react";
+import { useState,useRef, useEffect } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 
@@ -42,17 +42,32 @@ function OverviewProfilePage() {
 }
 
 function RingTracker({ burntCalories, gainedCalories, goalCalories }) {
-  const radius = 135;
+  const containerRef = useRef(null);
+  const [radius, setRadius] = useState(135); 
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (containerRef.current) {
+        const size = Math.min(containerRef.current.offsetWidth, containerRef.current.offsetHeight);
+        setRadius(size * 0.4); 
+      }
+    };
+
+    handleResize(); 
+    window.addEventListener('resize', handleResize); 
+
+    return () => {
+      window.removeEventListener('resize', handleResize); 
+    };
+  }, []);
+
   const strokeWidth = 10;
   const normalizedRadius = radius - strokeWidth * 2;
   const circumference = normalizedRadius * 2 * Math.PI;
 
   const totalCalories = Math.max(0, gainedCalories - burntCalories);
-
   const progress = Math.min(totalCalories / goalCalories, 1);
-
   const strokeDashoffset = circumference - progress * circumference;
-
 
   return (
     <div className="ring-container">
@@ -85,6 +100,49 @@ function RingTracker({ burntCalories, gainedCalories, goalCalories }) {
     </div>
   );
 }
+
+
+function GoalKCAL(userDetails) {
+  const { weight, height, age, activityLevel, goal } = userDetails;
+  let bmr;
+
+  if (!weight || !height || !age) return 0;
+
+  if (userDetails.gender === "male") {
+    bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+  } else {
+    bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+  }
+
+  let activityFactor = 1.2; 
+  switch (activityLevel) {
+    case "sedentary":
+      activityFactor = 1.2;
+      break;
+    case "lightly-active":
+      activityFactor = 1.375;
+      break;
+    case "moderately-active":
+      activityFactor = 1.55;
+      break;
+    case "vigorously-active":
+      activityFactor = 1.725;
+      break;
+    case "extremely-active":
+      activityFactor = 1.9;
+      break;
+  }
+
+  const maintenanceKCAL = bmr * activityFactor;
+
+  switch (goal) {
+    case "weight-loss":
+      return maintenanceKCAL - 500; 
+    case "weight-gain":
+      return maintenanceKCAL + 500; 
+  }
+}
+
 
 function LoginButtonsProfilePage() {
   return (
@@ -227,8 +285,7 @@ function Profilepage() {
   const userDetails = getUserRecord(userInfo?.username);
 
   console.log('userDetails:', userDetails);
-
-
+  const goalCalories = Math.round(GoalKCAL(userDetails));
 
   return (
     <>
@@ -242,7 +299,7 @@ function Profilepage() {
             <RingTracker 
             burntCalories={450}      
             gainedCalories={2500}    
-            goalCalories={2500} />
+            goalCalories={goalCalories}/>
           </div>
           <div className="top-grid-container-pp-2">
             <OverviewProfilePage />
