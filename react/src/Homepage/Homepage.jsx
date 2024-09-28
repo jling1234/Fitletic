@@ -108,7 +108,7 @@ function HomepageContent() {
           className="recipes-button"
           onClick={routeChangeMealslogin}
         >
-          <div className="button-text">SAVED RECIPES</div>
+          <div className="button-text">CREATE MEAL</div>
           <div className="button-background"></div>
         </button>
         <button
