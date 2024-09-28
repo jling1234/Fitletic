@@ -194,30 +194,34 @@ function LoginMealProfilePageButton() {
 }
 
 function UserProfileRectangleLeft({ userDetails }) {
+  if (!userDetails) {
+    return <div className="left-white-rectangle"></div>
+  }
+
   return (
     <div className="left-white-rectangle">
       <div className="input-fields">
         <label>
           <div className="label-container">Username:</div>
-          <input type="text" value={userDetails.username} readOnly />
+          <input type="text" defaultValue={userDetails.username} readOnly />
         </label>
       </div>
       <div className="input-fields">
         <label>
           <div className="label-container">Age:</div>
-          <input type="number" value={userDetails.age} readOnly />
+          <input type="number" defaultValue={userDetails.age} readOnly />
         </label>
       </div>
       <div className="input-fields">
         <label>
           <div className="label-container">Gender:</div>
-          <input type="text" value={userDetails.gender} readOnly />
+          <input type="text" defaultValue={userDetails.gender} readOnly />
         </label>
       </div>
       <div className="input-fields">
         <label>
           <div className="label-container">Goal:</div>
-          <input type="text" value={userDetails.goal} readOnly />
+          <input type="text" defaultValue={userDetails.goal} readOnly />
         </label>
       </div>
     </div>
@@ -225,56 +229,58 @@ function UserProfileRectangleLeft({ userDetails }) {
 }
 
 function UserProfileRectangleRight({ userDetails }) {
-  const [bmi, setBmi] = useState("");
+  if (!userDetails) {
+    return <div className="right-white-rectangle"></div>
+  }
 
-  useEffect(() => {
-    const heightInMeters = parseFloat(userDetails?.height) / 100;
-    const weight = parseFloat(userDetails?.weight);
+  const heightInMeters = parseFloat(userDetails?.height) / 100;
+  const weight = parseFloat(userDetails?.weight);
 
-    if (!isNaN(heightInMeters) && !isNaN(weight) && heightInMeters > 0) {
-      const calculatedBmi = (
-        weight /
-        (heightInMeters * heightInMeters)
-      ).toFixed(2);
+  let bmi = "";
 
-      if (calculatedBmi < 18.5) {
-        setBmi(`${calculatedBmi} (Underweight)`);
-      } else if (calculatedBmi >= 18.5 && calculatedBmi < 24.99) {
-        setBmi(`${calculatedBmi} (Normal weight)`);
-      } else if (calculatedBmi >= 25 && calculatedBmi < 29.99) {
-        setBmi(`${calculatedBmi} (Overweight)`);
-      } else {
-        setBmi(`${calculatedBmi} (Obese)`);
-      }
+  if (!isNaN(heightInMeters) && !isNaN(weight) && heightInMeters > 0) {
+    const calculatedBmi = (
+      weight /
+      (heightInMeters * heightInMeters)
+    ).toFixed(2);
+
+    if (calculatedBmi < 18.5) {
+      bmi = (`${calculatedBmi} (Underweight)`);
+    } else if (calculatedBmi >= 18.5 && calculatedBmi < 24.99) {
+      bmi = (`${calculatedBmi} (Normal weight)`);
+    } else if (calculatedBmi >= 25 && calculatedBmi < 29.99) {
+      bmi = (`${calculatedBmi} (Overweight)`);
     } else {
-      setBmi("");
+      bmi = (`${calculatedBmi} (Obese)`);
     }
-  }, [userDetails.height, userDetails.weight]);
+  } else {
+    bmi = "";
+  }
 
   return (
     <div className="right-white-rectangle">
       <div className="input-fields">
         <label>
           <div className="label-container">Activity Level:</div>
-          <input type="text" value={userDetails.activityLevel || ""} readOnly />
+          <input type="text" defaultValue={userDetails.activityLevel || ""} readOnly />
         </label>
       </div>
       <div className="input-fields">
         <label>
           <div className="label-container">Height (m):</div>
-          <input type="number" value={userDetails.height || ""} readOnly />
+          <input type="number" defaultValue={userDetails.height || ""} readOnly />
         </label>
       </div>
       <div className="input-fields">
         <label>
           <div className="label-container">Weight (kg):</div>
-          <input type="number" value={userDetails.weight || ""} readOnly />
+          <input type="number" defaultValue={userDetails.weight || ""} readOnly />
         </label>
       </div>
       <div className="input-fields">
         <label>
           <div className="label-container">BMI:</div>
-          <input type="text" value={bmi} readOnly />
+          <input type="text" defaultValue={bmi} readOnly />
         </label>
       </div>
     </div>
@@ -284,12 +290,19 @@ function UserProfileRectangleRight({ userDetails }) {
 function Profilepage() {
   const { data: userInfo, isLoading, isError } = useQuery("userInfo", getUserInfo);
 
+  const [userDetails, setUserDetails] = useState(null);
+
+  useEffect(() => {
+    if (!userInfo) return;
+
+    setUserDetails(getUserRecord(userInfo.username));
+  }, [userInfo]);
+
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error loading user info</p>;
 
-  const userDetails = getUserRecord(userInfo?.username);
+  const goalCalories = userDetails ? Math.round(getGoalCalories(userDetails)) : 0;
 
-  const goalCalories = Math.round(getGoalCalories(userDetails));
   return (
     <>
       <Header />
