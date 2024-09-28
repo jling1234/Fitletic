@@ -3,20 +3,23 @@ import "./Profilepage.css";
 import "../Homepage/Homepage.css";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {getUserRecord} from "../Shared/LocalDetails/LocalDetails.jsx";
-import {getUserInfo} from "../Shared/API/Auth.js";
-import {useQuery} from "react-query";
+import {
+  getUserRecord,
+  setUserRecord,
+} from "../Shared/LocalDetails/LocalDetails.jsx";
+import { getUserInfo } from "../Shared/API/Auth.js";
+import { useQuery } from "react-query";
+import {
+  getLoggedCaloriesFromAllMeals,
+  getLoggedMealsToday,
+} from "../Shared/API/Meals.js";
 import { getLoggedWorkoutResponses } from "../Shared/API/Workout";
-import { getLoggedMealsToday } from "../Shared/API/Meals";
-import { getLoggedCalories } from "../Shared/API/Meals";
-
 function ImageProfilePage({ username }) {
   return (
     <>
       <div className="img-profilepage">
         <div className="img-text">
-          Hello,
-          <br />
+          
           Hello,
           <br />
           {username}
@@ -26,20 +29,7 @@ function ImageProfilePage({ username }) {
   );
 }
 
-function OverviewProfilePage() {
-  const { data: calories } = useQuery("calories", getLoggedWorkoutResponses);
-  const totalCalories = calories
-    ? calories.reduce((sum, workout) => sum + workout.calories, 0)
-    : 0;
-
-  const { data: loggedMeals } = useQuery("loggedMeals", getLoggedMealsToday);
-
-  let intakeCalories = 0;
-  if (loggedMeals) {
-    for (const loggedMeal of loggedMeals) {
-      intakeCalories += getLoggedCalories(loggedMeal);
-    }
-  }
+function OverviewProfilePage({ gainedCalories, burntCalories }) {
   return (
     <>
       <div className="overview-text">
@@ -47,11 +37,11 @@ function OverviewProfilePage() {
       </div>
       <div className="cal-values-flex-container">
         <div className="cal-values">
-          <p className="number-cal">{totalCalories} Kcal</p>
+          <p className="number-cal">{burntCalories} Kcal</p>
           <p className="text-cal">Burnt Calories</p>
         </div>
         <div className="cal-values">
-          <p className="number-cal">{intakeCalories} Kcal</p>
+          <p className="number-cal">{gainedCalories} Kcal</p>
           <p className="text-cal">Intake Calories</p>
         </div>
       </div>
@@ -68,7 +58,7 @@ function RingTracker({ burntCalories, gainedCalories, goalCalories }) {
       if (containerRef.current) {
         const size = Math.min(
           containerRef.current.offsetWidth,
-          containerRef.current.offsetHeight,
+          containerRef.current.offsetHeight
         );
         setRadius(size * 0.4);
       }
@@ -88,20 +78,22 @@ function RingTracker({ burntCalories, gainedCalories, goalCalories }) {
 
   const totalCalories = Math.max(0, gainedCalories - burntCalories);
   const progress = Math.min(totalCalories / goalCalories, 1);
-  const strokeDashoffset = circumference - progress * circumference;
+  let strokeDashoffset = circumference - progress * circumference;
+  if (isNaN(strokeDashoffset)) {
+    strokeDashoffset = 0;
+  }
 
   return (
     <div className="ring-container">
       <svg className="ring-svg" height={radius * 2} width={radius * 2}>
         <circle
           stroke="white"
-          fill="transparent"
+          fill="#eeeeee"
           strokeWidth={strokeWidth}
-          r={normalizedRadius}
+          r={normalizedRadius + strokeWidth}
           cx={radius}
           cy={radius}
         />
-
         <circle
           stroke="#fb5d35"
           fill="transparent"
@@ -136,8 +128,10 @@ function getGoalCalories(userDetails) {
 
   if (userDetails.gender === "male") {
     bmr = 10 * weight + 6.25 * height - 5 * age + 5;
-  } else {
+  } else if (userDetails.gender === "female") {
     bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+  } else {
+    return 0;
   }
 
   let activityFactor = 1.2;
@@ -211,88 +205,162 @@ function LoginMealProfilePageButton() {
   );
 }
 
-function UserProfileRectangleLeft({ userDetails }) {
+function UserProfileRectangleLeft({ userDetails, setUserDetails }) {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
+  };
+
+  if (!userDetails) {
+    return <div className="left-white-rectangle"></div>;
+  }
+
   return (
     <div className="left-white-rectangle">
       <div className="input-fields">
         <label>
           <div className="label-container">Username:</div>
-          <input type="text" value={userDetails.username} readOnly />
+          <input
+            className="text-field-info"
+            type="text"
+            name="username"
+            value={userDetails.username}
+            onChange={handleChange}
+            readOnly
+          />
         </label>
       </div>
       <div className="input-fields">
         <label>
           <div className="label-container">Age:</div>
-          <input type="number" value={userDetails.age} readOnly />
+          <input
+            className="number-field-size"
+            type="number"
+            name="age"
+            value={userDetails.age || ""}
+            onChange={handleChange}
+          />
         </label>
       </div>
       <div className="input-fields">
         <label>
           <div className="label-container">Gender:</div>
-          <input type="text" value={userDetails.gender} readOnly />
+          <select
+            className="dropdown"
+            name="gender"
+            value={userDetails.gender || ""}
+            onChange={handleChange}
+          >
+            <option value="">Select</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
         </label>
       </div>
       <div className="input-fields">
         <label>
           <div className="label-container">Goal:</div>
-          <input type="text" value={userDetails.goal} readOnly />
+          <select
+            className="dropdown"
+            name="goal"
+            value={userDetails.goal || ""}
+            onChange={handleChange}
+          >
+            <option value="">Select</option>
+            <option value="weight-loss">Weight Loss</option>
+            <option value="maintain-weight">Maintain Weight</option>
+            <option value="weight-gain">Weight Gain</option>
+            <option value="none">None of these</option>
+          </select>
         </label>
       </div>
     </div>
   );
 }
 
-function UserProfileRectangleRight({ userDetails }) {
-  const [bmi, setBmi] = useState("");
+function UserProfileRectangleRight({ userDetails, setUserDetails }) {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
+  };
 
-  useEffect(() => {
-    const heightInMeters = parseFloat(userDetails?.height) / 100;
-    const weight = parseFloat(userDetails?.weight);
+  const heightInMeters = parseFloat(userDetails?.height) / 100;
+  const weight = parseFloat(userDetails?.weight);
 
-    if (!isNaN(heightInMeters) && !isNaN(weight) && heightInMeters > 0) {
-      const calculatedBmi = (
-        weight /
-        (heightInMeters * heightInMeters)
-      ).toFixed(2);
+  let bmi = "";
 
-      if (calculatedBmi < 18.5) {
-        setBmi(`${calculatedBmi} (Underweight)`);
-      } else if (calculatedBmi >= 18.5 && calculatedBmi < 24.99) {
-        setBmi(`${calculatedBmi} (Normal weight)`);
-      } else if (calculatedBmi >= 25 && calculatedBmi < 29.99) {
-        setBmi(`${calculatedBmi} (Overweight)`);
-      } else {
-        setBmi(`${calculatedBmi} (Obese)`);
-      }
+  if (!isNaN(heightInMeters) && !isNaN(weight) && heightInMeters > 0) {
+    const calculatedBmi = (weight / (heightInMeters * heightInMeters)).toFixed(
+      2
+    );
+
+    if (calculatedBmi < 18.5) {
+      bmi = `${calculatedBmi} (Underweight)`;
+    } else if (calculatedBmi >= 18.5 && calculatedBmi < 24.99) {
+      bmi = `${calculatedBmi} (Normal weight)`;
+    } else if (calculatedBmi >= 25 && calculatedBmi < 29.99) {
+      bmi = `${calculatedBmi} (Overweight)`;
     } else {
-      setBmi("");
+      bmi = `${calculatedBmi} (Obese)`;
     }
-  }, [userDetails.height, userDetails.weight]);
+  } else {
+    bmi = "";
+  }
 
   return (
     <div className="right-white-rectangle">
       <div className="input-fields">
         <label>
           <div className="label-container">Activity Level:</div>
-          <input type="text" value={userDetails.activityLevel || ""} readOnly />
+          <select
+            className="dropdown"
+            name="activityLevel"
+            value={userDetails.activityLevel || ""}
+            onChange={handleChange}
+          >
+            <option value="">Select</option>
+            <option value="sedentary">Sedentary</option>
+            <option value="moderately-active">Moderately Active</option>
+            <option value="vigorously-active">Vigorously Active</option>
+            <option value="extremely-active">Extremely Active</option>
+            <option value="none">None of these</option>
+          </select>
         </label>
       </div>
       <div className="input-fields">
         <label>
-          <div className="label-container">Height (m):</div>
-          <input type="number" value={userDetails.height || ""} readOnly />
+          <div className="label-container">Height (cm):</div>
+          <input
+            className="number-field-size"
+            type="number"
+            name="height"
+            value={userDetails.height || ""}
+            onChange={handleChange}
+          />
         </label>
       </div>
       <div className="input-fields">
         <label>
           <div className="label-container">Weight (kg):</div>
-          <input type="number" value={userDetails.weight || ""} readOnly />
+          <input
+            className="number-field-size"
+            type="number"
+            name="weight"
+            value={userDetails.weight || ""}
+            onChange={handleChange}
+          />
         </label>
       </div>
       <div className="input-fields">
         <label>
           <div className="label-container">BMI:</div>
-          <input type="text" value={bmi} readOnly />
+          <input className="text-field-info" type="text" value={bmi} readOnly />
         </label>
       </div>
     </div>
@@ -300,55 +368,115 @@ function UserProfileRectangleRight({ userDetails }) {
 }
 
 function Profilepage() {
-  const { data: userInfo, isLoading, isError } = useQuery("userInfo", getUserInfo);
+  const navigate = useNavigate();
+
+  const {
+    data: userInfo,
+    isLoading,
+    isError,
+  } = useQuery("userInfo", getUserInfo);
+
+  const { data: loggedMeals } = useQuery("loggedMeals", getLoggedMealsToday);
+  const { data: workouts } = useQuery("workouts", getLoggedWorkoutResponses);
+
+  const [userDetails, setUserDetails] = useState({
+    username: "",
+    age: "",
+    gender: "",
+    goal: "",
+    activityLevel: "",
+    height: "",
+    weight: "",
+  });
+
+  useEffect(() => {
+    if (!isLoading && !userInfo) {
+      navigate("/login", { replace: true });
+    }
+  }, [navigate, userInfo, isLoading]);
+
+  useEffect(() => {
+    if (!userInfo) return;
+
+    let userRecord = getUserRecord(userInfo.username);
+    if (userRecord === null) {
+      setUserDetails({
+        username: userInfo.username,
+      });
+    } else {
+      setUserDetails({ ...userRecord, username: userInfo.username });
+    }
+  }, [userInfo]);
+
+  const onSaveButtonClick = () => {
+    if (!userInfo) return;
+
+    const userRecord = { ...userDetails };
+    delete userRecord["username"];
+    setUserRecord(userInfo.username, userRecord);
+    window.location.reload();
+  };
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error loading user info</p>;
 
-  const userDetails = getUserRecord(userInfo?.username);
+  const intakeCalories = getLoggedCaloriesFromAllMeals(loggedMeals);
 
-  const goalCalories = Math.round(getGoalCalories(userDetails));
-  const { data: calories } = useQuery("calories", getLoggedWorkoutResponses);
-  const totalCalories = calories
-    ? calories.reduce((sum, workout) => sum + workout.calories, 0)
+  const goalCalories = userDetails
+    ? Math.round(getGoalCalories(userDetails))
     : 0;
 
-  const { data: loggedMeals } = useQuery("loggedMeals", getLoggedMealsToday);
+  const burnedCalories = workouts
+    ? workouts.reduce((sum, workout) => sum + workout.calories, 0)
+    : 0;
 
-  let intakeCalories = 0;
-  if (loggedMeals) {
-    for (const loggedMeal of loggedMeals) {
-      intakeCalories += getLoggedCalories(loggedMeal);
-    }
-  }
   return (
     <>
       <Header />
       <div className="biggest-container">
         <div className="grid-container-profilepage">
           <div className="left-grid-container-pp-12">
-            <ImageProfilePage username={userInfo.username} />
+            <ImageProfilePage username={userDetails.username} />
           </div>
           <div className="top-grid-container-pp-1">
             <RingTracker
-              burntCalories={450}
-              gainedCalories={2500}
+              burntCalories={burnedCalories}
+              gainedCalories={intakeCalories}
               goalCalories={goalCalories}
-              consumed={(intakeCalories - totalCalories).toFixed(2)}
-              target={2500}
             />
+            {goalCalories === 0 ? (
+              <p className="ring-tracker-warning">
+                Fill in your details to calculate your goal calories!
+              </p>
+            ) : null}
           </div>
           <div className="top-grid-container-pp-2">
-            <OverviewProfilePage />
+            <OverviewProfilePage
+              gainedCalories={intakeCalories}
+              burntCalories={burnedCalories}
+            />
             <LoginButtonsProfilePage />
           </div>
-          <div className="bottom-grid-container-pp-1">
-            <UserProfileRectangleLeft
-              userDetails={{ ...userDetails, username: userInfo.username }}
-            />
-          </div>
-          <div className="bottom-grid-container-pp-2">
-            <UserProfileRectangleRight userDetails={userDetails} />
+          <div className="bottom-grid-container-pp-1-2">
+            <div className="bottom-grid-container-pp-1">
+              <UserProfileRectangleLeft
+                userDetails={userDetails}
+                setUserDetails={setUserDetails}
+              />
+            </div>
+            <div className="bottom-grid-container-pp-2">
+              <UserProfileRectangleRight
+                userDetails={userDetails}
+                setUserDetails={setUserDetails}
+              />
+            </div>
+            <button
+              type="button"
+              className="profile-save-button button-profilepage"
+              onClick={onSaveButtonClick}
+            >
+              Save Changes
+            </button>
           </div>
         </div>
       </div>

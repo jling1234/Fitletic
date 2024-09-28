@@ -57,7 +57,7 @@ export default function Header({ headerRef }) {
   };
 
   const routeChangeMealslogin = () => {
-    if (userInfo) navigate("/meals/logs");
+    if (userInfo) navigate("/meals");
     else navigate("/login");
   };
 

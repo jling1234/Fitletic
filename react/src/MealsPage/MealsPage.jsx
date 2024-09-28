@@ -13,8 +13,7 @@ import {
   getLoggedMealsToday,
   getMeals,
   getNutrientAmount,
-  logMeal,
-  deleteLoggedMeal,
+  logMeal, deleteLoggedMeal, getLoggedCaloriesFromAllMeals
 } from "../Shared/API/Meals.js";
 import PropTypes from "prop-types";
 
@@ -469,13 +468,7 @@ function Mealspage({ showLogs }) {
 
   const { data: loggedMeals } = useQuery("loggedMeals", getLoggedMealsToday);
 
-  let calories = 0;
-  if (loggedMeals) {
-    for (const loggedMeal of loggedMeals) {
-      calories += getLoggedCalories(loggedMeal);
-    }
-  }
-  calories = Number(calories.toFixed(2));
+  const calories = getLoggedCaloriesFromAllMeals(loggedMeals);
 
   return (
     <>

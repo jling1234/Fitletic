@@ -64,53 +64,27 @@
 
 .footer-content {
   display: flex;
-  width: 50%;
   justify-content: space-between;
   gap: 2rem;
 }
 
-.about-us, .query-form {
-  width: 50%; 
+.about-us {
+  max-width: 60ch;
   padding: 1rem;
   background-color: transparent;
   border-radius: 8px;
-  display: flex;            
-  flex-direction: column;   
+  display: flex;
+  flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 1rem; 
+  gap: 1rem;
 }
 
-.about-us h3, .query-form h3 {
-  font-size: 18px;
-  color: var(--color-text-dark);
+.about-us h3 {
+  font-size: var(--font-size-medium);
   text-align: center; 
 }
 
-.query-form input,
-.query-form textarea {
-  width: 100%; 
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 14px;
-  
-}
-
-.query-form textarea {
-  resize: vertical;
-}
-
-.query-form button {
-  padding: 8px 16px;
-  background-color: #FDA172;
-  color: black;
-  border: none;
-  border-radius: 5px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.query-form button:hover {
-  background-color: #ffd2bb;
+.about-us p {
+  font-size: var(--font-size-small);
 }

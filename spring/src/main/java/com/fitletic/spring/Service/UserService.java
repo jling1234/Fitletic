@@ -53,5 +53,7 @@ public class UserService {
         return (User) authentication.getPrincipal();
     }
 
-   
+    public boolean userExists(String username) {
+        return userRepository.existsByUsername(username);
+    }
 }

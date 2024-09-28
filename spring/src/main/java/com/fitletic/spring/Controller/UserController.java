@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,5 +35,10 @@ public class UserController {
         List<User> users = userService.allUsers();
 
         return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/exists/{username}")
+    public ResponseEntity<Boolean> exists(@PathVariable String username) {
+        return ResponseEntity.ok(userService.userExists(username));
     }
 }
