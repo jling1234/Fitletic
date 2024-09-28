@@ -39,3 +39,22 @@ export async function deleteWorkout (workoutId) {
     return response.data;
 }
 
+export async function getWorkoutName (workoutId) {
+const response = await axios.get("http://localhost:8080/workout/get/" + workoutId,
+    {
+    headers: { Authorization: "Bearer " + getToken()},
+});
+console.log(response.data);
+return response.data;
+}
+
+export async function fetchUserExercises(workoutId){
+    const response = await axios.get(
+        "http://localhost:8080/userExercise/get/" + workoutId,
+        {
+          headers: { Authorization: "Bearer " + getToken() },
+        }
+)
+console.log(response.data);
+return response.data;
+}

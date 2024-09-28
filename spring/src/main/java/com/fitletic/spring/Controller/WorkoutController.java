@@ -52,9 +52,9 @@ public class WorkoutController {
         return ResponseEntity.ok().build();
     }
     @CrossOrigin(origins = "*", methods ={RequestMethod.POST,RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE}, allowedHeaders = "*")
-    @GetMapping("/get")
+    @GetMapping("/get/{workoutId}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Optional<Workout>> getWorkout(@RequestParam String workoutId) {
+    public ResponseEntity<Optional<Workout>> getWorkout(@PathVariable String workoutId) {
         return ResponseEntity.ok(workoutService.getWorkout(workoutId));
     }
 

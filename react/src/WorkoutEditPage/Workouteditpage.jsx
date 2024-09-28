@@ -8,10 +8,10 @@ import { getToken } from "../Shared/LocalDetails/LocalDetails.jsx";
 import { BackArrow } from "../Savedworkoutspage/Savedworkoutspage";
 import axios from "axios";
 import { getUserInfo } from "../Shared/API/Auth";
-import { useQueryClient } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import { useMutation } from "react-query";
-import { deleteWorkout } from "../Shared/API/Workout.js";
+import { deleteWorkout, fetchUserExercises, getWorkoutName } from "../Shared/API/Workout.js";
 
 // eslint-disable-next-line react/prop-types
 export function Exercise({ exerciseName }) {
@@ -147,31 +147,30 @@ function Workouteditpage() {
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [inputtedExercises, setInputtedExercises] = useState("");
   const [results, setResults] = useState([]);
-  const [exercises, setExercises] = useState([]);
+  
 
   const navigate = useNavigate();
   /* const [query, setQuery] = useState("");*/
 
   let { workoutId } = useParams();
-  const fetchUserExercises = async (workoutId) => {
-    const response = await axios.get(
-      "http://localhost:8080/userExercise/get/" + workoutId,
-      {
-        headers: { Authorization: "Bearer " + getToken() },
-      }
-    );
 
-    const exercises = response.data.map((exercise) => ({
-      id: generateUniqueId(),
-      exerciseName: exercise.exerciseName,
-      time: exercise.time,
-      exerciseId: exercise.exerciseId,
-    }));
-    setExercises(exercises);
-  };
+  const { data: userExerciseData } = useQuery(
+    ["userExercise", workoutId],
+    async () => await fetchUserExercises(workoutId)
+  );
+  const [exercises, setExercises] = useState([]);
+  
   useEffect(() => {
-    fetchUserExercises(workoutId);
-  });
+    if(userExerciseData){
+      const exercises = userExerciseData.map((exercise) => ({
+        id: generateUniqueId(),
+        exerciseName: exercise.exerciseName,
+        time: exercise.time,
+        exerciseId: exercise.exerciseId,
+      }));
+      setExercises(exercises);
+    }
+  }, [userExerciseData]);
 
   function generateUniqueId() {
     return Date.now() + Math.random().toString(36).substring(2, 9);
@@ -224,10 +223,23 @@ function Workouteditpage() {
       console.error("Error:", error);
     }
   };
+  //to get a prev workout name
+
+  const { data: workoutData } = useQuery(
+    ["workoutName", workoutId],
+    async () => await getWorkoutName(workoutId)
+  );
+  const [routineName, setRoutineName] = useState("Routine");
 
   //to make the routine name editable
-  const [routineName, setRoutineName] = useState("Routine 1");
+
   const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    if (!workoutData) return;
+
+    setRoutineName(workoutData.workoutName);
+  }, [workoutData]);
 
   const queryClient = useQueryClient();
 
@@ -306,7 +318,6 @@ function Workouteditpage() {
   };
 
   const handleDeleteWorkout = useMutation({
-    
     mutationFn: async () => {
       return await deleteWorkout(workoutId);
     },
@@ -315,20 +326,7 @@ function Workouteditpage() {
       console.log("Entered deleted block");
     },
   });
- 
 
-  // const handleDeleteWorkout = () => {
-  //   console.log("Entered deleted block")
-  //   const deleteWorkoutMutation = useMutation({
-  //     mutationFn: async (id) => {
-  //       return await deleteWorkout(id);
-  //     },
-  //     onSuccess: async (id) => {
-  //       await queryClient.invalidateQueries("workout");
-  //     },
-  //   });
-  //   return () => deleteWorkoutMutation.mutate(newWorkoutId);
-  // };
 
   const handleTimeChange = (id, newTime) => {
     setExercises((prevExercises) =>
@@ -375,7 +373,7 @@ function Workouteditpage() {
               }}
             />
             <ul>
-              {exercises.map((exercise) => (
+              {exercises&&exercises.map((exercise) => (
                 <li key={exercise.id} className="savedexercise-form">
                   <Exercise exerciseName={exercise.exerciseName} />
                   <TimeInputField

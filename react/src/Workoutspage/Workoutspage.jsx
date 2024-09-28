@@ -59,9 +59,7 @@ function Workoutcard({ workout }) {
         <p>{workout.workoutName}</p>
         <button
           type="button"
-          onClick={() =>
-            navigate("/workouteditpage/" + workout.id)
-          }
+          onClick={() => navigate("/workouteditpage/" + workout.id)}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
