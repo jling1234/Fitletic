@@ -168,7 +168,7 @@ input[type="number"]::-webkit-outer-spin-button {
 .number-cal {
   font-family: "Anton";
   line-height: 2rem;
-  font-size: 40px;
+  font-size: 2rem;
 }
 
 .text-cal {
@@ -261,7 +261,6 @@ input[type="number"]::-webkit-outer-spin-button {
   flex: 100%;
   background: none;
   height: 2rem;
-  margin-left: 0.5rem;
   padding: 0.5rem;
   width: 100%;
   max-width: 100%;
@@ -325,82 +324,74 @@ input[type="number"]::-webkit-outer-spin-button {
   cursor: pointer;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
   .grid-container-profilepage {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(4, auto);
-    gap: 1.5rem;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, auto);
   }
 
-  .grid-container-profilepage .left-grid-container-pp-12,
-  .grid-container-profilepage .top-grid-container-pp-1,
-  .grid-container-profilepage .top-grid-container-pp-2 {
-    grid-column: 1;
-    grid-row: auto;
+  .grid-container-profilepage .left-grid-container-pp-12 {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    padding-bottom: 2rem;
   }
 
   .img-profilepage {
-    min-height: 300px;
-    margin-bottom: 2rem;
+    background-image: url(./Assets/profpimage-landscape.png);
+    min-height: 33dvh;
+    background-position: center;
   }
 
-  .img-text {
-    font-size: 30px;
-    line-height: 2.5rem;
-    margin-top: 1rem;
+  .grid-container-profilepage .top-grid-container-pp-1 {
+    grid-row: 2;
+    grid-column: 1;
   }
 
-  .ring-container {
-    width: 200px;
-    height: 200px;
-    margin-top: 2rem;
+  .grid-container-profilepage .top-grid-container-pp-2 {
+    grid-row: 2;
+    grid-column: 2;
   }
 
-  .number-cal,
-  .ring-label {
-    font-size: 30px;
-  }
-
-  .overview-text p {
-    font-size: 30px;
-    margin-top: 2rem;
-  }
-
-  .button-profilepage,
-  .button-small-profilepage {
-    min-width: 200px;
+  .grid-container-profilepage .bottom-grid-container-pp-1-2 {
+    grid-column: 1 / -1;
+    grid-row: 3;
   }
 }
 
-@media (max-width: 480px) {
-  .ring-container {
-    width: 150px;
-    height: 150px;
-    margin-top: 1.5rem;
+@media (max-width: 700px) {
+  .grid-container-profilepage {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, auto);
   }
 
-  .ring-container .ring-svg {
-    transform: scale(0.6);
+  .grid-container-profilepage .left-grid-container-pp-12 {
+    grid-row: 1;
+    padding-bottom: 2rem;
   }
 
-  .img-text,
-  .number-cal,
-  .ring-label {
-    font-size: 24px;
+  .grid-container-profilepage .top-grid-container-pp-1 {
+    grid-row: 3;
+    min-height: 270px;
   }
 
-  .overview-text p {
-    font-size: 24px;
-    margin-top: 1.5rem;
+  .grid-container-profilepage .top-grid-container-pp-2 {
+    grid-row: 2;
+    grid-column: 1;
+    padding-bottom: 1rem;
   }
 
-  .img-text {
-    line-height: 2rem;
-    margin-bottom: 1.5rem;
+  .grid-container-profilepage .bottom-grid-container-pp-1-2 {
+    grid-row: 4;
+
+    grid-template-columns: 1fr;
   }
 
-  .button-profilepage,
-  .button-small-profilepage {
-    min-width: 180px;
+  .input-fields label {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .label-container {
+    flex: 1;
   }
 }
