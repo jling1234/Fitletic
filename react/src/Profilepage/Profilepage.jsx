@@ -3,7 +3,7 @@ import "./Profilepage.css";
 import "../Homepage/Homepage.css";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {getUserRecord} from "../Shared/LocalDetails/LocalDetails.jsx";
+import {getUserRecord, setUserRecord} from "../Shared/LocalDetails/LocalDetails.jsx";
 import {getUserInfo} from "../Shared/API/Auth.js";
 import {useQuery} from "react-query";
 
@@ -193,9 +193,17 @@ function LoginMealProfilePageButton() {
   );
 }
 
-function UserProfileRectangleLeft({ userDetails }) {
+function UserProfileRectangleLeft({ userDetails, setUserDetails }) {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
+  };
+
   if (!userDetails) {
-    return <div className="left-white-rectangle"></div>
+    return <div className="left-white-rectangle"></div>;
   }
 
   return (
@@ -203,40 +211,77 @@ function UserProfileRectangleLeft({ userDetails }) {
       <div className="input-fields">
         <label>
           <div className="label-container">Username:</div>
-          <input type="text" defaultValue={userDetails.username} readOnly />
+          <input
+            className="text-field-info"
+            type="text"
+            name="username"
+            value={userDetails.username}
+            onChange={handleChange}
+            readOnly
+          />
         </label>
       </div>
       <div className="input-fields">
         <label>
           <div className="label-container">Age:</div>
-          <input type="number" defaultValue={userDetails.age} readOnly />
+          <input
+            className="number-field-size"
+            type="number"
+            name="age"
+            value={userDetails.age || ""}
+            onChange={handleChange}
+          />
         </label>
       </div>
       <div className="input-fields">
         <label>
           <div className="label-container">Gender:</div>
-          <input type="text" defaultValue={userDetails.gender} readOnly />
+          <select
+            className="dropdown"
+            name="gender"
+            value={userDetails.gender || ""}
+            onChange={handleChange}
+          >
+            <option value="">Select</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
         </label>
       </div>
       <div className="input-fields">
         <label>
           <div className="label-container">Goal:</div>
-          <input type="text" defaultValue={userDetails.goal} readOnly />
+          <select
+            className="dropdown"
+            name="goal"
+            value={userDetails.goal || ""}
+            onChange={handleChange}
+          >
+            <option value="">Select</option>
+            <option value="weight-loss">Weight Loss</option>
+            <option value="maintain-weight">Maintain Weight</option>
+            <option value="weight-gain">Weight Gain</option>
+            <option value="none">None of these</option>
+          </select>
         </label>
       </div>
     </div>
   );
 }
 
-function UserProfileRectangleRight({ userDetails }) {
-  if (!userDetails) {
-    return <div className="right-white-rectangle"></div>
-  }
+function UserProfileRectangleRight({ userDetails, setUserDetails }) {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
+  };
 
   const heightInMeters = parseFloat(userDetails?.height) / 100;
   const weight = parseFloat(userDetails?.weight);
 
-  let bmi = "";
+  let bmi = '';
 
   if (!isNaN(heightInMeters) && !isNaN(weight) && heightInMeters > 0) {
     const calculatedBmi = (
@@ -245,16 +290,16 @@ function UserProfileRectangleRight({ userDetails }) {
     ).toFixed(2);
 
     if (calculatedBmi < 18.5) {
-      bmi = (`${calculatedBmi} (Underweight)`);
+      bmi = `${calculatedBmi} (Underweight)`;
     } else if (calculatedBmi >= 18.5 && calculatedBmi < 24.99) {
-      bmi = (`${calculatedBmi} (Normal weight)`);
+      bmi = `${calculatedBmi} (Normal weight)`;
     } else if (calculatedBmi >= 25 && calculatedBmi < 29.99) {
-      bmi = (`${calculatedBmi} (Overweight)`);
+      bmi = `${calculatedBmi} (Overweight)`;
     } else {
-      bmi = (`${calculatedBmi} (Obese)`);
+      bmi = `${calculatedBmi} (Obese)`;
     }
   } else {
-    bmi = "";
+    bmi = '';
   }
 
   return (
@@ -262,25 +307,49 @@ function UserProfileRectangleRight({ userDetails }) {
       <div className="input-fields">
         <label>
           <div className="label-container">Activity Level:</div>
-          <input type="text" defaultValue={userDetails.activityLevel || ""} readOnly />
+          <select
+            className="dropdown"
+            name="activityLevel"
+            value={userDetails.activityLevel || ''}
+            onChange={handleChange}
+          >
+            <option value="">Select</option>
+            <option value="sedentary">Sedentary</option>
+            <option value="moderately-active">Moderately Active</option>
+            <option value="vigorously-active">Vigorously Active</option>
+            <option value="extremely-active">Extremely Active</option>
+            <option value="none">None of these</option>
+          </select>
         </label>
       </div>
       <div className="input-fields">
         <label>
-          <div className="label-container">Height (m):</div>
-          <input type="number" defaultValue={userDetails.height || ""} readOnly />
+          <div className="label-container">Height (cm):</div>
+          <input
+            className="number-field-size"
+            type="number"
+            name="height"
+            value={userDetails.height || ''}
+            onChange={handleChange}
+          />
         </label>
       </div>
       <div className="input-fields">
         <label>
           <div className="label-container">Weight (kg):</div>
-          <input type="number" defaultValue={userDetails.weight || ""} readOnly />
+          <input
+            className="number-field-size"
+            type="number"
+            name="weight"
+            value={userDetails.weight || ''}
+            onChange={handleChange}
+          />
         </label>
       </div>
       <div className="input-fields">
         <label>
           <div className="label-container">BMI:</div>
-          <input type="text" defaultValue={bmi} readOnly />
+          <input className="text-field-info" type="text" value={bmi} readOnly />
         </label>
       </div>
     </div>
@@ -288,25 +357,49 @@ function UserProfileRectangleRight({ userDetails }) {
 }
 
 function Profilepage() {
-  const { data: userInfo, isLoading, isError } = useQuery("userInfo", getUserInfo);
+  const {
+    data: userInfo,
+    isLoading,
+    isError,
+  } = useQuery("userInfo", getUserInfo);
 
-  const [userDetails, setUserDetails] = useState(null);
+  const [userDetails, setUserDetails] = useState({
+    username: "",
+    age: "",
+    gender: "",
+    goal: "",
+    activityLevel: "",
+    height: "",
+    weight: "",
+  });
 
   useEffect(() => {
     if (!userInfo) return;
 
-    let userDetails = getUserRecord(userInfo.username);
-    if (userDetails === null) {
-      userDetails = {};
+    let userRecord = getUserRecord(userInfo.username);
+    if (userRecord === null) {
+      setUserDetails({
+        username: userInfo.username,
+      });
+    } else {
+      setUserDetails({ ...userRecord, username: userInfo.username });
     }
-
-    setUserDetails(userDetails);
   }, [userInfo]);
+
+  const onSaveButtonClick = () => {
+    if (!userInfo) return;
+
+    const userRecord = { ...userDetails };
+    delete userRecord["username"];
+    setUserRecord(userInfo.username, userRecord);
+  };
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error loading user info</p>;
 
-  const goalCalories = userDetails ? Math.round(getGoalCalories(userDetails)) : 0;
+  const goalCalories = userDetails
+    ? Math.round(getGoalCalories(userDetails))
+    : 0;
 
   return (
     <>
@@ -314,7 +407,7 @@ function Profilepage() {
       <div className="biggest-container">
         <div className="grid-container-profilepage">
           <div className="left-grid-container-pp-12">
-            <ImageProfilePage username={userInfo.username} />
+            <ImageProfilePage username={userDetails.username} />
           </div>
           <div className="top-grid-container-pp-1">
             <RingTracker
@@ -327,13 +420,26 @@ function Profilepage() {
             <OverviewProfilePage />
             <LoginButtonsProfilePage />
           </div>
-          <div className="bottom-grid-container-pp-1">
-            <UserProfileRectangleLeft
-              userDetails={{ ...userDetails, username: userInfo.username }}
-            />
-          </div>
-          <div className="bottom-grid-container-pp-2">
-            <UserProfileRectangleRight userDetails={userDetails} />
+          <div className="bottom-grid-container-pp-1-2">
+            <div className="bottom-grid-container-pp-1">
+              <UserProfileRectangleLeft
+                userDetails={userDetails}
+                setUserDetails={setUserDetails}
+              />
+            </div>
+            <div className="bottom-grid-container-pp-2">
+              <UserProfileRectangleRight
+                userDetails={userDetails}
+                setUserDetails={setUserDetails}
+              />
+            </div>
+            <button
+              type="button"
+              className="profile-save-button button-profilepage"
+              onClick={onSaveButtonClick}
+            >
+              Save Changes
+            </button>
           </div>
         </div>
       </div>
