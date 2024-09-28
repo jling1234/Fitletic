@@ -357,6 +357,8 @@ function UserProfileRectangleRight({ userDetails, setUserDetails }) {
 }
 
 function Profilepage() {
+  const navigate = useNavigate();
+
   const {
     data: userInfo,
     isLoading,
@@ -372,6 +374,12 @@ function Profilepage() {
     height: "",
     weight: "",
   });
+
+  useEffect(() => {
+    if (!isLoading && !userInfo) {
+      navigate("/login", { replace: true });
+    }
+  }, [navigate, userInfo, isLoading]);
 
   useEffect(() => {
     if (!userInfo) return;
