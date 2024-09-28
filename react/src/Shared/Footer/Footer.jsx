@@ -45,17 +45,6 @@ export function Footer() {
            logging meals, and managing nutrition goals.
           </p>
         </div>
-
-        <form id="contactForm" className="query-form">
-          <h3>Contact Us</h3>
-          <div className="form-group">
-            <input type="email" name="email" className="input-field" placeholder="Your Email" />
-          </div>
-          <div className="form-group">
-            <textarea name="message" className="input-field" placeholder="Message" rows="4"></textarea>
-          </div>
-          <button type="submit" className="submit-btn">Submit</button>
-        </form>
       </div>
     </footer>
   );
