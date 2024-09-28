@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import {getUserRecord, setUserRecord} from "../Shared/LocalDetails/LocalDetails.jsx";
 import {getUserInfo} from "../Shared/API/Auth.js";
 import {useQuery} from "react-query";
+import {getLoggedCaloriesFromAllMeals, getLoggedMealsToday} from "../Shared/API/Meals.js";
 
 function ImageProfilePage({ username }) {
   return (
@@ -21,7 +22,7 @@ function ImageProfilePage({ username }) {
   );
 }
 
-function OverviewProfilePage() {
+function OverviewProfilePage({ gainedCalories, burntCalories }) {
   return (
     <>
       <div className="overview-text">
@@ -29,11 +30,11 @@ function OverviewProfilePage() {
       </div>
       <div className="cal-values-flex-container">
         <div className="cal-values">
-          <p className="number-cal">450 Kcal</p>
+          <p className="number-cal">{burntCalories} Kcal</p>
           <p className="text-cal">Burnt Calories</p>
         </div>
         <div className="cal-values">
-          <p className="number-cal">2800 Kcal</p>
+          <p className="number-cal">{gainedCalories} Kcal</p>
           <p className="text-cal">Intake Calories</p>
         </div>
       </div>
@@ -77,13 +78,12 @@ function RingTracker({ burntCalories, gainedCalories, goalCalories }) {
       <svg className="ring-svg" height={radius * 2} width={radius * 2}>
         <circle
           stroke="white"
-          fill="transparent"
+          fill="#eeeeee"
           strokeWidth={strokeWidth}
-          r={normalizedRadius}
+          r={normalizedRadius + strokeWidth}
           cx={radius}
           cy={radius}
         />
-
         <circle
           stroke="#fb5d35"
           fill="transparent"
@@ -365,6 +365,8 @@ function Profilepage() {
     isError,
   } = useQuery("userInfo", getUserInfo);
 
+  const { data: loggedMeals } = useQuery("loggedMeals", getLoggedMealsToday);
+
   const [userDetails, setUserDetails] = useState({
     username: "",
     age: "",
@@ -406,6 +408,9 @@ function Profilepage() {
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error loading user info</p>;
 
+  const intakeCalories = getLoggedCaloriesFromAllMeals(loggedMeals);
+  console.log(intakeCalories)
+
   const goalCalories = userDetails
     ? Math.round(getGoalCalories(userDetails))
     : 0;
@@ -421,7 +426,7 @@ function Profilepage() {
           <div className="top-grid-container-pp-1">
             <RingTracker
               burntCalories={450}
-              gainedCalories={2500}
+              gainedCalories={intakeCalories}
               goalCalories={goalCalories}
             />
             {goalCalories === 0 ? (
@@ -431,7 +436,7 @@ function Profilepage() {
             ) : null}
           </div>
           <div className="top-grid-container-pp-2">
-            <OverviewProfilePage />
+            <OverviewProfilePage gainedCalories={intakeCalories} burntCalories={450}/>
             <LoginButtonsProfilePage />
           </div>
           <div className="bottom-grid-container-pp-1-2">

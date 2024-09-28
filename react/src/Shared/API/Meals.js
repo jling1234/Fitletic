@@ -104,6 +104,16 @@ export async function getLoggedMealsToday() {
   return response.data;
 }
 
+export function getLoggedCaloriesFromAllMeals(loggedMeals) {
+  let calories = 0;
+  if (loggedMeals) {
+    for (const loggedMeal of loggedMeals) {
+      calories += getLoggedCalories(loggedMeal);
+    }
+  }
+  return  Number(calories.toFixed(2));
+}
+
 export function getLoggedCalories(loggedMeal) {
   let mealCalories = 0;
   for (const ingredient of loggedMeal.meal.ingredients) {
