@@ -121,8 +121,10 @@ function getGoalCalories(userDetails) {
 
   if (userDetails.gender === "male") {
     bmr = 10 * weight + 6.25 * height - 5 * age + 5;
-  } else {
+  } else if (userDetails.gender === "female") {
     bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+  } else {
+    return 0;
   }
 
   let activityFactor = 1.2;
