@@ -295,7 +295,12 @@ function Profilepage() {
   useEffect(() => {
     if (!userInfo) return;
 
-    setUserDetails(getUserRecord(userInfo.username));
+    let userDetails = getUserRecord(userInfo.username);
+    if (userDetails === null) {
+      userDetails = {};
+    }
+
+    setUserDetails(userDetails);
   }, [userInfo]);
 
   if (isLoading) return <p>Loading...</p>;
