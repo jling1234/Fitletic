@@ -111,7 +111,7 @@ export function getLoggedCaloriesFromAllMeals(loggedMeals) {
       calories += getLoggedCalories(loggedMeal);
     }
   }
-  return  Number(calories.toFixed(2));
+  return  Number(calories.toFixed(0));
 }
 
 export function getLoggedCalories(loggedMeal) {

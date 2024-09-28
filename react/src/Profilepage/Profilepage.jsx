@@ -71,7 +71,10 @@ function RingTracker({ burntCalories, gainedCalories, goalCalories }) {
 
   const totalCalories = Math.max(0, gainedCalories - burntCalories);
   const progress = Math.min(totalCalories / goalCalories, 1);
-  const strokeDashoffset = circumference - progress * circumference;
+  let strokeDashoffset = circumference - progress * circumference;
+  if (isNaN(strokeDashoffset)) {
+    strokeDashoffset = 0;
+  }
 
   return (
     <div className="ring-container">
@@ -409,7 +412,6 @@ function Profilepage() {
   if (isError) return <p>Error loading user info</p>;
 
   const intakeCalories = getLoggedCaloriesFromAllMeals(loggedMeals);
-  console.log(intakeCalories)
 
   const goalCalories = userDetails
     ? Math.round(getGoalCalories(userDetails))
