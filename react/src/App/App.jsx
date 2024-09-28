@@ -3,6 +3,12 @@ import Homepage from "../Homepage/Homepage.jsx";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LoginPage, SignUpPage } from "../LoginSignupPage/LoginSignupPage.jsx";
+import Profilepage from "../Profilepage/Profilepage.jsx";
+import Workoutspage from "../Workoutspage/Workoutspage.jsx";
+import Workoutloginpage from "../Workoutloginpage/Workoutloginpage.jsx";
+import Mealspage, {LogsPage} from "../MealsPage/MealsPage.jsx";
+import Mealsloginpage from "../MealsloginPage/MealsloginPage.jsx";
+import Savedworkoutspage from "../Savedworkoutspage/Savedworkoutspage.jsx";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const router = createBrowserRouter([
@@ -20,10 +26,35 @@ const router = createBrowserRouter([
   }, {
     path: "profile",
     element: <Profilepage />
+  }, {
+    path: "workout",
+    element: <Workoutspage />
+  }, {
+    path: "workoutlogin",
+    element: <Workoutloginpage/>
+  }, {
+    path: "meals",
+    element: <Mealspage />
+  }, {
+    path: "meals/logs",
+    element: <LogsPage />
+  }, {
+    path: "mealslogin/:mealId?",
+    element: <Mealsloginpage/>
+  }, {
+    path: "savedworkoutspage",
+    element: <Savedworkoutspage />
   }
 ]);
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60000,
+      cacheTime: 90000
+    }
+  }
+});
 
 function App() {
   return (

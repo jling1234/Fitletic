@@ -2,10 +2,13 @@ import { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 import { HomepageLinkLogo } from "../Logo/Logo.jsx";
-
+import { useNavigate} from "react-router-dom";
+import { useQuery } from "react-query";
+import { getUserInfo } from "../API/Auth.js";
 import "./Header.css";
+import PropTypes from "prop-types";
 
-export default function Header() {
+export default function Header({ headerRef }) {
   const opacityFillStart = 0;
   const opacityFillStop = 400;
 
@@ -33,8 +36,33 @@ export default function Header() {
     return () => window.removeEventListener("scroll", updateBackgroundOpacity);
   }, []);
 
+  let navigate = useNavigate();
+
+  const { data: userInfo } = useQuery("userInfo", getUserInfo);
+
+  const routeChangeProfile = () => {
+    if (userInfo) {
+      navigate("/profile");
+    } else navigate("/login");
+  };
+
+  const routeChangeWorkouts = () => {
+    if (userInfo) navigate("/workout");
+    else navigate("/login");
+  };
+
+  const routeChangeSavedWorkouts = () => {
+    if (userInfo) navigate("/savedworkoutspage");
+    else navigate("/login");
+  };
+
+  const routeChangeMealslogin = () => {
+    if (userInfo) navigate("/meals/logs");
+    else navigate("/login");
+  };
+
   return (
-    <header className="header">
+    <header ref={headerRef} className="header">
       <div ref={backgroundRef} className="header-background"></div>
       <div className="header-content">
         <HomepageLinkLogo></HomepageLinkLogo>
@@ -45,13 +73,13 @@ export default function Header() {
               <Link to={"/"}>HOME</Link>
             </li>
             <li>
-              <Link to={"/profile"}>PROFILE</Link>
+              <Link onClick={routeChangeProfile}>PROFILE</Link>
             </li>
             <li>
-              <Link to={"/"}>WORKOUTS</Link>
+              <Link onClick={routeChangeWorkouts}>WORKOUTS</Link>
             </li>
             <li>
-              <Link to={"/"}>MEALS</Link>
+              <Link onClick={routeChangeMealslogin}>MEALS</Link>
             </li>
           </ul>
         </nav>
@@ -59,3 +87,10 @@ export default function Header() {
     </header>
   );
 }
+
+Header.propTypes = {
+  headerRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  ]),
+};

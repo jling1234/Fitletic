@@ -1,5 +1,125 @@
-@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Anton&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+@import url(https://fonts.googleapis.com/css2?family=Anton&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Anton&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap);
+
+.input-fields {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+}
+
+.input-fields label {
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.age-pp,
+.gender-pp,
+.goal-pp,
+.username-pp {
+  display: flex;
+  align-items: center;
+}
+
+.BMI-profile,
+.activity-lvl,
+.age-pp,
+.gender-pp,
+.goal-pp,
+.height-pp,
+.username-pp,
+.weight-pp {
+  font-size: 18px;
+  margin-bottom: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  margin-left: 0.5rem;
+  margin-top: 0.3rem;
+}
+
+.BMI-profile {
+  display: flex;
+  align-items: center;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-fields input {
+  height: 2rem;
+  max-width: 15rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.age-pp input,
+.gender-pp input,
+.goal-pp input,
+.username-pp input {
+  height: 2rem;
+  max-width: 15rem;
+  margin-left: 10px;
+  box-sizing: border-box;
+}
+
+.activity-lvl input {
+  box-sizing: border-box;
+}
+
+.BMI-profile input,
+.height-pp input,
+.weight-pp input {
+  max-width: 15rem;
+  box-sizing: border-box;
+}
+
+.BMI-profile input {
+  height: 2rem;
+  margin-left: 10px;
+}
+
+.ring-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 15px;
+  border-radius: 50%;
+  width: 270px;
+  height: 270px;
+  position: relative;
+}
+
+.ring-container .ring-svg {
+  position: absolute;
+}
+
+.ring-container .ring-svg circle {
+  border: #000;
+}
+
+.overview-text p,
+.ring-container .ring-label {
+  font-family: "Anton";
+  text-align: center;
+  font-size: 40px;
+}
+
+.ring-container .ring-label {
+  color: #000;
+}
+
+.ring-tracker-goal-calories {
+  font-family: "Josephin Sans";
+  font-size: 16px;
+  color: gray;
+  text-align: center;
+  padding-top: 0.5rem;
+}
 
 .biggest-container {
   display: flex;
@@ -8,16 +128,18 @@
   width: 100%;
   height: 100%;
 }
+
 .grid-container-profilepage {
   display: grid;
   grid-template: repeat(2, 1fr) / repeat(3, 1fr);
-  gap: 0rem;
+  gap: 0;
   align-self: center;
   width: 100%;
   max-width: 1200px;
 }
 
-.grid-container-profilepage .left-grid-container-pp-12 {
+.grid-container-profilepage .left-grid-container-pp-12,
+.grid-container-profilepage .top-grid-container-pp-1 {
   grid-row: 1 / span 2;
   grid-column: 1;
   display: flex;
@@ -29,10 +151,6 @@
 .grid-container-profilepage .top-grid-container-pp-1 {
   grid-column: 2;
   grid-row: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .grid-container-profilepage .top-grid-container-pp-2 {
@@ -42,7 +160,8 @@
   flex-direction: column;
 }
 
-.grid-container-profilepage .bottom-grid-container-pp-1 {
+.grid-container-profilepage .bottom-grid-container-pp-1,
+.grid-container-profilepage .bottom-grid-container-pp-2 {
   grid-column: 2;
   grid-row: 2;
   display: flex;
@@ -53,26 +172,20 @@
 
 .grid-container-profilepage .bottom-grid-container-pp-2 {
   grid-column: 3;
-  grid-row: 2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
 }
 
 .img-profilepage {
-  background-image: url("./Assets/profpimage.png");
+  background-image: url(./Assets/profpimage.png);
   border-radius: 30px;
   min-height: 100%;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   min-width: 100%;
-  margin-inline-start: 70px;
 }
 
 .img-text {
   text-align: left;
-  color: white;
+  color: #fff;
   font-family: Anton;
   margin-left: 1.5rem;
   margin-top: 3rem;
@@ -81,10 +194,7 @@
 }
 
 .overview-text p {
-  font-family: "Anton";
-  text-align: center;
-  font-size: 40px;
-  font-weight: bold;
+  font-weight: 700;
   padding-bottom: 40px;
 }
 
@@ -95,9 +205,13 @@
   justify-content: center;
 }
 
-.number-cal {
+.number-cal,
+.text-cal {
   text-align: center;
   margin-left: 17px;
+}
+
+.number-cal {
   font-family: "Anton";
   line-height: 2rem;
   font-size: 40px;
@@ -106,10 +220,8 @@
 .text-cal {
   font-family: "Josefin Sans";
   font-size: 16px;
-  color: grey;
-  text-align: center;
+  color: gray;
   padding-top: 1rem;
-  margin-left: 17px;
 }
 
 .cal-values {
@@ -120,7 +232,7 @@
 
 .button-profilepage {
   background-color: #fb5d35;
-  border: none;
+  border: 0;
   border-radius: 25px;
   min-height: 28px;
   min-width: 250px;
@@ -129,7 +241,7 @@
 }
 
 .button-profilepage p {
-  color: white;
+  color: #fff;
   font-size: 15px;
   font-family: "Josefin Sans";
 }
@@ -141,12 +253,20 @@
   align-items: center;
 }
 
+.circle,
 .left-white-rectangle,
 .right-white-rectangle {
-  background-color: white;
-  margin: 1rem;
   display: flex;
   flex-direction: column;
+  background-color: #fff;
+}
+
+.left-white-rectangle,
+.right-white-rectangle {
+  align-items: start;
+  line-height: 0.5rem;
+  width: 95%;
+  margin: 1rem;
   justify-content: start;
   border-radius: 30px;
   min-width: 20rem;
@@ -164,20 +284,17 @@
 }
 
 .circle {
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 15px solid #fb5d35;
   border-radius: 50%;
   width: 270px;
   height: 270px;
-  background-color: white;
 }
 
 .button-small-profilepage {
   background-color: #fb5d35;
-  border: none;
+  border: 0;
   border-radius: 25px;
   min-height: 28px;
   min-width: 150px;
@@ -186,54 +303,35 @@
 }
 
 .button-small-profilepage p {
-  color: white;
+  color: #fff;
   font-size: 15px;
   font-family: "Josefin Sans";
 }
 
-.button-small-profilepage:hover,
-.button-profilepage {
+.button-profilepage,
+.button-small-profilepage:hover {
   cursor: pointer;
 }
 
-.activity-lvl {
+.activity-lvl,
+.height-pp,
+.weight-pp {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
 .activity-lvl input {
-  height: 2rem;
   max-width: 15rem;
- margin: 10px;
-
 }
 
-.height-pp {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-
-.height-pp input {
-  margin: 10px;
-  height: 2rem;
-}
-
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
+.height-pp,
 .weight-pp {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
   justify-content: center;
 }
 
+.activity-lvl input,
+.height-pp input,
 .weight-pp input {
   margin: 10px;
   height: 2rem;

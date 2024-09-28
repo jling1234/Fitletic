@@ -1,6 +1,4 @@
 import Logo from "../Logo/Logo.jsx";
-import { Link } from "react-router-dom";
-
 import "./Footer.css";
 
 export function FooterWaveDivider() {
@@ -35,21 +33,6 @@ export function Footer() {
   return (
     <footer className="footer">
       <Logo></Logo>
-
-      <ul className="footer-links">
-        <li>
-          <Link to={"/"}>FAQ</Link>
-        </li>
-        <li>
-          <Link to={"/"}>Our Mission</Link>
-        </li>
-        <li>
-          <Link to={"/"}>About Us</Link>
-        </li>
-        <li>
-          <Link to={"/"}>Contact Us</Link>
-        </li>
-      </ul>
     </footer>
   );
 }

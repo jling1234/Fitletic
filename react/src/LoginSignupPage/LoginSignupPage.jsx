@@ -6,34 +6,43 @@ import { HomepageLinkLogo } from "../Shared/Logo/Logo.jsx";
 import axios from "axios";
 import {setToken, setUserRecord} from "../Shared/LocalDetails/LocalDetails.jsx";
 import PropTypes from "prop-types";
-import {useQuery} from "react-query";
+import {useMutation, useQuery, useQueryClient} from "react-query";
 import {getUserInfo} from "../Shared/API/Auth.js";
+import {getAPIBaseUrl} from "../Shared/API/Env.js";
 
 function LoginForm() {
+    const queryClient = useQueryClient();
+    const navigate = useNavigate();
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [invalidAttempt, setInvalidAttempt] = useState(false);
-    const navigate = useNavigate();
+
+    const loginMutation = useMutation({
+        mutationFn: async () => {
+            return await axios.post(getAPIBaseUrl() + "/auth/login", {
+                username: username,
+                password: password,
+            });
+        },
+        onSuccess: (loginResponse) => {
+            setToken(loginResponse.data["token"]);
+            queryClient.removeQueries({ queryKey: "userInfo" });
+            navigate("/");
+            window.location.reload();
+        },
+        onError: (e) => {
+            if (e.status === 401) {
+                setInvalidAttempt(true);
+            } else {
+                throw e;
+            }
+        }
+    })
 
     const onLoginSubmit = async (event) => {
         event.preventDefault();
-        try {
-            const loginResponse = await axios.post("http://localhost:8080/auth/login", {
-              username: username,
-              password: password,
-            });
-
-            setToken(loginResponse.data["token"]);
-
-            navigate("/");
-        } catch (e) {
-            if (e.status === 401) {
-                setInvalidAttempt(true);
-                return;
-            }
-
-            throw e;
-        }
+        await loginMutation.mutate();
     };
 
     return (
@@ -70,6 +79,7 @@ function LoginForm() {
 }
 
 function SignUpForm() {
+    const queryClient = useQueryClient();
     const [formIndex, setFormIndex] = useState(0);
 
     const [username, setUsername] = useState("");
@@ -83,26 +93,32 @@ function SignUpForm() {
 
     const navigate = useNavigate();
 
+    const signupMutation = useMutation({
+        mutationFn: async () => {
+            const registerResponse = await axios.post(getAPIBaseUrl() + "/auth/signup", {
+                username: username,
+                password: password,
+            });
+
+            return await axios.post(getAPIBaseUrl() + "/auth/login", {
+                username: username,
+                password: password,
+            });
+        },
+        onSuccess: (loginResponse) => {
+            setToken(loginResponse.data["token"]);
+            setUserRecord(username, { age, height, weight, activityLevel });
+            queryClient.removeQueries( { queryKey: "userInfo" });
+            navigate("/");
+        },
+        onError: (e) => {
+            throw e;
+        }
+    })
+
     const onSignUpSubmit = async (event) => {
         event.preventDefault();
-        try {
-            const registerResponse = await axios.post("http://localhost:8080/auth/signup", {
-                username: username,
-                password: password,
-            });
-
-            const loginResponse = await axios.post("http://localhost:8080/auth/login", {
-                username: username,
-                password: password,
-            });
-
-            setToken(loginResponse.data["token"]);
-
-            setUserRecord(username, { age, height, weight, activityLevel });
-            navigate("/");
-        } catch (e) {
-            console.log(e);
-        }
+        await signupMutation.mutate();
     };
 
     const forms = [

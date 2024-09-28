@@ -2,15 +2,17 @@ import Header from "../Shared/Header/Header";
 import "./Profilepage.css";
 import "../Homepage/Homepage.css";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function ImageProfilePage() {
+  const username = "Fitletic";
   return (
     <>
       <div className="img-profilepage">
         <div className="img-text">
-          Hello,<br></br>
-          Username
+          Hello,
+          <br />
+          {username}
         </div>
       </div>
     </>
@@ -38,11 +40,42 @@ function OverviewProfilePage() {
   );
 }
 
-function RingTracker() {
+function RingTracker({ consumed, target }) {
+  const radius = 135;
+  const strokeWidth = 10;
+  const normalizedRadius = radius - strokeWidth * 2;
+  const circumference = normalizedRadius * 2 * Math.PI;
+  const strokeDashoffset = circumference - (consumed / target) * circumference;
+
   return (
-    <div className="circle">
-      <p className="number-cal">2450/2500</p>
-      <p className="text-cal">Goal Calories</p>
+    <div className="ring-container">
+      <svg className="ring-svg" height={radius * 2} width={radius * 2}>
+        {/* Background Circle*/}
+        <circle
+          stroke="#fb5d35"
+          fill="transparent"
+          strokeWidth={strokeWidth}
+          strokeDasharray={`${circumference} ${circumference}`}
+          style={{ strokeDashoffset }}
+          r={normalizedRadius}
+          cx={radius}
+          cy={radius}
+        />
+
+        <circle
+          stroke="white"
+          fill="transparent"
+          strokeWidth={strokeWidth}
+          strokeDasharray={`${circumference} ${circumference}`}
+          style={{ normalizedRadius }}
+          cx={radius}
+          cy={radius}
+          strokeLinecap="round"
+          transform={`rotate(-90 ${radius} ${radius})`}
+        />
+      </svg>
+      <div className="ring-label">{consumed}/2500</div>
+      <p className="ring-tracker-goal-calories">Goal Calories</p>
     </div>
   );
 }
@@ -60,11 +93,11 @@ function LoginWorkoutProfilePageButton() {
   return (
     <div>
       <button
-        type=" button"
+        type="button"
         className="button-profilepage"
         onClick={() => alert("login a workout was clicked ")}
       >
-        <p> Login a Workout</p>
+        <p>Login a Workout</p>
       </button>
     </div>
   );
@@ -74,11 +107,11 @@ function LoginMealProfilePageButton() {
   return (
     <div>
       <button
-        type=" button"
+        type="button"
         className="button-profilepage"
         onClick={() => alert("login a meal was clicked ")}
       >
-        <p> Login a Meal</p>
+        <p>Login a Meal</p>
       </button>
     </div>
   );
@@ -88,20 +121,46 @@ function UserProfileRectangleLeft() {
   return (
     <>
       <div className="left-white-rectangle">
-        <p>
-          Username: <br></br>
-          Age:<br></br>
-          Gender:<br></br>
-          Goal:
-        </p>
+        <div className="input-fields">
+          <label>
+            <div className="username-pp">
+              Username:
+              <input type="text" />
+            </div>
+          </label>
+        </div>
+        <div className="input-fields">
+          <label>
+            <div className="age-pp">
+              Age:
+              <input type="number" />
+            </div>
+          </label>
+        </div>
+        <div className="input-fields">
+          <label>
+            <div className="gender-pp">
+              Gender:
+              <input type="text" />
+            </div>
+          </label>
+        </div>
+        <div className="input-fields">
+          <label>
+            <div className="goal-pp">
+              Goal:
+              <input type="text" />
+            </div>
+          </label>
+        </div>
       </div>
       <div>
         <button
-          type=" button"
+          type="button"
           className="button-small-profilepage"
-          onClick={() => alert("save changes was clicked ")}
+          onClick={() => alert("save changes was clicked")}
         >
-          <p> Save Changes</p>
+          <p>Save Changes</p>
         </button>
       </div>
     </>
@@ -110,6 +169,7 @@ function UserProfileRectangleLeft() {
 
 //has BMI calculation in it
 function UserProfileRectangleRight() {
+  const [activityLevel, setActivityLevel] = useState("");
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
   const [bmi, setBmi] = useState("");
@@ -121,7 +181,7 @@ function UserProfileRectangleRight() {
     } else {
       setBmi("");
     }
-  });
+  }, [height, weight]);
 
   const disableScroll = (e) => {
     e.target.blur();
@@ -130,22 +190,31 @@ function UserProfileRectangleRight() {
   return (
     <>
       <div className="right-white-rectangle">
-        <p>
-          <div className="activity-lvl">
-            Activity Level:<br></br> <input type="text" />
+        <div className="activity-lvl">
+          Activity Level:
+          <div className="input-fields">
+            <input
+              type="text"
+              value={activityLevel}
+              onChange={(e) => setActivityLevel(e.target.value)}
+            />
           </div>
-          <div className="height-pp">
-            Height(m):
+        </div>
+        <div className="height-pp">
+          Height(m):
+          <div className="input-fields">
             <input
               type="number"
               value={height}
               onChange={(e) => setHeight(e.target.value)}
               onClick={(e) => e.preventDefault()}
               onWheel={disableScroll}
-            ></input>
+            />
           </div>
-          <div className="weight-pp">
-            Weight(kg):<br></br>
+        </div>
+        <div className="weight-pp">
+          Weight(kg):
+          <div className="input-fields">
             <input
               type="number"
               value={weight}
@@ -153,22 +222,21 @@ function UserProfileRectangleRight() {
               onWheel={disableScroll}
             />
           </div>
-          <div className="BMI-profile">
-            <p>
-              BMI: {""} 
-               {bmi}
-            </p>
-            <br></br>
+        </div>
+        <div className="BMI-profile">
+          BMI:
+          <div className="input-fields">
+            <input type="number" value={bmi} readOnly />
           </div>
-        </p>
+        </div>
       </div>
       <div>
         <button
-          type=" button"
+          type="button"
           className="button-small-profilepage"
-          onClick={() => alert("log out was clicked ")}
+          onClick={() => alert("log out was clicked")}
         >
-          <p> Log Out</p>
+          <p>Log Out</p>
         </button>
       </div>
     </>
@@ -185,7 +253,7 @@ function Profilepage() {
             <ImageProfilePage />
           </div>
           <div className="top-grid-container-pp-1">
-            <RingTracker />
+            <RingTracker consumed={100} target={2500} />
           </div>
           <div className="top-grid-container-pp-2">
             <OverviewProfilePage />
