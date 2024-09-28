@@ -10,6 +10,7 @@ import { BackArrow } from "../Savedworkoutspage/Savedworkoutspage";
 import axios from "axios";
 import { getUserInfo } from "../Shared/API/Auth";
 import { useQueryClient } from "react-query";
+import {getAPIBaseUrl} from "../Shared/API/Env.js";
 
 // eslint-disable-next-line react/prop-types
 export function Exercise({ exerciseName }) {
@@ -186,7 +187,7 @@ function Workoutloginpage() {
   // eslint-disable-next-line no-unused-vars
   const fetchDataExercise = async (value) => {
     try {
-      const response = await axios.get("http://localhost:8080/exercise", {
+      const response = await axios.get(getAPIBaseUrl() + "/exercise", {
         headers: {Authorization:"Bearer " + getToken()}});
       const results = response.data.filter((inputtedExercises) => {
         return (
@@ -245,7 +246,7 @@ let newWorkoutId;
   const handleSaveWorkout = async (event) => {
     event.preventDefault();
     try {
-     const response = await axios.post("http://localhost:8080/workout/save",
+     const response = await axios.post(getAPIBaseUrl() + "/workout/save",
          {
             userId: getUserInfo().id,
             workoutName:routineName,
@@ -266,7 +267,7 @@ let newWorkoutId;
        console.log("Entered 2nd block")
      for(const item of exercises)
       {
-        const response1 = await axios.post("http://localhost:8080/userExercise/save",
+        const response1 = await axios.post(getAPIBaseUrl() + "/userExercise/save",
             {
               userId: getUserInfo.id,
               workoutId: newWorkoutId,

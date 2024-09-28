@@ -12,6 +12,7 @@ import { useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import { useMutation } from "react-query";
 import { deleteWorkout, fetchUserExercises, getWorkoutName } from "../Shared/API/Workout.js";
+import { getAPIBaseUrl } from "../Shared/API/Env.js";
 
 // eslint-disable-next-line react/prop-types
 export function Exercise({ exerciseName }) {
@@ -205,7 +206,7 @@ function Workouteditpage() {
   // eslint-disable-next-line no-unused-vars
   const fetchDataExercise = async (value) => {
     try {
-      const response = await axios.get("http://localhost:8080/exercise", {
+      const response = await axios.get(getAPIBaseUrl()+"/exercise", {
         headers: { Authorization: "Bearer " + getToken() },
       });
       const results = response.data.filter((inputtedExercises) => {
@@ -277,7 +278,7 @@ function Workouteditpage() {
     // event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8080/workout/save",
+        getAPIBaseUrl()+"/workout/save",
         {
           userId: getUserInfo().id,
           workoutName: routineName,
@@ -298,7 +299,7 @@ function Workouteditpage() {
       console.log("Entered 2nd block");
       for (const item of exercises) {
         const response1 = await axios.post(
-          "http://localhost:8080/userExercise/save",
+          getAPIBaseUrl()+"/userExercise/save",
           {
             userId: getUserInfo.id,
             workoutId: newWorkoutId,

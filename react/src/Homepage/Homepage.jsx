@@ -7,6 +7,7 @@ import "./Homepage.css";
 import { getUserInfo } from "../Shared/API/Auth.js";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { setToken } from "../Shared/LocalDetails/LocalDetails.jsx";
+import {getAPIBaseUrl} from "../Shared/API/Env.js";
 
 function BannerText() {
   const text = "FITLETIC";
@@ -128,20 +129,17 @@ function LoginSignupButtonWrapper() {
 
   const { data: userInfo } = useQuery("userInfo", getUserInfo);
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
+    queryClient.clear();
     setToken("");
-    await queryClient.invalidateQueries();
+    window.location.reload();
   };
 
   if (userInfo) {
-    return (
-      <div className="homepage-button-wrapper">
-        <Link to={"/"}>Profile</Link>
-        <button type={"button"} onClick={handleLogout}>
-          Logout
-        </button>
-      </div>
-    );
+    return <div className="homepage-button-wrapper">
+      <Link to={"/profile"}>Profile</Link>
+      <button type={"button"} onClick={handleLogout}>Logout</button>
+    </div>
   }
 
   return (

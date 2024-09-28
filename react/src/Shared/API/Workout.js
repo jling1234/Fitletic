@@ -1,10 +1,11 @@
 import axios from "axios";
 import {getToken} from "../LocalDetails/LocalDetails.jsx";
+import {getAPIBaseUrl} from "./Env.js";
 
 export async function getWorkouts () {
 
         const response = await axios.get(
-            "http://localhost:8080/workout/getWorkouts",
+            getAPIBaseUrl()+"/workout/getWorkouts",
             {
                 headers: { Authorization: "Bearer " + getToken()},
             }
@@ -14,7 +15,7 @@ export async function getWorkouts () {
 }
 
 export async function getLoggedWorkoutResponses () {
-    const response = await axios.get("http://localhost:8080/logged/get", {
+    const response = await axios.get(getAPIBaseUrl()+"/logged/get", {
         headers: { Authorization: "Bearer " + getToken()},
     }
 );
@@ -22,7 +23,7 @@ return response.data;
 }
 
 export async function saveLoggedWorkoutResponse (workoutId) {
-    const response = await axios.post("http://localhost:8080/logged/save/" + workoutId, null,
+    const response = await axios.post(getAPIBaseUrl()+"/logged/save/" + workoutId, null,
 {
     headers: { Authorization: "Bearer " + getToken()},
 }
@@ -32,7 +33,7 @@ return response.data;
 }
 
 export async function deleteWorkout (workoutId) {
-    const response = await axios.post("http://localhost:8080/workout/delete?workoutId=" + workoutId, null,
+    const response = await axios.post(getAPIBaseUrl()+"/workout/delete?workoutId=" + workoutId, null,
     {
         headers: { Authorization: "Bearer " + getToken()},
     });
@@ -40,7 +41,7 @@ export async function deleteWorkout (workoutId) {
 }
 
 export async function getWorkoutName (workoutId) {
-const response = await axios.get("http://localhost:8080/workout/get/" + workoutId,
+const response = await axios.get(getAPIBaseUrl()+"/workout/get/" + workoutId,
     {
     headers: { Authorization: "Bearer " + getToken()},
 });
@@ -50,7 +51,7 @@ return response.data;
 
 export async function fetchUserExercises(workoutId){
     const response = await axios.get(
-        "http://localhost:8080/userExercise/get/" + workoutId,
+        getAPIBaseUrl()+"/userExercise/get/" + workoutId,
         {
           headers: { Authorization: "Bearer " + getToken() },
         }

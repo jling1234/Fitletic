@@ -4,10 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import "./LoginSignupPage.css";
 import { HomepageLinkLogo } from "../Shared/Logo/Logo.jsx";
 import axios from "axios";
-import {setToken, setUserRecord} from "../Shared/LocalDetails/LocalDetails.jsx";
+import { setToken, setUserRecord } from "../Shared/LocalDetails/LocalDetails.jsx";
 import PropTypes from "prop-types";
-import {useQuery, useQueryClient} from "react-query";
-import {getUserInfo} from "../Shared/API/Auth.js";
+import { useQuery, useQueryClient , useMutation } from "react-query";
+import { getUserInfo } from "../Shared/API/Auth.js";
+import {getAPIBaseUrl} from "../Shared/API/Env.js";
 
 function LoginForm() {
     const queryClient = useQueryClient();
@@ -17,26 +18,31 @@ function LoginForm() {
     const [password, setPassword] = useState("");
     const [invalidAttempt, setInvalidAttempt] = useState(false);
 
-    const onLoginSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            const loginResponse = await axios.post("http://localhost:8080/auth/login", {
-              username: username,
-              password: password,
+    const loginMutation = useMutation({
+        mutationFn: async () => {
+            return await axios.post(getAPIBaseUrl() + "/auth/login", {
+                username: username,
+                password: password,
             });
-
+        },
+        onSuccess: (loginResponse) => {
             setToken(loginResponse.data["token"]);
-            await queryClient.invalidateQueries();
-
+            queryClient.removeQueries({ queryKey: "userInfo" });
             navigate("/");
-        } catch (e) {
+            window.location.reload();
+        },
+        onError: (e) => {
             if (e.status === 401) {
                 setInvalidAttempt(true);
-                return;
+            } else {
+                throw e;
             }
-
-            throw e;
         }
+    })
+
+    const onLoginSubmit = async (event) => {
+        event.preventDefault();
+        await loginMutation.mutate();
     };
 
     return (
@@ -73,6 +79,7 @@ function LoginForm() {
 }
 
 function SignUpForm() {
+    const queryClient = useQueryClient();
     const [formIndex, setFormIndex] = useState(0);
 
     const [username, setUsername] = useState("");
@@ -80,32 +87,40 @@ function SignUpForm() {
     const [passwordConfirm, setPasswordConfirm] = useState("");
 
     const [age, setAge] = useState("");
+    const [gender, setGender] = useState("");
+    const [goal, setGoal] = useState("");
     const [height, setHeight] = useState("");
     const [weight, setWeight] = useState("");
     const [activityLevel, setActivityLevel] = useState("");
 
     const navigate = useNavigate();
 
+    const signupMutation = useMutation({
+        mutationFn: async () => {
+            const registerResponse = await axios.post(getAPIBaseUrl() + "/auth/signup", {
+                username: username,
+                password: password,
+            });
+
+            return await axios.post(getAPIBaseUrl() + "/auth/login", {
+                username: username,
+                password: password,
+            });
+        },
+        onSuccess: (loginResponse) => {
+            setToken(loginResponse.data["token"]);
+            setUserRecord(username, { age, height, weight, activityLevel, gender, goal });
+            queryClient.removeQueries( { queryKey: "userInfo" });
+            navigate("/");
+        },
+        onError: (e) => {
+            throw e;
+        }
+    })
+
     const onSignUpSubmit = async (event) => {
         event.preventDefault();
-        try {
-            const registerResponse = await axios.post("http://localhost:8080/auth/signup", {
-                username: username,
-                password: password,
-            });
-
-            const loginResponse = await axios.post("http://localhost:8080/auth/login", {
-                username: username,
-                password: password,
-            });
-
-            setToken(loginResponse.data["token"]);
-
-            setUserRecord(username, { age, height, weight, activityLevel });
-            navigate("/");
-        } catch (e) {
-            console.log(e);
-        }
+        await signupMutation.mutate();
     };
 
     const forms = [
@@ -163,6 +178,20 @@ function SignUpForm() {
                 </div>
             </div>
             <div>
+                <p className="gender">Gender</p>
+                <div className="gender-select-field">
+                    <select
+                        className="dropdown"
+                        value={gender}
+                        onChange={(e) => setGender(e.target.value)}
+                    >
+                        <option value="">Select</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+            </div>
+            <div>
                 <p className="height">Height</p>
                 <div className="height-number-field">
                     <input
@@ -206,7 +235,7 @@ function SignUpForm() {
             <div>
                 <p className="goal">Goal</p>
                 <div className="goal-select-field">
-                    <select className="dropdown">
+                    <select className="dropdown" value={goal} onChange={(e) => setGoal(e.target.value)}>
                         <option value="">Select</option>
                         <option value="weight-loss">Weight Loss</option>
                         <option value="maintain-weight">Maintain Weight</option>

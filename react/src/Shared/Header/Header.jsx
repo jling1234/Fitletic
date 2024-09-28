@@ -2,7 +2,9 @@ import { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 import { HomepageLinkLogo } from "../Logo/Logo.jsx";
-
+import { useNavigate} from "react-router-dom";
+import { useQuery } from "react-query";
+import { getUserInfo } from "../API/Auth.js";
 import "./Header.css";
 import PropTypes from "prop-types";
 
@@ -34,6 +36,31 @@ export default function Header({ headerRef }) {
     return () => window.removeEventListener("scroll", updateBackgroundOpacity);
   }, []);
 
+  let navigate = useNavigate();
+
+  const { data: userInfo } = useQuery("userInfo", getUserInfo);
+
+  const routeChangeProfile = () => {
+    if (userInfo) {
+      navigate("/profile");
+    } else navigate("/login");
+  };
+
+  const routeChangeWorkouts = () => {
+    if (userInfo) navigate("/workout");
+    else navigate("/login");
+  };
+
+  const routeChangeSavedWorkouts = () => {
+    if (userInfo) navigate("/savedworkoutspage");
+    else navigate("/login");
+  };
+
+  const routeChangeMealslogin = () => {
+    if (userInfo) navigate("/meals/logs");
+    else navigate("/login");
+  };
+
   return (
     <header ref={headerRef} className="header">
       <div ref={backgroundRef} className="header-background"></div>
@@ -46,13 +73,13 @@ export default function Header({ headerRef }) {
               <Link to={"/"}>HOME</Link>
             </li>
             <li>
-              <Link to={"/profile"}>PROFILE</Link>
+              <Link onClick={routeChangeProfile}>PROFILE</Link>
             </li>
             <li>
-              <Link to={"/workout"}>WORKOUTS</Link>
+              <Link onClick={routeChangeWorkouts}>WORKOUTS</Link>
             </li>
             <li>
-              <Link to={"/meals"}>MEALS</Link>
+              <Link onClick={routeChangeMealslogin}>MEALS</Link>
             </li>
           </ul>
         </nav>

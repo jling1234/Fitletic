@@ -1,4 +1,6 @@
 import Logo from "../Logo/Logo.jsx";
+import { Link } from "react-router-dom";
+
 import "./Footer.css";
 
 export function FooterWaveDivider() {
@@ -32,7 +34,29 @@ export function FooterWaveDivider() {
 export function Footer() {
   return (
     <footer className="footer">
-      <Logo></Logo>
+      <Logo />
+      
+      <div className="footer-content">
+        <div className="about-us">
+          <h3>About Us</h3>
+          <p>
+          Fitletic  is a platform that simplifies fitness
+           tracking with features for saving workouts, 
+           logging meals, and managing nutrition goals.
+          </p>
+        </div>
+
+        <form id="contactForm" className="query-form">
+          <h3>Contact Us</h3>
+          <div className="form-group">
+            <input type="email" name="email" className="input-field" placeholder="Your Email" />
+          </div>
+          <div className="form-group">
+            <textarea name="message" className="input-field" placeholder="Message" rows="4"></textarea>
+          </div>
+          <button type="submit" className="submit-btn">Submit</button>
+        </form>
+      </div>
     </footer>
   );
 }

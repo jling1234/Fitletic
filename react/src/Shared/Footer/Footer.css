@@ -59,5 +59,58 @@
 }
 
 .footer-wave-container .custom-shape-divider-footer {
-  margin-bottom: -2px; /* Remove random gaps */
+  margin-bottom: -2px; 
+}
+
+.footer-content {
+  display: flex;
+  width: 50%;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.about-us, .query-form {
+  width: 50%; 
+  padding: 1rem;
+  background-color: transparent;
+  border-radius: 8px;
+  display: flex;            
+  flex-direction: column;   
+  align-items: center;
+  text-align: center;
+  gap: 1rem; 
+}
+
+.about-us h3, .query-form h3 {
+  font-size: 18px;
+  color: var(--color-text-dark);
+  text-align: center; 
+}
+
+.query-form input,
+.query-form textarea {
+  width: 100%; 
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  
+}
+
+.query-form textarea {
+  resize: vertical;
+}
+
+.query-form button {
+  padding: 8px 16px;
+  background-color: #FDA172;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.query-form button:hover {
+  background-color: #ffd2bb;
 }
