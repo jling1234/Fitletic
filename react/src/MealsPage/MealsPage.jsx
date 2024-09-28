@@ -6,12 +6,12 @@ import {useMutation, useQuery, useQueryClient} from "react-query";
 import {getUserInfo} from "../Shared/API/Auth.js";
 import {useEffect, useRef, useState} from "react";
 import {
-  deleteMeal,
+  deleteMeal, getAllLoggedMeals, getLoggedCalories,
   getIngredients,
   getLoggedMealsToday,
   getMeals,
   getNutrientAmount,
-  logMeal
+  logMeal, deleteLoggedMeal
 } from "../Shared/API/Meals.js";
 import PropTypes from "prop-types";
 
@@ -100,6 +100,7 @@ function MealCard({ meal, ingredients }) {
       await queryClient.invalidateQueries(["meal", id]);
       await queryClient.invalidateQueries("meals");
       await queryClient.invalidateQueries("loggedMeals");
+      await queryClient.invalidateQueries("allLoggedMeals");
     },
   });
 
@@ -113,6 +114,7 @@ function MealCard({ meal, ingredients }) {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries("loggedMeals");
+      await queryClient.invalidateQueries("allLoggedMeals");
     },
   });
 
@@ -278,9 +280,171 @@ MyMeals.propTypes = {
   ]),
 };
 
-function Mealspage() {
+function DateLogCard({ date, loggedMeals }) {
+  const queryClient = useQueryClient();
+
+  const deleteLoggedMealMutation = useMutation({
+    mutationFn: async (id) => {
+      return await deleteLoggedMeal(id);
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries("loggedMeals");
+      await queryClient.invalidateQueries("allLoggedMeals");
+    },
+  });
+
+  const timeFormat = new Intl.DateTimeFormat("en-DE", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  loggedMeals.sort((a, b) => a.loggedAtEpochSecond > b.loggedAtEpochSecond);
+
+  return (
+    <div className="my-logs-card">
+      <h3>{date}</h3>
+      <ul className="my-logs-card-list">
+        {loggedMeals.map((loggedMeal, index) => {
+          const date = new Date(loggedMeal.loggedAtEpochSecond * 1000);
+
+          return (
+            <li key={loggedMeal.id}>
+              <p className="my-logs-calories">
+                {getLoggedCalories(loggedMeal)} kcal
+              </p>
+              <p className="my-logs-meal-name">{loggedMeal.meal.name}</p>
+              <p className="my-logs-time">{timeFormat.format(date)}</p>
+              <button
+                onClick={async () =>
+                  await deleteLoggedMealMutation.mutate(loggedMeal.id)
+                }
+                className="my-logs-delete-button"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="#000000"
+                >
+                  <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
+                </svg>
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
+function MyLogs({ divRef }) {
+  const { data: allLoggedMeals } = useQuery(
+    "allLoggedMeals",
+    getAllLoggedMeals,
+  );
+
+  const transformedMeals = {};
+  const dates = [];
+
+  if (allLoggedMeals) {
+    allLoggedMeals.sort(
+      (a, b) => a.loggedAtEpochSecond < b.loggedAtEpochSecond,
+    );
+
+    const format = new Intl.DateTimeFormat("en-DE", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
+
+    for (const loggedMeal of allLoggedMeals) {
+      const date = new Date(loggedMeal.loggedAtEpochSecond * 1000);
+      let formattedDate = null;
+      if (date.toDateString() === today.toDateString()) {
+        formattedDate = "Today";
+      } else if (date.toDateString() === yesterday.toDateString()) {
+        formattedDate = "Yesterday";
+      } else {
+        formattedDate = format.format(date);
+      }
+
+      if (formattedDate in transformedMeals) {
+        transformedMeals[formattedDate].push(loggedMeal);
+      } else {
+        transformedMeals[formattedDate] = [loggedMeal];
+        dates.push(formattedDate);
+      }
+    }
+
+    console.log(transformedMeals);
+  }
+
+  return (
+    <div ref={divRef} className="bottompage-container-mp">
+      <div className="my-logs-heading">
+        <h2>MY LOGGED MEALS</h2>
+      </div>
+      <ul className="my-logs-container">
+        {dates.map((date) => {
+          return (
+            <li key={date}>
+              <DateLogCard date={date} loggedMeals={transformedMeals[date]} />
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
+MyLogs.propTypes = {
+  divRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  ]),
+};
+
+function LogAMealButton({ headerRef, contentRef, text }) {
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        const customOffset = 10;
+        const headerOffset = headerRef.current.offsetHeight;
+        const elementPosition = contentRef.current.getBoundingClientRect().top;
+        const offsetPosition =
+          elementPosition + window.scrollY - headerOffset - customOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+      }}
+    >
+      <p>{text}</p>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        height="24px"
+        viewBox="0 -960 960 960"
+        width="24px"
+        fill="#ffffff"
+      >
+        <path d="M440-120q-75 0-140.5-28T185-225q-49-49-77-114.5T80-480q0-75 28-140.5T185-735q49-49 114.5-77T440-840q21 0 40.5 2.5T520-830v82q-20-6-39.5-9t-40.5-3q-118 0-199 81t-81 199q0 118 81 199t199 81q118 0 199-81t81-199q0-11-1-20t-3-20h82q2 11 2 20v20q0 75-28 140.5T695-225q-49 49-114.5 77T440-120Zm112-192L400-464v-216h80v184l128 128-56 56Zm168-288v-120H600v-80h120v-120h80v120h120v80H800v120h-80Z" />
+      </svg>
+    </button>
+  );
+}
+
+function Mealspage({ showLogs }) {
   const navigate = useNavigate();
-  const myMealsRef = useRef(null);
+  const contentRef = useRef(null);
   const headerRef = useRef(null);
 
   const { data: userInfo, isLoading: userInfoIsLoading } = useQuery(
@@ -299,16 +463,10 @@ function Mealspage() {
   let calories = 0;
   if (loggedMeals) {
     for (const loggedMeal of loggedMeals) {
-      let mealCalories = 0;
-      for (const ingredient of loggedMeal.meal.ingredients) {
-        const adjustedIngredient = { ...ingredient.ingredient, count: ingredient.count };
-        mealCalories += getNutrientAmount(adjustedIngredient, "Energy", "kcal");
-      }
-      const servesSafe = loggedMeal.meal.servings > 0 ? loggedMeal.meal.servings : 1;
-      calories += mealCalories / servesSafe;
+      calories += getLoggedCalories(loggedMeal);
     }
   }
-
+  calories = Number(calories.toFixed(2));
 
   return (
     <>
@@ -325,42 +483,36 @@ function Mealspage() {
                 <h6> gained today</h6>
               </div>
               <div className="Mealslog">
-                <button
-                  type="button"
-                  onClick={() => {
-                    const customOffset = 10;
-                    const headerOffset = headerRef.current.offsetHeight;
-                    const elementPosition = myMealsRef.current.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.scrollY - headerOffset - customOffset;
-
-                    window.scrollTo({
-                      top: offsetPosition,
-                      behavior: "smooth"
-                    })
-                  }}
-                >
-                  <p>Log a Meal</p>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24px"
-                    viewBox="0 -960 960 960"
-                    width="24px"
-                    fill="#ffffff"
-                  >
-                    <path d="M440-120q-75 0-140.5-28T185-225q-49-49-77-114.5T80-480q0-75 28-140.5T185-735q49-49 114.5-77T440-840q21 0 40.5 2.5T520-830v82q-20-6-39.5-9t-40.5-3q-118 0-199 81t-81 199q0 118 81 199t199 81q118 0 199-81t81-199q0-11-1-20t-3-20h82q2 11 2 20v20q0 75-28 140.5T695-225q-49 49-114.5 77T440-120Zm112-192L400-464v-216h80v184l128 128-56 56Zm168-288v-120H600v-80h120v-120h80v120h120v80H800v120h-80Z" />
-                  </svg>
-                </button>
+                {!showLogs && <button type="button" onClick={() => navigate("/meals/logs")}><p>View Logs</p></button>}
+                {showLogs && <button type="button" onClick={() => navigate("/meals")}><p>View Meals</p></button>}
+                  <LogAMealButton
+                    text={showLogs ? "Manage my Logs" : "Log a Meal"}
+                    headerRef={headerRef}
+                    contentRef={contentRef}
+                  />
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <MyMeals divRef={myMealsRef} />
+      {showLogs ? (
+        <MyLogs divRef={contentRef} />
+      ) : (
+        <MyMeals divRef={contentRef} />
+      )}
 
       <FooterWithWaves />
     </>
   );
+}
+
+Mealspage.propTypes = {
+  showLogs: PropTypes.bool,
+};
+
+export function LogsPage() {
+  return <Mealspage showLogs={true}></Mealspage>;
 }
 
 export default Mealspage;

@@ -1,19 +1,19 @@
 import Header from "../Shared/Header/Header";
 import "./Profilepage.css";
 import "../Homepage/Homepage.css";
-import { getUserRecord } from "../Shared/LocalDetails/LocalDetails.jsx";
-import { getUserInfo } from "../Shared/API/Auth.js";
-import { useState,useRef, useEffect } from "react";
-import { useQuery } from "react-query";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import {getUserRecord} from "../Shared/LocalDetails/LocalDetails.jsx";
+import {getUserInfo} from "../Shared/API/Auth.js";
+import {useQuery} from "react-query";
 
 function ImageProfilePage({ username }) {
   return (
     <>
       <div className="img-profilepage">
         <div className="img-text">
-          Hello,<br />
+          Hello,
+          <br />
           {username}
         </div>
       </div>
@@ -43,21 +43,24 @@ function OverviewProfilePage() {
 
 function RingTracker({ burntCalories, gainedCalories, goalCalories }) {
   const containerRef = useRef(null);
-  const [radius, setRadius] = useState(135); 
+  const [radius, setRadius] = useState(135);
 
   useEffect(() => {
     const handleResize = () => {
       if (containerRef.current) {
-        const size = Math.min(containerRef.current.offsetWidth, containerRef.current.offsetHeight);
-        setRadius(size * 0.4); 
+        const size = Math.min(
+          containerRef.current.offsetWidth,
+          containerRef.current.offsetHeight,
+        );
+        setRadius(size * 0.4);
       }
     };
 
-    handleResize(); 
-    window.addEventListener('resize', handleResize); 
+    handleResize();
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize); 
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -72,8 +75,7 @@ function RingTracker({ burntCalories, gainedCalories, goalCalories }) {
   return (
     <div className="ring-container">
       <svg className="ring-svg" height={radius * 2} width={radius * 2}>
-        
-      <circle
+        <circle
           stroke="white"
           fill="transparent"
           strokeWidth={strokeWidth}
@@ -82,8 +84,8 @@ function RingTracker({ burntCalories, gainedCalories, goalCalories }) {
           cy={radius}
         />
 
-<circle
-          stroke="#fb5d35" 
+        <circle
+          stroke="#fb5d35"
           fill="transparent"
           strokeWidth={strokeWidth}
           strokeDasharray={`${circumference} ${circumference}`}
@@ -95,18 +97,24 @@ function RingTracker({ burntCalories, gainedCalories, goalCalories }) {
           transform={`rotate(-90 ${radius} ${radius})`}
         />
       </svg>
-      <div className="ring-label"> {totalCalories}/{goalCalories}</div>
+      <div className="ring-label">
+        {" "}
+        {totalCalories}/{goalCalories}
+      </div>
       <p className="ring-tracker-goal-calories">Goal Calories</p>
     </div>
   );
 }
 
-
-function GoalKCAL(userDetails) {
-  const { weight, height, age, activityLevel, goal } = userDetails;
+function getGoalCalories(userDetails) {
+  let { weight, height, age, activityLevel, goal } = userDetails;
   let bmr;
 
-  if (!weight || !height || !age) return 0;
+  if (!weight || !height || !age || !activityLevel || !goal) return 0;
+
+  weight = Number(weight);
+  height = Number(height);
+  age = Number(age);
 
   if (userDetails.gender === "male") {
     bmr = 10 * weight + 6.25 * height - 5 * age + 5;
@@ -114,7 +122,7 @@ function GoalKCAL(userDetails) {
     bmr = 10 * weight + 6.25 * height - 5 * age - 161;
   }
 
-  let activityFactor = 1.2; 
+  let activityFactor = 1.2;
   switch (activityLevel) {
     case "sedentary":
       activityFactor = 1.2;
@@ -137,12 +145,12 @@ function GoalKCAL(userDetails) {
 
   switch (goal) {
     case "weight-loss":
-      return maintenanceKCAL - 500; 
+      return maintenanceKCAL - 500;
     case "weight-gain":
-      return maintenanceKCAL + 500; 
+      return maintenanceKCAL + 500;
   }
+  return maintenanceKCAL;
 }
-
 
 function LoginButtonsProfilePage() {
   return (
@@ -224,7 +232,10 @@ function UserProfileRectangleRight({ userDetails }) {
     const weight = parseFloat(userDetails?.weight);
 
     if (!isNaN(heightInMeters) && !isNaN(weight) && heightInMeters > 0) {
-      const calculatedBmi = (weight / (heightInMeters * heightInMeters)).toFixed(2);
+      const calculatedBmi = (
+        weight /
+        (heightInMeters * heightInMeters)
+      ).toFixed(2);
 
       if (calculatedBmi < 18.5) {
         setBmi(`${calculatedBmi} (Underweight)`);
@@ -270,23 +281,15 @@ function UserProfileRectangleRight({ userDetails }) {
   );
 }
 
-
-
-
 function Profilepage() {
-
   const { data: userInfo, isLoading, isError } = useQuery("userInfo", getUserInfo);
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error loading user info</p>;
 
-  console.log('userInfo:', userInfo);
-
   const userDetails = getUserRecord(userInfo?.username);
 
-  console.log('userDetails:', userDetails);
-  const goalCalories = Math.round(GoalKCAL(userDetails));
-
+  const goalCalories = Math.round(getGoalCalories(userDetails));
   return (
     <>
       <Header />
@@ -296,17 +299,20 @@ function Profilepage() {
             <ImageProfilePage username={userInfo.username} />
           </div>
           <div className="top-grid-container-pp-1">
-            <RingTracker 
-            burntCalories={450}      
-            gainedCalories={2500}    
-            goalCalories={goalCalories}/>
+            <RingTracker
+              burntCalories={450}
+              gainedCalories={2500}
+              goalCalories={goalCalories}
+            />
           </div>
           <div className="top-grid-container-pp-2">
             <OverviewProfilePage />
             <LoginButtonsProfilePage />
           </div>
           <div className="bottom-grid-container-pp-1">
-            <UserProfileRectangleLeft userDetails={{ ...userDetails, username: userInfo.username }} />
+            <UserProfileRectangleLeft
+              userDetails={{ ...userDetails, username: userInfo.username }}
+            />
           </div>
           <div className="bottom-grid-container-pp-2">
             <UserProfileRectangleRight userDetails={userDetails} />
@@ -316,4 +322,5 @@ function Profilepage() {
     </>
   );
 }
+
 export default Profilepage;

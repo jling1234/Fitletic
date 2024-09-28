@@ -64,11 +64,17 @@
 }
 
 .KcalGained-tracker h6 {
-  font-family: "Josefin Sans";
+  font-family: "Josefin Sans", sans-serif;
   margin-bottom: -7px;
   margin-right: -80px;
 }
 
+.Mealslog {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
 
 .Mealslog button {
   background-color: #ff5f35;
@@ -77,7 +83,6 @@
   min-width: 15rem;
   min-height: 2rem;
   cursor: pointer;
-  margin-top: 2rem;
 
   display: flex;
   padding: 0.25rem 0.75rem;
@@ -162,22 +167,6 @@
   margin: 0 auto;
   max-width: 50dvw;
   padding-left: 0;
-}
-
-@media (max-width: 1000px) {
-  .my-meals-heading {
-    max-width: 80dvw;
-    flex-wrap: wrap;
-  }
-
-  .meal-search-wrapper {
-    max-width: 80dvw;
-  }
-
-  .saved-meals-flex-container {
-    grid-template-columns: 1fr;
-    max-width: 80dvw;
-  }
 }
 
 .saved-meals {
@@ -288,4 +277,125 @@
   border-color: var(--color-accent);
   color: white;
   background: var(--color-accent);
+}
+
+.my-logs-heading {
+  margin-bottom: 2rem;
+  max-width: 50dvw;
+  margin-inline: auto;
+}
+
+.my-logs-heading h2 {
+  font-family: "Anton", sans-serif;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: left;
+}
+
+.my-logs-container {
+  max-width: 50dvw;
+  margin-inline: auto;
+  padding-left: 0;
+  list-style: none;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.my-logs-card {
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.my-logs-card h3 {
+  font-size: 1.75rem;
+  text-align: left;
+}
+
+.my-logs-card-list {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+
+.my-logs-card-list li {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.my-logs-card-list li:not(:last-child) {
+  border-bottom: 1px solid black;
+  padding-bottom: 1rem;
+}
+
+.my-logs-calories {
+  font-size: var(--font-size-small);
+}
+
+.my-logs-time {
+  font-size: var(--font-size-small);
+
+  margin-left: auto;
+  border-right: 1px solid black;
+  padding-right: 1rem;
+}
+
+.my-logs-delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  min-width: 24px;
+}
+
+@media (max-width: 1000px) {
+  .my-meals-heading {
+    max-width: 80dvw;
+    flex-wrap: wrap;
+  }
+
+  .meal-search-wrapper {
+    max-width: 80dvw;
+  }
+
+  .saved-meals-flex-container {
+    grid-template-columns: 1fr;
+    max-width: 80dvw;
+  }
+
+  .my-logs-heading {
+    max-width: 80dvw;
+    line-height: 1;
+  }
+
+  .my-logs-container {
+    max-width: 80dvw;
+  }
+}
+
+@media (max-width: 500px) {
+  .my-logs-card-list li {
+    flex-direction: column;
+
+    align-items: start;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .my-logs-time {
+    margin-left: 0;
+    border-right: none;
+  }
 }

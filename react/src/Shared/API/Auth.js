@@ -1,9 +1,10 @@
 import axios from "axios";
 import {getToken, setToken} from "../LocalDetails/LocalDetails.jsx";
+import {getAPIBaseUrl} from "./Env.js";
 
 export async function getUserInfo() {
   try {
-    const response = await axios.get("http://localhost:8080/users/me", {
+    const response = await axios.get(getAPIBaseUrl() + "/users/me", {
       headers: { Authorization: "Bearer " + getToken() },
     });
 

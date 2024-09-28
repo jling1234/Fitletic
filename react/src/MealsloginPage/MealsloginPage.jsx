@@ -96,6 +96,7 @@ function Mealsloginpage() {
       await queryClient.invalidateQueries(["meal", data.id]);
       await queryClient.invalidateQueries("meals");
       await queryClient.invalidateQueries("loggedMeals");
+      await queryClient.invalidateQueries("allLoggedMeals");
       navigate("/mealslogin/" + data.id, { replace: true });
     }
   });

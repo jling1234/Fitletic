@@ -32,7 +32,6 @@ export function FooterWaveDivider() {
 }
 
 export function Footer() {
- 
   return (
     <footer className="footer">
       <Logo />

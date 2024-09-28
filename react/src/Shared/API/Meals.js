@@ -1,14 +1,15 @@
 import axios from "axios";
 import {getToken} from "../LocalDetails/LocalDetails.jsx";
+import {getAPIBaseUrl} from "./Env.js";
 
 export async function getIngredients() {
-  const response = await axios.get("http://localhost:8080/meals/ingredients");
+  const response = await axios.get(getAPIBaseUrl() + "/meals/ingredients");
 
   return response.data;
 }
 
 export async function getMeals() {
-  const response = await axios.get("http://localhost:8080/meals", {
+  const response = await axios.get(getAPIBaseUrl() + "/meals", {
     headers: { Authorization: "Bearer " + getToken() },
   });
 
@@ -21,7 +22,7 @@ export async function getMeal(id) {
   }
 
   try {
-    const response = await axios.get("http://localhost:8080/meals/" + id, {
+    const response = await axios.get(getAPIBaseUrl() + "/meals/" + id, {
       headers: { Authorization: "Bearer " + getToken() },
     });
 
@@ -39,7 +40,7 @@ export async function saveMeal(meal, id) {
     id = "";
   }
 
-  const response = await axios.put("http://localhost:8080/meals/" + id, meal, {
+  const response = await axios.put(getAPIBaseUrl() + "/meals/" + id, meal, {
     headers: { Authorization: "Bearer " + getToken() },
   });
 
@@ -47,7 +48,7 @@ export async function saveMeal(meal, id) {
 }
 
 export async function deleteMeal(id) {
-  const response = await axios.delete("http://localhost:8080/meals/" + id, {
+  const response = await axios.delete(getAPIBaseUrl() + "/meals/" + id, {
     headers: { Authorization: "Bearer " + getToken() },
   });
 
@@ -55,9 +56,28 @@ export async function deleteMeal(id) {
 }
 
 export async function logMeal(id) {
-  const response = await axios.post("http://localhost:8080/meals/log/" + id, null,{
+  const response = await axios.post(getAPIBaseUrl() + "/meals/log/" + id, null,{
     headers: { Authorization: "Bearer " + getToken() },
   });
+
+  return response.data;
+}
+
+export async function deleteLoggedMeal(id) {
+  const response = await axios.delete(getAPIBaseUrl() + "/meals/log/" + id,{
+    headers: { Authorization: "Bearer " + getToken() },
+  });
+
+  return response.data;
+}
+
+export async function getAllLoggedMeals() {
+  const response = await axios.get(
+    getAPIBaseUrl() + "/meals/log/all",
+    {
+      headers: { Authorization: "Bearer " + getToken() },
+    },
+  );
 
   return response.data;
 }
@@ -75,13 +95,29 @@ export async function getLoggedMealsToday() {
   const endOfDayEpoch = Math.floor(endOfDay.getTime() / 1000);
 
   const response = await axios.get(
-    `http://localhost:8080/meals/log?from=${startOfDayEpoch}&to=${endOfDayEpoch}`,
+    getAPIBaseUrl() + `/meals/log?from=${startOfDayEpoch}&to=${endOfDayEpoch}`,
     {
       headers: { Authorization: "Bearer " + getToken() },
     },
   );
 
   return response.data;
+}
+
+export function getLoggedCalories(loggedMeal) {
+  let mealCalories = 0;
+  for (const ingredient of loggedMeal.meal.ingredients) {
+    const adjustedIngredient = {
+      ...ingredient.ingredient,
+      count: ingredient.count,
+    };
+    mealCalories += getNutrientAmount(adjustedIngredient, "Energy", "kcal");
+  }
+  const servesSafe =
+    loggedMeal.meal.servings > 0 ? loggedMeal.meal.servings : 1;
+
+  mealCalories = mealCalories / servesSafe;
+  return Number(mealCalories.toFixed(2));
 }
 
 export function getNutrientAmount(ingredient, name, unit) {

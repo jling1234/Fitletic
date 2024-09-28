@@ -6,8 +6,9 @@ import { HomepageLinkLogo } from "../Shared/Logo/Logo.jsx";
 import axios from "axios";
 import { setToken, setUserRecord } from "../Shared/LocalDetails/LocalDetails.jsx";
 import PropTypes from "prop-types";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery, useQueryClient , useMutation } from "react-query";
 import { getUserInfo } from "../Shared/API/Auth.js";
+import {getAPIBaseUrl} from "../Shared/API/Env.js";
 
 function LoginForm() {
     const queryClient = useQueryClient();
@@ -17,62 +18,68 @@ function LoginForm() {
     const [password, setPassword] = useState("");
     const [invalidAttempt, setInvalidAttempt] = useState(false);
 
-    const onLoginSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            const loginResponse = await axios.post("http://localhost:8080/auth/login", {
+    const loginMutation = useMutation({
+        mutationFn: async () => {
+            return await axios.post(getAPIBaseUrl() + "/auth/login", {
                 username: username,
                 password: password,
             });
-
+        },
+        onSuccess: (loginResponse) => {
             setToken(loginResponse.data["token"]);
-            await queryClient.invalidateQueries();
-
+            queryClient.removeQueries({ queryKey: "userInfo" });
             navigate("/");
-        } catch (e) {
+            window.location.reload();
+        },
+        onError: (e) => {
             if (e.status === 401) {
                 setInvalidAttempt(true);
-                return;
+            } else {
+                throw e;
             }
-
-            throw e;
         }
+    })
+
+    const onLoginSubmit = async (event) => {
+        event.preventDefault();
+        await loginMutation.mutate();
     };
 
     return (
-        <form className="login-data-container" onSubmit={onLoginSubmit}>
-            <div>
-                <p className="username-container">Username</p>
-                <input
-                    className="text-field-info"
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-            </div>
-            <div className="password-container">
-                <p className="username">Password</p>
-                <input
-                    className="text-field-info"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-            </div>
-            {invalidAttempt && <p className={"invalid-attempt-text"}>Invalid username or password!</p>}
-            <button className="login-button" type="submit">
-                <p>Login</p>
-            </button>
-            <div className="no-account">
-                <p>
-                    Don&apos;t have an account? <Link to={"/signup"}>Sign Up</Link>
-                </p>
-            </div>
-        </form>
+      <form className="login-data-container" onSubmit={onLoginSubmit}>
+        <div>
+          <p className="username-container">Username</p>
+          <input
+            className="text-field-info"
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div className="password-container">
+          <p className="username">Password</p>
+          <input
+            className="text-field-info"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        {invalidAttempt && <p className={"invalid-attempt-text"}>Invalid username or password!</p>}
+        <button className="login-button" type="submit">
+          <p>Login</p>
+        </button>
+        <div className="no-account">
+          <p>
+            Don&apos;t have an account? <Link to={"/signup"}>Sign Up</Link>
+          </p>
+        </div>
+      </form>
     );
 }
 
 function SignUpForm() {
+    const queryClient = useQueryClient();
     const [formIndex, setFormIndex] = useState(0);
 
     const [username, setUsername] = useState("");
@@ -88,26 +95,32 @@ function SignUpForm() {
 
     const navigate = useNavigate();
 
+    const signupMutation = useMutation({
+        mutationFn: async () => {
+            const registerResponse = await axios.post(getAPIBaseUrl() + "/auth/signup", {
+                username: username,
+                password: password,
+            });
+
+            return await axios.post(getAPIBaseUrl() + "/auth/login", {
+                username: username,
+                password: password,
+            });
+        },
+        onSuccess: (loginResponse) => {
+            setToken(loginResponse.data["token"]);
+            setUserRecord(username, { age, height, weight, activityLevel, gender, goal });
+            queryClient.removeQueries( { queryKey: "userInfo" });
+            navigate("/");
+        },
+        onError: (e) => {
+            throw e;
+        }
+    })
+
     const onSignUpSubmit = async (event) => {
         event.preventDefault();
-        try {
-            const registerResponse = await axios.post("http://localhost:8080/auth/signup", {
-                username: username,
-                password: password,
-            });
-
-            const loginResponse = await axios.post("http://localhost:8080/auth/login", {
-                username: username,
-                password: password,
-            });
-
-            setToken(loginResponse.data["token"]);
-
-            setUserRecord(username, { age, height, gender, goal, weight, activityLevel });
-            navigate("/");
-        } catch (e) {
-            console.log(e);
-        }
+        await signupMutation.mutate();
     };
 
     const forms = [
@@ -215,6 +228,7 @@ function SignUpForm() {
                         <option value="moderately-active">Moderately Active</option>
                         <option value="vigorously-active">Vigorously Active</option>
                         <option value="extremely-active">Extremely Active</option>
+                        <option value="none">None of these</option>
                     </select>
                 </div>
             </div>
@@ -226,6 +240,7 @@ function SignUpForm() {
                         <option value="weight-loss">Weight Loss</option>
                         <option value="maintain-weight">Maintain Weight</option>
                         <option value="weight-gain">Weight Gain</option>
+                        <option value="none">None of these</option>
                     </select>
                 </div>
             </div>
