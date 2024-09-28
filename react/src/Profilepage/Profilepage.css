@@ -301,6 +301,13 @@ input[type="number"]::-webkit-outer-spin-button {
   padding-top: 0.5rem;
 }
 
+.ring-tracker-warning {
+  font-size: var(--font-size-small);
+  padding-top: 2rem;
+  color: red;
+  font-style: italic;
+}
+
 .button-small-profilepage {
   background-color: #fb5d35;
   border: 0;

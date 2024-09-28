@@ -392,6 +392,7 @@ function Profilepage() {
     const userRecord = { ...userDetails };
     delete userRecord["username"];
     setUserRecord(userInfo.username, userRecord);
+    window.location.reload();
   };
 
   if (isLoading) return <p>Loading...</p>;
@@ -415,6 +416,11 @@ function Profilepage() {
               gainedCalories={2500}
               goalCalories={goalCalories}
             />
+            {goalCalories === 0 ? (
+              <p className="ring-tracker-warning">
+                Fill in your details to calculate your goal calories!
+              </p>
+            ) : null}
           </div>
           <div className="top-grid-container-pp-2">
             <OverviewProfilePage />
