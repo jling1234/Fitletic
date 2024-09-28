@@ -7,7 +7,7 @@ import axios from "axios";
 import { setToken, setUserRecord } from "../Shared/LocalDetails/LocalDetails.jsx";
 import PropTypes from "prop-types";
 import { useQuery, useQueryClient , useMutation } from "react-query";
-import { getUserInfo } from "../Shared/API/Auth.js";
+import {doesUserExist, getUserInfo} from "../Shared/API/Auth.js";
 import {getAPIBaseUrl} from "../Shared/API/Env.js";
 
 function LoginForm() {
@@ -93,6 +93,8 @@ function SignUpForm() {
     const [weight, setWeight] = useState("");
     const [activityLevel, setActivityLevel] = useState("");
 
+    const [errorText, setErrorText] = useState("");
+
     const navigate = useNavigate();
 
     const signupMutation = useMutation({
@@ -127,8 +129,27 @@ function SignUpForm() {
         <form
             key={0}
             className="signup-data-container"
-            onSubmit={(event) => {
+            onSubmit={async (event) => {
                 event.preventDefault();
+
+                if (!username) {
+                    setErrorText("Username may not be empty!");
+                    return;
+                }
+                if (await doesUserExist(username)) {
+                    setErrorText("User already exists!");
+                    return;
+                }
+                if (!password) {
+                    setErrorText("Password may not be empty!");
+                    return;
+                }
+                if (password !== passwordConfirm) {
+                    setErrorText("Passwords do not match!");
+                    return;
+                }
+
+                setErrorText("");
                 setFormIndex(formIndex + 1);
             }}
         >
@@ -159,6 +180,7 @@ function SignUpForm() {
                     value={passwordConfirm}
                 />
             </div>
+            <p className="signup-error">{errorText}</p>
             <button className="next-button" type="submit">
                 <p>Next</p>
             </button>

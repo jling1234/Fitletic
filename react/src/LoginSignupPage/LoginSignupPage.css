@@ -53,7 +53,7 @@
   border: none;
   min-height: 28px;
   min-width: 350px;
-  margin-top: 33px;
+  margin-top: 10px;
   color: white;
   padding-block: 2px;
 }
@@ -107,4 +107,12 @@
   min-width: 350px;
   padding-inline: 10px;
   margin-top: 3px;
+}
+
+.signup-error {
+  color: red;
+  font-size: var(--font-size-small);
+  text-align: end;
+  padding-top: 0.5rem;
+  font-style: italic;
 }

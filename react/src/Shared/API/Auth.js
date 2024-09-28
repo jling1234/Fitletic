@@ -17,3 +17,16 @@ export async function getUserInfo() {
     throw error;
   }
 }
+
+export async function doesUserExist(username) {
+  try {
+    const response = await axios.get(getAPIBaseUrl() + "/users/exists/" + username);
+    return response.data;
+  } catch (error) {
+    if (error.status === 401 || error.status === 403) {
+      return null;
+    }
+
+    throw error;
+  }
+}
