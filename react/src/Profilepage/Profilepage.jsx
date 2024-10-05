@@ -217,6 +217,20 @@ function UserProfileRectangleLeft({ userDetails, setUserDetails }) {
     return <div className="left-white-rectangle"></div>;
   }
 
+  const handleAgeBlur = (e) => {
+    let { name, value } = e.target;
+    if (value < 16) {
+      value = 16;
+    }
+    else if (value > 97) {
+      value = 97;
+    }
+    setUserDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
+  };
+
   return (
     <div className="left-white-rectangle">
       <div className="input-fields">
@@ -241,6 +255,7 @@ function UserProfileRectangleLeft({ userDetails, setUserDetails }) {
             name="age"
             value={userDetails.age || ""}
             onChange={handleChange}
+            onBlur={handleAgeBlur}
           />
         </label>
       </div>
