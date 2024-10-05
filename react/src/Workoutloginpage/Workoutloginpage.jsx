@@ -207,7 +207,7 @@ function Workoutloginpage() {
 
 
   //to make the routine name editable
-  const [routineName, setRoutineName] = useState("Routine 1");
+  const [routineName, setRoutineName] = useState("Enter Routine Name");
   const [isEditing, setIsEditing] = useState(false);
 
   const queryClient = useQueryClient();

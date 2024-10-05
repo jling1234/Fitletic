@@ -51,7 +51,7 @@ public class WorkoutController {
         workoutService.deleteLoggedWorkout(workoutId);
         return ResponseEntity.ok().build();
     }
-    @CrossOrigin(origins = "*", methods ={RequestMethod.POST,RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE}, allowedHeaders = "*")
+    
     @GetMapping("/get/{workoutId}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Optional<Workout>> getWorkout(@PathVariable String workoutId) {

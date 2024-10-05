@@ -157,9 +157,9 @@ function getGoalCalories(userDetails) {
 
   switch (goal) {
     case "weight-loss":
-      return maintenanceKCAL - 500;
+      return maintenanceKCAL - 300;
     case "weight-gain":
-      return maintenanceKCAL + 500;
+      return maintenanceKCAL + 300;
   }
   return maintenanceKCAL;
 }
@@ -181,7 +181,7 @@ function LoginWorkoutProfilePageButton() {
       <button
         type="button"
         className="button-profilepage"
-        onClick={() => navigate("/workoutlogin")} //change here for redirection
+        onClick={() => navigate("/savedworkoutspage")} //change here for redirection
       >
         <p>Login a Workout</p>
       </button>
