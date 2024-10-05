@@ -19,7 +19,6 @@ function ImageProfilePage({ username }) {
     <>
       <div className="img-profilepage">
         <div className="img-text">
-          
           Hello,
           <br />
           {username}
@@ -377,7 +376,10 @@ function Profilepage() {
   } = useQuery("userInfo", getUserInfo);
 
   const { data: loggedMeals } = useQuery("loggedMeals", getLoggedMealsToday);
-  const { data: workouts } = useQuery("workouts", getLoggedWorkoutResponses);
+  const { data: workouts } = useQuery(
+    "workoutResponses",
+    getLoggedWorkoutResponses
+  );
 
   const [userDetails, setUserDetails] = useState({
     username: "",
