@@ -116,3 +116,17 @@
   padding-top: 0.5rem;
   font-style: italic;
 }
+
+@media (max-width: 900px) {
+  .signup-page-grid-container {
+    grid-template: 1fr 3fr / 1fr;
+  }
+
+  .left-grid-container {
+    grid-row: 2;
+  }
+
+  .right-grid-container {
+    grid-row: 1;
+  }
+}
