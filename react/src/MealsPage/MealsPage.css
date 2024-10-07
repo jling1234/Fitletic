@@ -383,6 +383,10 @@
   .my-logs-container {
     max-width: 80dvw;
   }
+
+  .my-logs-card h3 {
+    line-height: 1;
+  }
 }
 
 @media (max-width: 500px) {
