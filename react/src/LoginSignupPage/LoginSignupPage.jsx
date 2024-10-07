@@ -200,7 +200,7 @@ function SignUpForm() {
                 </div>
             </div>
             <div>
-                <p className="gender">Gender</p>
+                <p className="gender">Sex</p>
                 <div className="gender-select-field">
                     <select
                         className="dropdown"

@@ -261,7 +261,7 @@ function UserProfileRectangleLeft({ userDetails, setUserDetails }) {
       </div>
       <div className="input-fields">
         <label>
-          <div className="label-container">Gender:</div>
+          <div className="label-container">Sex:</div>
           <select
             className="dropdown"
             name="gender"
