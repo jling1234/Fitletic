@@ -9,10 +9,15 @@
 }
 
 .backarrow-savedroutines-label {
-  display: grid;
-  grid-template-columns: repeat(7,1fr);
- 
+  display: flex;
+  gap: 4rem;
+
   margin: 1.5rem 0rem 2rem 0rem;
+}
+
+
+.backarrow-savedroutines-label h1 {
+  line-height: 1;
 }
 
 .saved-routines-container {
@@ -78,5 +83,49 @@
 
 .new-routine-button {
   text-align: center;
-  margin-top: .7rem;
+  margin-top: 0.7rem;
+}
+
+@media (max-width: 750px) {
+  .dumbbells-img {
+    background-image: none;
+  }
+
+  .new-routine-button {
+    display: none;
+  }
+
+  .whole-page-container {
+    display: grid;
+    grid-template-rows: min-content 1fr;
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .tracker-container {
+    grid-row: 1;
+
+  }
+
+  .rectangle-box-container {
+    grid-row: 2;
+  }
+
+  .dumbbells-img {
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    min-height: 0;
+    margin-bottom: 2rem;
+  }
+
+  .saved-routines-inputfield-container {
+    padding-inline: 1rem;
+  }
+
+  .plus-button-container {
+    padding-right: 1rem;
+  }
+  .burntcal-tracker {
+    opacity: .9;
+  }
 }

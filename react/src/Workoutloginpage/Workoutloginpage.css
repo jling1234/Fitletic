@@ -226,3 +226,29 @@ input[type="text"]:focus {
   top: 256px;
   left: 440px;
 }
+
+
+@media (max-width: 700px) {
+  .right-container-workout-loginpage {
+   
+  }
+
+  .workout-loginpage-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content  1fr;
+    justify-items: stretch;
+  }
+
+  .stretchedcontainer {
+    padding-inline: 3rem;
+
+    padding-bottom: 2rem;
+  }
+
+  .savedexercises-form {
+    
+  }
+  .added-exercise-input-field {
+    min-width: 13ch;
+  }
+}

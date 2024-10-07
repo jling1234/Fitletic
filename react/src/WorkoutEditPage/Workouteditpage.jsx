@@ -1,4 +1,4 @@
-import "../WorkoutEditPage/Workouteditpage.css";
+
 import Header from "../Shared/Header/Header";
 //eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect, useRef } from "react";
@@ -349,7 +349,7 @@ function Workouteditpage() {
       <Header />
       <div className="workout-loginpage-container">
         {/**need the below div to load the img */}
-        <div>
+        <div className="stretchedcontainer">
           <BackArrow />
 
           <div className="left-hand-side">

@@ -14,7 +14,7 @@ import {
   saveLoggedWorkoutResponse,
 } from "../Shared/API/Workout.js";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import {getAPIBaseUrl} from "../Shared/API/Env.js";
+import { getAPIBaseUrl } from "../Shared/API/Env.js";
 
 export function BackArrow() {
   return (
@@ -107,19 +107,16 @@ export default function Savedworkoutspage() {
       <Header />
       <div className="backarrow-savedroutines-label">
         <BackArrow />
-        <div className="saved-routines-container">
-          <Savedroutineslabel />
-        </div>
+        <Savedroutineslabel />
       </div>
       <div className="whole-page-container">
-        <div>
-          {/**child container of the whole page container */}
+        {/**child container of the whole page container */}
 
-          <div className="rectangle-box-container">
-            <Rectanglebox />
-          </div>
+        <div className="rectangle-box-container">
+          <Rectanglebox />
         </div>
-        <div>
+
+        <div className="tracker-container">
           {/**child container of the whole page container */}
           <DumbbellsImg />
           <div className="new-routine-button">

@@ -162,7 +162,7 @@ function Workoutloginpage() {
       ...exercises,
       {
         id: generateUniqueId(),
-        exerciseName: "Name:def",
+        exerciseName: "",
         time: 0,
   
         
@@ -305,9 +305,9 @@ let newWorkoutId;
       <Header />
       <div className="workout-loginpage-container">
         {/**need the below div to load the img */}
-        <div>
+        <div className="stretchedcontainer">
           <BackArrow />
-
+          
           <div className="left-hand-side">
             {/*Routine name should be connected to the backend to display the routine name*/}
             <div className="routine-label">
