@@ -306,13 +306,11 @@ function DateLogCard({ date, loggedMeals }) {
     minute: "2-digit",
   });
 
-  loggedMeals.sort((a, b) => a.loggedAtEpochSecond > b.loggedAtEpochSecond);
-
   return (
     <div className="my-logs-card">
       <h3>{date}</h3>
       <ul className="my-logs-card-list">
-        {loggedMeals.map((loggedMeal, index) => {
+        {loggedMeals.toReversed().map((loggedMeal, index) => {
           const date = new Date(loggedMeal.loggedAtEpochSecond * 1000);
 
           return (
@@ -357,10 +355,6 @@ function MyLogs({ divRef }) {
   const dates = [];
 
   if (allLoggedMeals) {
-    allLoggedMeals.sort(
-      (a, b) => a.loggedAtEpochSecond < b.loggedAtEpochSecond
-    );
-
     const format = new Intl.DateTimeFormat("en-DE", {
       weekday: "long",
       year: "numeric",
@@ -390,8 +384,6 @@ function MyLogs({ divRef }) {
         dates.push(formattedDate);
       }
     }
-
-    console.log(transformedMeals);
   }
 
   return (

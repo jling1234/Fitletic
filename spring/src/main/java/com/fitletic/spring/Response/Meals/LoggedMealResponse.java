@@ -10,8 +10,13 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoggedMealResponse {
+public class LoggedMealResponse implements Comparable<LoggedMealResponse> {
     private String id;
     private MealResponse meal;
     private long loggedAtEpochSecond;
+
+    @Override
+    public int compareTo(LoggedMealResponse o) {
+        return Long.compare(this.loggedAtEpochSecond, o.loggedAtEpochSecond);
+    }
 }
